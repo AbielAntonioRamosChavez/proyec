@@ -1,94 +1,54 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../../auth/services/auth.service';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { catchError, mapTo, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
 
 @Component({
   selector: 'app-login',
-  standalone: false,
+  standalone:false,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-   public form: FormGroup;
-  isSubmited: boolean = false;
-  public error = '';
+export class LoginComponent implements OnInit {
+  loginForm!: FormGroup; // Inicializamos el formulario aquí
+  error: string = '';
+  isLoading: boolean = false;
 
   constructor(
-    private _authService: AuthService,
-    private router: Router,
-  ) {
-    this.form = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(10)]),
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(10)]]
     });
   }
 
-  public onSubmit() {
-    this.isSubmited = true;
-    if (this.form.invalid) {
+  onSubmit() {
+    if (this.loginForm.invalid) {
       return;
     }
-    const body = {
-      email: this.form.value.email.toLowerCase(),
-      password: this.form.value.password
-    };
-    this._authService.login(body).pipe(
-      tap((tokens: any) => {
-        this._authService.doLoginUser(this.form.value.email, tokens);
-      }),
-      mapTo(true),
-      catchError(error => {
-        this.handleError(error);
-        return of(false);
-      })
-    ).subscribe(res => {
-        try {
-          //console.log("RES LOGIN", res);
-          if (res) {
-            setTimeout(() => {
-              const dataUser = JSON.parse(localStorage.getItem('USER_CURRENT') || '{}');
-              if (dataUser.tipo != "checkin") {
-                this.router.navigate(['/pages']).then(() => {
-                  this.isSubmited = false;
-                });
-              } else {
-                this.router.navigate(['/login']).then(() => {
-                  this.isSubmited = false;
-                });
-              }
-            }, 500);
-          }
-          else {
-            this.isSubmited = false;
-          }
-        } catch (e) {
-          //console.log('edit_route fail redirect ', e);
-        }
-    },error1 =>  {
-      this.isSubmited = false;
-      //console.log(err);
-    },
-    );
+
+    this.isLoading = true;
+    this.error = '';
+
+    const { email, password } = this.loginForm.value;
+
+    this.authService.login({ correo: email, contrasena: password }).subscribe({
+      next: () => {
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        this.error = err;
+        this.isLoading = false;
+      }
+    });
   }
 
-  handleError(error: any) {
-    if (error.status === 401) {
-      this.error = error.error.message || 'Credenciales incorrectas. Inténtelo de nuevo.';
-    } else if (error.status === 400) {
-      this.error = 'Solicitud incorrecta. Verifique los datos ingresados.';
-    } else if (error.status === 500) {
-      this.error = 'Error interno del servidor. Inténtelo más tarde.';
-    } else {
-      this.error = 'Ocurrió un error desconocido. Inténtelo de nuevo.';
-    }
-
-    console.error('Error en el login:', error);
-
-    setTimeout(() => {
-      this.error = '';
-    }, 5000);
+  get form() {
+    return this.loginForm.controls;
   }
 }
