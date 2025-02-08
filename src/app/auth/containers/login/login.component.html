@@ -1,32 +1,50 @@
-<div *ngIf="error" class="alert alert-danger">
-  {{ error }}
-</div>
+<div class="login" id="layoutAuthentication">
+  <div id="layoutAuthentication_content">
+    <main>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-5">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+              <div class="card-header"><h3 class="text-center font-weight-light my-4">Ingresar</h3>
+                <div *ngIf="error" class="alert alert-danger">
+                  {{ error }}
+                </div></div>
+              <div class="card-body">
+                <form [formGroup]="form" (ngSubmit)="form.valid && onSubmit()" autocomplete="off">
+                  <!-- Campo Correo Electrónico -->
+                  <div class="form-floating mb-3">
+                    <input class="form-control" name="email" id="email" formControlName="email" type="email" placeholder="name@example.com" />
+                    <label for="email">Correo Electrónico</label>
+                    <!-- Errores del campo email -->
+                    <div *ngIf="form.get('email')?.dirty && form.get('email')?.invalid" class="">
+                      <div *ngIf="form.get('email')?.errors?.['required']">El campo correo electrónico es requerido</div>
+                      <div *ngIf="form.get('email')?.errors?.['email']">El correo electrónico debe ser un formato válido</div>
+                    </div>
+                  </div>
 
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="email">Correo Electrónico</label>
-    <input type="email" id="email" formControlName="email" />
-    <div *ngIf="form['email'].invalid && form['email'].touched">
-      <small *ngIf="form['email'].errors?.['required']">Campo obligatorio</small>
-      <small *ngIf="form['email'].errors?.['email']">Formato de email inválido</small>
-    </div>
-  </div>
-
-  <div>
-    <label for="password">Contraseña</label>
-    <input type="password" id="password" formControlName="password" />
-    <div *ngIf="form['password'].invalid && form['password'].touched">
-      <small *ngIf="form['password'].errors?.['required']">Campo obligatorio</small>
-      <small *ngIf="form['password'].errors?.['minlength']">Mínimo 6 caracteres</small>
-      <small *ngIf="form['password'].errors?.['maxlength']">Máximo 10 caracteres</small>
-    </div>
-  </div>
+                  <!-- Campo Contraseña -->
+                  <div class="form-floating mb-3">
+                    <input class="form-control" id="password" formControlName="password" type="password" placeholder="Contraseña" />
+                    <label for="password">Contraseña</label>
+                    <!-- Errores del campo password -->
+                    <div *ngIf="form.get('password')?.dirty && form.get('password')?.invalid" class="feedback">
+                      <div *ngIf="form.get('password')?.errors?.['required']">La contraseña es requerida</div>
+                      <div *ngIf="form.get('password')?.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres</div>
+                      <div *ngIf="form.get('password')?.errors?.['maxlength']">La contraseña no puede tener más de 10 caracteres</div>
+                    </div>
+                  </div>
 
                   <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                     <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Ingresar</button>
                   </div>
 
                 </form>
+                <!-- Pie de la tarjeta -->
+                <div class="card-footer text-center py-3">
+                  <div class="small">
+                    <a routerLink="/register" class="nav-link">¿Necesita una cuenta? Regístrese</a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
