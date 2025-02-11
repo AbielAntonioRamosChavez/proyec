@@ -1,62 +1,40 @@
-<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+<nav class="sb-sidenav accordion custom-sidenav" id="sidenavAccordion">
   <div class="sb-sidenav-menu">
     <div class="nav">
-      <div class="sb-sidenav-menu-heading">Core</div>
-      <a class="nav-link" routerLink="/dashboard">
-        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-        Principal
-      </a>
-      <div class="sb-sidenav-menu-heading">Catalogos</div>
+      <div class="sb-sidenav-menu-heading">Catálogos</div>
       <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-        Administrador
+        <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
+        Ventas
         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
       </a>
       <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
         <nav class="sb-sidenav-menu-nested nav">
-          <a class="nav-link" routerLink="/usuarios">Usuarios</a>
-          <a class="nav-link" routerLink="/productos">Productos</a>
+          <a class="nav-link" routerLink="/usuarios"><i class="fas fa-tasks"></i> Gestión de ventas</a>
+          <a class="nav-link" routerLink="/productos"><i class="fas fa-cash-register"></i> Punto de venta</a>
         </nav>
       </div>
+      <a class="nav-link" href="charts.html">
+        <div class="sb-nav-link-icon"><i class="fas fa-box"></i></div>
+        Productos
+      </a>
       <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-        <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-        Cliente
+        <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+        Usuarios
         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
       </a>
-      <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-        <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-            Perfil
-            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-          </a>
-          <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-            <nav class="sb-sidenav-menu-nested nav">
-              <a class="nav-link" href="login.html">Datos personales</a>
-              <a class="nav-link" href="register.html">Ubicación</a>
-              <a class="nav-link" href="password.html">Credenciales</a>
-            </nav>
-          </div>
-          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-            Mis compras
-            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-          </a>
-          <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-            <nav class="sb-sidenav-menu-nested nav">
-              <a class="nav-link" href="401.html">Envíos</a>
-              <a class="nav-link" href="404.html">Compras</a>
-              <a class="nav-link" href="500.html">Facturas</a>
-            </nav>
-          </div>
+      <div class="collapse" id="collapsePages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+        <nav class="sb-sidenav-menu-nested nav">
+          <a class="nav-link" routerLink="/usuarios"><i class="fas fa-user"></i> Ver usuarios</a>
+          <a class="nav-link" routerLink="/productos"><i class="fas fa-user-plus"></i> Agregar usuarios</a>
         </nav>
       </div>
-      <div class="sb-sidenav-menu-heading">Procesos</div>
       <a class="nav-link" href="charts.html">
-        <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-        Compras
+        <div class="sb-nav-link-icon"><i class="fas fa-chart-bar"></i></div>
+        Estadísticas
       </a>
-      <a class="nav-link" href="tables.html">
-        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-        Ventas
+      <a class="nav-link" href="charts.html">
+        <div class="sb-nav-link-icon"><i class="fas fa-history"></i></div>
+        Historial
       </a>
     </div>
   </div>
