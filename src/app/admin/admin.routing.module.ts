@@ -4,6 +4,8 @@ import { AdminComponent } from './admin.component';
 import { PrincipalComponent } from './pages/principal/principal.component';
 import {UsuarioComponent} from './pages/catalogos/usuario/usuario.component';
 import {ProductoComponent} from './pages/catalogos/producto/producto.component';
+import { PerfilComponent } from '../catalogos/perfil/perfil.component';
+import { DatospComponent } from './pages/datosp/datosp.component';
 
 const routes: Routes = [
   {
@@ -21,6 +23,11 @@ const routes: Routes = [
       {
         path: 'productos',
         component: ProductoComponent
+      },
+      {
+        path: 'perfil', component: PerfilComponent
+      },{path:'datosp',
+        component:DatospComponent
       }
     ]
   }

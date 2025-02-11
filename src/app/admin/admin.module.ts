@@ -10,6 +10,12 @@ import {BreadscrumbComponent} from './template/breadscrumb/breadscrumb.component
 import {ReactiveFormsModule} from '@angular/forms';
 import {UsuarioComponent} from './pages/catalogos/usuario/usuario.component';
 import {ProductoComponent} from './pages/catalogos/producto/producto.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
+import { PerfilComponent } from './pages/catalogos/perfil/perfil.component';
+import { DatospComponent } from './pages/datosp/datosp.component';
+
+
 
 @NgModule({
   declarations: [
@@ -20,7 +26,7 @@ import {ProductoComponent} from './pages/catalogos/producto/producto.component';
     PrincipalComponent,
     BreadscrumbComponent,
     UsuarioComponent,
-    ProductoComponent,
+    ProductoComponent,PerfilComponent,DatospComponent
   ],
   exports: [
     FooterComponent,
@@ -32,6 +38,9 @@ import {ProductoComponent} from './pages/catalogos/producto/producto.component';
     CommonModule,
     AdminRoutingModule,
     ReactiveFormsModule,
+    MatCardModule,
+    MatTableModule, MatCardModule,
+    MatTableModule
   ]
 })
 export class AdminModule {}

@@ -12,12 +12,15 @@ import {TokenInterceptor} from './auth/token.interceptor';
 import {ErrorAutenticateInterceptor} from './auth/ErrorAutenticateInterceptor';
 import {ReactiveFormsModule} from '@angular/forms';
 import {AuthModule} from './auth/auth.module';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { PerfilComponent } from './catalogos/perfil/perfil.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
     RegisterComponent,
+    PerfilComponent,
   ],
   exports: [
   ],
@@ -42,7 +45,8 @@ import {AuthModule} from './auth/auth.module';
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorAutenticateInterceptor,
       multi: true,
-    }
+    },
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })
