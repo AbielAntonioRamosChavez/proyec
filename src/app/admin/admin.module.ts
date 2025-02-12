@@ -9,7 +9,12 @@ import {PrincipalComponent} from './pages/principal/principal.component';
 import {BreadscrumbComponent} from './template/breadscrumb/breadscrumb.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {UsuarioComponent} from './pages/catalogos/usuario/usuario.component';
-import {ProductoComponent} from './pages/catalogos/producto/producto.component';
+import {ProductosComponent} from './pages/catalogos/productos/productos.component';
+import { AgregarusuarioComponent } from './pages/catalogos/agregarusuario/agregarusuario.component';
+import { GestiondeventasComponent } from './pages/catalogos/gestiondeventas/gestiondeventas.component';
+import { PuntodeventaComponent } from './pages/catalogos/puntodeventa/puntodeventa.component';
+import { EstadisticasComponent } from './pages/catalogos/estadisticas/estadisticas.component';
+import { HistorialComponent } from './pages/catalogos/historial/historial.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +25,13 @@ import {ProductoComponent} from './pages/catalogos/producto/producto.component';
     PrincipalComponent,
     BreadscrumbComponent,
     UsuarioComponent,
-    ProductoComponent,
+    ProductosComponent,
+    AgregarusuarioComponent,
+    GestiondeventasComponent,
+    PuntodeventaComponent,
+    EstadisticasComponent,
+    HistorialComponent,
+    ProductosComponent,
   ],
   exports: [
     FooterComponent,

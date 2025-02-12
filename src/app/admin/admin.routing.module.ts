@@ -3,7 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { PrincipalComponent } from './pages/principal/principal.component';
 import {UsuarioComponent} from './pages/catalogos/usuario/usuario.component';
-import {ProductoComponent} from './pages/catalogos/producto/producto.component';
+import {ProductosComponent} from './pages/catalogos/productos/productos.component';
+import { AgregarusuarioComponent } from './pages/catalogos/agregarusuario/agregarusuario.component';
+import { GestiondeventasComponent } from './pages/catalogos/gestiondeventas/gestiondeventas.component';
+import { PuntodeventaComponent } from './pages/catalogos/puntodeventa/puntodeventa.component';
+import { EstadisticasComponent } from './pages/catalogos/estadisticas/estadisticas.component';
+import { HistorialComponent } from './pages/catalogos/historial/historial.component';
 
 const routes: Routes = [
   {
@@ -20,7 +25,27 @@ const routes: Routes = [
       },
       {
         path: 'productos',
-        component: ProductoComponent
+        component: ProductosComponent
+      },
+      {
+        path:'agregarusuario',
+        component: AgregarusuarioComponent
+      },
+      {
+        path:'gestiondeventas',
+        component: GestiondeventasComponent
+      },
+      {
+        path:'puntodeventa',
+        component: PuntodeventaComponent
+      },
+      {
+        path:'estadisticas',
+        component: EstadisticasComponent
+      },
+      {
+        path:'historial',
+        component: HistorialComponent
       }
     ]
   }
