@@ -7,7 +7,7 @@ import {SidemenuComponent} from './template/sidemenu/sidemenu.component';
 import {AdminComponent} from './admin.component';
 import {PrincipalComponent} from './pages/principal/principal.component';
 import {BreadscrumbComponent} from './template/breadscrumb/breadscrumb.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UsuarioComponent} from './pages/catalogos/usuario/usuario.component';
 import {ProductosComponent} from './pages/catalogos/productos/productos.component';
 import { AgregarusuarioComponent } from './pages/catalogos/agregarusuario/agregarusuario.component';
@@ -15,6 +15,14 @@ import { GestiondeventasComponent } from './pages/catalogos/gestiondeventas/gest
 import { PuntodeventaComponent } from './pages/catalogos/puntodeventa/puntodeventa.component';
 import { EstadisticasComponent } from './pages/catalogos/estadisticas/estadisticas.component';
 import { HistorialComponent } from './pages/catalogos/historial/historial.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatButtonModule} from '@angular/material/button';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import {MatCardModule} from '@angular/material/card';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -32,6 +40,7 @@ import { HistorialComponent } from './pages/catalogos/historial/historial.compon
     EstadisticasComponent,
     HistorialComponent,
     ProductosComponent,
+    PuntodeventaComponent
   ],
   exports: [
     FooterComponent,
@@ -43,6 +52,17 @@ import { HistorialComponent } from './pages/catalogos/historial/historial.compon
     CommonModule,
     AdminRoutingModule,
     ReactiveFormsModule,
-  ]
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
+    MatTableModule, 
+    MatPaginatorModule,
+    MatCardModule,
+    FormsModule,
+    MatInputModule,
+    MatFormFieldModule
+  ],
 })
-export class AdminModule {}
+export class AdminModule {
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+}

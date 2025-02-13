@@ -12,6 +12,7 @@ import {TokenInterceptor} from './auth/token.interceptor';
 import {ErrorAutenticateInterceptor} from './auth/ErrorAutenticateInterceptor';
 import {ReactiveFormsModule} from '@angular/forms';
 import {AuthModule} from './auth/auth.module';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {AuthModule} from './auth/auth.module';
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorAutenticateInterceptor,
       multi: true,
-    }
+    },
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })

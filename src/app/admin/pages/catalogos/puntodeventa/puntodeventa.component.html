@@ -1,1 +1,73 @@
-<p>puntodeventa works!</p>
+<div class="punto-de-venta mat-elevation-z8">
+    <div class="encabezado">
+      <h1>Abarrotes</h1>
+      <p>PUNTO DE VENTA</p>
+  
+      <form class="busqueda-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Código del Producto</mat-label>
+          <input matInput [(ngModel)]="codigoBusqueda" (keyup.enter)="buscarProducto()" placeholder="Ingrese código">
+          <button mat-icon-button matSuffix (click)="buscarProducto()" aria-label="Search">
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Cantidad</mat-label>
+          <input matInput type="number" [(ngModel)]="cantidadAgregar" placeholder="Ingrese cantidad">
+        </mat-form-field>
+  
+        <button mat-raised-button color="primary" (click)="agregarProducto()">AGREGAR</button>
+      </form>
+    </div>
+  
+    <div class="contenido">
+      <div class="productos">
+        <table mat-table [dataSource]="productosEnVenta" class="mat-elevation-z8">
+          <ng-container matColumnDef="codigo">
+            <th mat-header-cell *matHeaderCellDef="let element">Código</th>
+            <td mat-cell *matCellDef="let element"> {{element.codigo}} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="descripcion">
+            <th mat-header-cell *matHeaderCellDef="let element">Descripción</th>
+            <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="precio">
+            <th mat-header-cell *matHeaderCellDef="let element">Precio</th>
+            <td mat-cell *matCellDef="let element"> {{element.precio | currency}} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="cantidad">
+            <th mat-header-cell *matHeaderCellDef="let element">Cant.</th>
+            <td mat-cell *matCellDef="let element">
+              <input type="number" [(ngModel)]="element.cantidad" (change)="calcularTotal()">
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="importe">
+            <th mat-header-cell *matHeaderCellDef="let element">Importe</th>
+            <td mat-cell *matCellDef="let element"> {{ (element.precio * element.cantidad) | currency }} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef="let element">Acciones</th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <button mat-icon-button color="warn" (click)="eliminarProducto(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+  
+      <div class="resumen">
+        <p>Total: {{ total | currency }}</p>
+        <button mat-raised-button color="primary">COBRAR</button>
+      </div>
+    </div>
+  </div>
