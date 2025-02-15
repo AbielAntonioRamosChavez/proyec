@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogConfirmacionComponent } from '../dialogo-confirmacion/dialogo-confirmacion.component';
+import { DialogoEditarUsuarioComponent } from '../../catalogos/dialogo-editar-usuario/dialogo-editar-usuario.component';
 
 @Component({
   selector: 'app-usuario',
@@ -46,8 +47,27 @@ export class UsuarioComponent {
   }
 
   editarUsuario(usuario: any) {
-    console.log('Editando usuario:', usuario);
-    // Aquí puedes agregar la lógica para editar el usuario, como abrir un diálogo o navegar a otra página.
+    const dialogRef = this.dialog.open(DialogoEditarUsuarioComponent, {
+      width: '350px',
+      data: { 
+        nombre: usuario.nombre, 
+        correo: usuario.correo, 
+        telefono: usuario.telefono,
+        direccion: usuario.direccion,
+        rol: usuario.rol
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Usuario editado:', result);
+        // Actualizar el usuario en la lista
+        const index = this.usuarios.findIndex(u => u.correo === usuario.correo);
+        if (index !== -1) {
+          this.usuarios[index] = result;
+        }
+      }
+    });
   }
 
   // Método para abrir el diálogo de confirmación antes de eliminar
@@ -56,10 +76,10 @@ export class UsuarioComponent {
       width: '350px',
       data: { nombre: usuario.nombre },
     });
-  
+
     dialogRef.afterClosed().subscribe((confirmado) => {
       if (confirmado) {
-        this.usuarios = this.usuarios.filter((u) => u !== usuario);
+        this.usuarios = this.usuarios.filter((u) => u  !== usuario);
       }
     });
   }
