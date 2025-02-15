@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Confirmar Eliminación</h2>
+<mat-dialog-content>
+  ¿Estás seguro de que deseas eliminar a {{ data.nombre }}?
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button color="warn" [mat-dialog-close]="true">Eliminar</button>
+</mat-dialog-actions>

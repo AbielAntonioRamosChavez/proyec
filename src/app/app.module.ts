@@ -13,14 +13,24 @@ import {ErrorAutenticateInterceptor} from './auth/ErrorAutenticateInterceptor';
 import {ReactiveFormsModule} from '@angular/forms';
 import {AuthModule} from './auth/auth.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+<<<<<<< HEAD
 import { CobroDialogComponent } from './cobro-dialog/cobro-dialog.component';
+=======
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogConfirmacionComponent } from './admin/pages/catalogos/dialogo-confirmacion/dialogo-confirmacion.component';
+
+>>>>>>> c2657b46a99d224980253ce90a615cc020a149e0
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
     RegisterComponent,
+<<<<<<< HEAD
     CobroDialogComponent,
+=======
+    MatDialogConfirmacionComponent
+>>>>>>> c2657b46a99d224980253ce90a615cc020a149e0
   ],
   exports: [
   ],
@@ -31,7 +41,9 @@ import { CobroDialogComponent } from './cobro-dialog/cobro-dialog.component';
     CommonModule,
     AdminModule,
     AuthModule,
+    MatDialogModule,
   ],
+  
   providers: [
     provideClientHydration(withEventReplay()),
     AppService,
@@ -48,6 +60,7 @@ import { CobroDialogComponent } from './cobro-dialog/cobro-dialog.component';
     },
     provideAnimationsAsync()
   ],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }

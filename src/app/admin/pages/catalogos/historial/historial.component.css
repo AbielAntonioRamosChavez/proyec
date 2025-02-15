@@ -1,0 +1,30 @@
+/* historial.component.css */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+  }
+  
+  li strong {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
