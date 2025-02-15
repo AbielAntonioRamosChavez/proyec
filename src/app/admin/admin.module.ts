@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule } from '@angular/common';
 import {AdminRoutingModule} from './admin.routing.module';
 import {FooterComponent} from './template/footer/footer.component';
 import {HeadermenuComponent} from './template/headermenu/headermenu.component';
@@ -26,12 +26,11 @@ import { RouterModule } from '@angular/router';
     AdminComponent,
     PrincipalComponent,
     BreadscrumbComponent,
-    ProductosComponent,
     GestiondeventasComponent,
     PuntodeventaComponent,
     EstadisticasComponent,
     HistorialComponent,
-    ProductosComponent,
+  
     UsuarioComponent,
     AgregarusuarioComponent
   ],
