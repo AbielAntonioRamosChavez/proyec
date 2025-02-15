@@ -1,1 +1,23 @@
-<p>historial works!</p>
+<div class="container">
+    <h2>Historial de Mensajes</h2>
+    <ul>
+      <!-- Ejemplo de mensaje 1 -->
+      <li>
+        <strong>Juan Pérez</strong> (juan.perez&#64;example.com): Hola, estoy interesado en sus servicios.
+      </li>
+      <!-- Ejemplo de mensaje 2 -->
+      <li>
+        <strong>Ana López</strong> (ana.lopez&#64;example.com): Me gustaría obtener más información sobre sus productos.
+      </li>
+      <!-- Ejemplo de mensaje 3 -->
+      <li>
+        <strong>Carlos Martínez</strong> (carlos.martinez&#64;example.com): ¿Cuál es el costo de sus servicios de consultoría?
+      </li>
+      <!-- Aquí se agregarían los mensajes dinámicamente -->
+      <li *ngFor="let mensaje of mensajes">
+        <strong>{{ mensaje.nombre }}</strong> ({{ mensaje.correo }}): {{ mensaje.texto }}
+      </li>
+    </ul>
+  </div>
+  
+  

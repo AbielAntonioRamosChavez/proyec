@@ -3,10 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AgregarusuarioComponent } from './agregarusuario/agregarusuario.component';
 
 const routes: Routes = [
-  {
-    path: 'agregarusuario',
-     component: AgregarusuarioComponent
-  }
 ];
 
 @NgModule({

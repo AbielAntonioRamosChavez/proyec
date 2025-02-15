@@ -36,8 +36,8 @@ import { FormsModule } from '@angular/forms';
     HistorialComponent,
     AdminComponent,
     UsuarioComponent,
-    AgregarusuarioComponent
-    
+    AgregarusuarioComponent,
+  
     
   ],
   exports: [
@@ -54,7 +54,8 @@ import { FormsModule } from '@angular/forms';
     RouterModule,
     MatDialogModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    ProductosComponent
   ],
 })
 export class AdminModule {}

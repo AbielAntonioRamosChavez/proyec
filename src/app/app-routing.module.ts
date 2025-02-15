@@ -4,6 +4,7 @@ import {LandingComponent} from './landing/landing.component';
 import {LoginComponent} from './auth/containers/login/login.component';
 import {AdminComponent} from './admin/admin.component';
 import {RandomGuard} from './auth/guards/random.guard';
+import { AgregarusuarioComponent } from './admin/pages/catalogos/agregarusuario/agregarusuario.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: 'landing',
     component: LandingComponent
+  },
+  {
+    path: 'agregarusuario',
+    component: AgregarusuarioComponent
   },
   {
     path: 'login',

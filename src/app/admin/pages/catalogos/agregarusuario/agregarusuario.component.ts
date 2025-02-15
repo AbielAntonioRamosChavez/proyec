@@ -13,7 +13,7 @@ export class AgregarusuarioComponent {
 
   // Redirigir a la lista de usuarios
   irAUsuarios() {
-    this.router.navigate(['/pages/usuarios']);
+    this.router.navigate(['/usuarios']);
   }
 
   // Datos del usuario nuevo
