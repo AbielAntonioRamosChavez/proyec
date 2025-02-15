@@ -5,8 +5,7 @@ import { FormsModule } from '@angular/forms'; // Importa FormsModule para usar n
   selector: 'app-productos',
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css'],
-  standalone: true,
-  imports: [FormsModule] // Importa FormsModule
+  standalone: false // Importa FormsModule
 })
 export class ProductosComponent {
   productos = [
