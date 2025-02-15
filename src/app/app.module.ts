@@ -12,12 +12,17 @@ import {TokenInterceptor} from './auth/token.interceptor';
 import {ErrorAutenticateInterceptor} from './auth/ErrorAutenticateInterceptor';
 import {ReactiveFormsModule} from '@angular/forms';
 import {AuthModule} from './auth/auth.module';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogConfirmacionComponent } from './admin/pages/catalogos/dialogo-confirmacion/dialogo-confirmacion.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
     RegisterComponent,
+    MatDialogConfirmacionComponent
   ],
   exports: [
   ],
@@ -28,7 +33,9 @@ import {AuthModule} from './auth/auth.module';
     CommonModule,
     AdminModule,
     AuthModule,
+    MatDialogModule,
   ],
+  
   providers: [
     provideClientHydration(withEventReplay()),
     AppService,
@@ -42,8 +49,10 @@ import {AuthModule} from './auth/auth.module';
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorAutenticateInterceptor,
       multi: true,
-    }
+    },
+    provideAnimationsAsync()
   ],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,13 +1,76 @@
-<div class="container-fluid px-4">
-  <app-breadscrumb [breadScrumbText]="breadText"></app-breadscrumb>
-  <div class="card mb-4">
-    <div class="card-body">
-      <p class="mb-0">
-      Contenido relacionado con los usuarios de la aplicación
-      </p>
-    </div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Usuarios</title>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="./usuario.component.css">
+</head>
+<body>
+
+<div class="container">
+  <!-- Encabezado con el botón alineado a la derecha -->
+  <div class="header">
+    <h2 class="mt-4">Lista de Usuarios</h2>
+    <a routerLink="/pages/agregarusuario" class="btn btn-success">
+      <i class="fas fa-plus"></i> Agregar Usuario
+    </a>
   </div>
 
-  <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>
+  <!-- Tabla de usuarios -->
+  <div class="table-responsive">
+    <table class="table">
+      <thead class="table-dark">
+        <tr>
+          <th>Nombre</th>
+          <th>Apellidos</th>
+          <th>Correo</th>
+          <th>Teléfono</th>
+          <th>Dirección</th>
+          <th>Rol</th>
+          <th>Fecha de Creación</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuariosFiltrados">
+          <td>{{ usuario.nombre }}</td>
+          <td>{{ usuario.apellidos }}</td>
+          <td>{{ usuario.correo }}</td>
+          <td>{{ usuario.telefono }}</td>
+          <td>{{ usuario.direccion }}</td>
+          <td>{{ usuario.rol }}</td>
+          <td>{{ usuario.fecha_creacion | date }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm" (click)="editarUsuario(usuario)">
+              <i class="fas fa-edit"></i> Editar
+            </button>
+            <button mat-button color="warn" (click)="eliminarUsuario(usuario)">
+              <i class="fas fa-trash"></i> Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+
+<!-- Modal de confirmación de eliminación -->
+<div id="modalEliminar" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="cerrarModal()">&times;</span>
+    <h2>Confirmar Eliminación</h2>
+    <p>¿Estás seguro de que deseas eliminar este usuario?</p>
+    <button class="btn btn-secondary" onclick="cerrarModal()">Cancelar</button>
+    <button class="btn btn-danger" onclick="eliminarUsuario()">Eliminar</button>
+  </div>
+</div>
+
+<script src="./usuario.component.ts"></script>
+
+</body>
+</html>
+
 
