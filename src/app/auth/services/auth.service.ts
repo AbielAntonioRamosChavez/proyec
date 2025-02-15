@@ -20,55 +20,54 @@ export class AuthService {
         private router: Router,
         ) {}
 
-    login(user: { email: string, password: string }): Observable<boolean> {
-        return this.http.post<any>(`${environment.api.authApis}/login`, user);
-    }
+        login(user: { correo: string, contrasena: string }): Observable<any> {
+          console.log('Datos enviados al backend:', user); // Depuración
+          return this.http.post<any>(`${environment.api.authApis}/usuarios/login`, user).pipe(
+              tap(response => console.log('Respuesta del servidor:', response)),
+              catchError(error => {
+                  console.error('Error en el login:', error);
+                  return throwError(error);
+              })
+          );
+      }
 
-  logout() {
-    return this.http.post<any>(`${environment.api.authApis}/logout`, {})
-      .pipe(
-        tap((response) => {
-          if (response && response.message === 'Cierre de sesión exitoso') {
-            this.doLogoutUser();
-            setTimeout(() => {
-              this.router.navigate(['/login']);
-            },800);
-          }
-        }),
-        catchError(error => {
-          this.doLogoutUser();
-          setTimeout(() => {
-            this.router.navigate(['/login']);
-          },800);
-          return throwError(error); // Repropagamos el error para que pueda ser manejado en un nivel superior
-        })
-      )
-      .subscribe({
-        next: () => {
-          // Manejar éxito (opcional)
-          console.log('Logout exitoso');
-        },
-        error: (error) => {
-          console.error('Error inesperado:', error);
-        }
-      });
-  }
+      
+      logout(): Observable<any> {
+          return this.http.post<any>(`${environment.api.authApis}/logout`, {}).pipe(
+              tap((response) => {
+                  if (response && response.message === 'Cierre de sesión exitoso') {
+                      this.doLogoutUser();
+                      setTimeout(() => {
+                          this.router.navigate(['/login']);
+                      }, 800);
+                  }
+              }),
+              catchError(error => {
+                  this.doLogoutUser();
+                  setTimeout(() => {
+                      this.router.navigate(['/login']);
+                  }, 800);
+                  return throwError(error); // Repropagamos el error para que pueda ser manejado en un nivel superior
+              })
+          );
+      }
 
-    register( data: any ): Observable<boolean> {
-        let url = `${environment.api.authApis}/register`;
-        return this.http.post<any>(url, data);
+      register(data: any): Observable<any> {
+        const url = `${environment.api.authApis}/usuarios/registro`; // Asegúrate de que la URL sea correcta
+        return this.http.post(url, data);
     }
 
     isLoggedIn() {
         return !!this.getJwtToken();
     }
 
-    refreshToken() {
-        return this.http.post<any>(`${environment.api.authApis}/refresh`, {
-        }).pipe(tap((tokens: Tokens) => {
-            this.storeJwtToken(tokens.token);
-        }));
-    }
+    refreshToken(): Observable<any> {
+      return this.http.post<any>(`${environment.api.authApis}/refresh`, {}).pipe(
+          tap((tokens: any) => {
+              this.storeJwtToken(tokens.token);
+          })
+      );
+  }
 
     getJwtToken() {
       let token = localStorage.getItem(this.JWT_TOKEN);
@@ -102,5 +101,10 @@ export class AuthService {
     private removeTokens() {
         localStorage.removeItem(this.JWT_TOKEN);
         localStorage.removeItem(this.USER_CURRENT);
+    }
+
+    consultarUsuarios(): Observable<any> {
+      const url = `${environment.api.authApis}/usuarios/consultar`;
+      return this.http.get(url);
     }
 }

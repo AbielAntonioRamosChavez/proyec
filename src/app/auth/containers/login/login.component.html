@@ -17,10 +17,10 @@
                     <label for="email">Correo Electrónico</label>
                     <!-- Errores del campo email -->
                     <div *ngIf="form.get('email')?.dirty && form.get('email')?.invalid" class="">
-                      <div *ngIf="form.get('email')?.errors?.['required']">El campo correo electrónico es requerido</div>
-                      <div *ngIf="form.get('email')?.errors?.['email']">El correo electrónico debe ser un formato válido</div>
+                        <div *ngIf="form.get('email')?.errors?.['required']">El campo correo electrónico es requerido</div>
+                        <div *ngIf="form.get('email')?.errors?.['email']">El correo electrónico debe ser un formato válido</div>
                     </div>
-                  </div>
+                </div>
 
                   <!-- Campo Contraseña -->
                   <div class="form-floating mb-3">
@@ -28,11 +28,11 @@
                     <label for="password">Contraseña</label>
                     <!-- Errores del campo password -->
                     <div *ngIf="form.get('password')?.dirty && form.get('password')?.invalid" class="feedback">
-                      <div *ngIf="form.get('password')?.errors?.['required']">La contraseña es requerida</div>
-                      <div *ngIf="form.get('password')?.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres</div>
-                      <div *ngIf="form.get('password')?.errors?.['maxlength']">La contraseña no puede tener más de 10 caracteres</div>
+                        <div *ngIf="form.get('password')?.errors?.['required']">La contraseña es requerida</div>
+                        <div *ngIf="form.get('password')?.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres</div>
+                        <div *ngIf="form.get('password')?.errors?.['maxlength']">La contraseña no puede tener más de 10 caracteres</div>
                     </div>
-                  </div>
+                </div>
 
                   <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                     <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Ingresar</button>

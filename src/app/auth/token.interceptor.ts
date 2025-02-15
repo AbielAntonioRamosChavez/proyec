@@ -16,10 +16,16 @@ export class TokenInterceptor implements HttpInterceptor {
         if (this.authService.getJwtToken()) {
             request = this.addToken(request, this.authService.getJwtToken());
         }
-
-        return next.handle(request).pipe(catchError(error => {
-            return throwError(error);
-        }));
+    
+        return next.handle(request).pipe(
+            catchError((error: HttpErrorResponse) => {
+                if (error.status === 401) {
+                    return this.handle401Error(request, next);
+                } else {
+                    return throwError(error);
+                }
+            })
+        );
     }
 
     private addToken(request: HttpRequest<any>, token: string) {

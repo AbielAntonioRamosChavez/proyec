@@ -29,50 +29,47 @@ export class LoginComponent {
   public onSubmit() {
     this.isSubmited = true;
     if (this.form.invalid) {
-      return;
+        return;
     }
+
+    // Cambia 'email' a 'correo' y 'password' a 'contrasena'
     const body = {
-      email: this.form.value.email.toLowerCase(),
-      password: this.form.value.password
+        correo: this.form.value.email.toLowerCase(), // Usar 'correo' en lugar de 'email'
+        contrasena: this.form.value.password         // Usar 'contrasena' en lugar de 'password'
     };
+
     this._authService.login(body).pipe(
-      tap((tokens: any) => {
-        this._authService.doLoginUser(this.form.value.email, tokens);
-      }),
-      mapTo(true),
-      catchError(error => {
-        this.handleError(error);
-        return of(false);
-      })
+        tap((tokens: any) => {
+            this._authService.doLoginUser(this.form.value.email, tokens);
+        }),
+        mapTo(true),
+        catchError(error => {
+            this.handleError(error);
+            return of(false);
+        })
     ).subscribe(res => {
         try {
-          //console.log("RES LOGIN", res);
-          if (res) {
-            setTimeout(() => {
-              const dataUser = JSON.parse(localStorage.getItem('USER_CURRENT') || '{}');
-              if (dataUser.tipo != "checkin") {
-                this.router.navigate(['/pages']).then(() => {
-                  this.isSubmited = false;
-                });
-              } else {
-                this.router.navigate(['/login']).then(() => {
-                  this.isSubmited = false;
-                });
-              }
-            }, 500);
-          }
-          else {
-            this.isSubmited = false;
-          }
+            if (res) {
+                setTimeout(() => {
+                    const dataUser = JSON.parse(localStorage.getItem('USER_CURRENT') || '{}');
+                    if (dataUser.tipo !== "checkin") {
+                        this.router.navigate(['/pages']).then(() => {
+                            this.isSubmited = false;
+                        });
+                    } else {
+                        this.router.navigate(['/login']).then(() => {
+                            this.isSubmited = false;
+                        });
+                    }
+                }, 500);
+            } else {
+                this.isSubmited = false;
+            }
         } catch (e) {
-          //console.log('edit_route fail redirect ', e);
+            console.error('Error al redirigir:', e);
         }
-    },error1 =>  {
-      this.isSubmited = false;
-      //console.log(err);
-    },
-    );
-  }
+    });
+}
 
   handleError(error: any) {
     if (error.status === 401) {
