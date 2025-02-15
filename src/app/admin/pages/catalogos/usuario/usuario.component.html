@@ -6,73 +6,7 @@
   <title>Lista de Usuarios</title>
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  
-  <style>
-    /* Encabezado */
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    /* Tabla */
-    .table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .table th, .table td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
-
-    .table th {
-      color: rgb(0, 0, 0);
-      background-color: #f2f2f2;
-      font-weight: bold;
-      padding: 10px;
-      border-bottom: 2px solid #ddd;
-    }
-
-    /* Estilos para el modal */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1050; /* Asegura que esté sobre otros elementos */
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal.show {
-      display: flex;
-    }
-
-    .modal-content {
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      width: 400px;
-      text-align: center;
-      position: relative; /* Asegura que la X esté bien posicionada */
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .modal .close {
-      position: absolute;
-      right: 15px;
-      top: 10px;
-      font-size: 20px;
-      cursor: pointer;
-      color: red;
-    }
-  </style>
+  <link rel="stylesheet" href="./usuario.component.css">
 </head>
 <body>
 
@@ -80,7 +14,7 @@
   <!-- Encabezado con el botón alineado a la derecha -->
   <div class="header">
     <h2 class="mt-4">Lista de Usuarios</h2>
-    <a href="/pages/agregarusuario" class="btn btn-success">
+    <a routerLink="/pages/agregarusuario" class="btn btn-success">
       <i class="fas fa-plus"></i> Agregar Usuario
     </a>
   </div>
@@ -101,19 +35,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Juan</td>
-          <td>Pérez</td>
-          <td>juan&#64;example.com</td>
-          <td>123456789</td>
-          <td>Calle Falsa 123</td>
-          <td>admin</td>
-          <td>15/02/2025</td>
+        <tr *ngFor="let usuario of usuariosFiltrados">
+          <td>{{ usuario.nombre }}</td>
+          <td>{{ usuario.apellidos }}</td>
+          <td>{{ usuario.correo }}</td>
+          <td>{{ usuario.telefono }}</td>
+          <td>{{ usuario.direccion }}</td>
+          <td>{{ usuario.rol }}</td>
+          <td>{{ usuario.fecha_creacion | date }}</td>
           <td>
-            <button class="btn btn-primary btn-sm" onclick="editarUsuario()">
+            <button class="btn btn-primary btn-sm" (click)="editarUsuario(usuario)">
               <i class="fas fa-edit"></i> Editar
             </button>
-            <button class="btn btn-danger btn-sm" onclick="mostrarModal()">
+            <button mat-button color="warn" (click)="eliminarUsuario(usuario)">
               <i class="fas fa-trash"></i> Eliminar
             </button>
           </td>
@@ -134,22 +68,7 @@
   </div>
 </div>
 
-<script>
-  function mostrarModal() {
-    console.log("Abriendo modal...");
-    document.getElementById("modalEliminar").classList.add("show");
-  }
-
-  function cerrarModal() {
-    console.log("Cerrando modal...");
-    document.getElementById("modalEliminar").classList.remove("show");
-  }
-
-  function eliminarUsuario() {
-    alert("Usuario eliminado correctamente.");
-    cerrarModal();
-  }
-</script>
+<script src="./usuario.component.ts"></script>
 
 </body>
 </html>

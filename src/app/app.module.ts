@@ -34,8 +34,8 @@ import { MatDialogConfirmacionComponent } from './admin/pages/catalogos/dialogo-
     AdminModule,
     AuthModule,
     MatDialogModule,
-    MatDialogModule
   ],
+  
   providers: [
     provideClientHydration(withEventReplay()),
     AppService,

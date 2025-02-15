@@ -1,3 +1,6 @@
 .custom-nav {
     background-color: #01172e !important;
 }
+form.d-none {
+    display: none !important;
+  }

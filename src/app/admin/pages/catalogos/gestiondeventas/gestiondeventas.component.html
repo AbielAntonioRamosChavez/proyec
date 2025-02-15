@@ -1,61 +1,68 @@
 <div class="container">
-    <h2>Ventas</h2>
-    <button (click)="nuevaVenta()">Nueva +</button>
-    
-    <table>
+  <!-- Encabezado y botón de nueva venta -->
+  <div class="header">
+      <h2>Ventas</h2>
+      <button class="nueva-venta-btn" (click)="nuevaVenta()">Nueva +</button>
+  </div>
+
+  <!-- Tabla de ventas -->
+  <table class="ventas-table">
       <thead>
-        <tr>
-          <th>Número</th>
-          <th>Fecha</th>
-          <th>Total</th>
-          <th>Detalles</th>
-          <th>Eliminar</th>
-        </tr>
+          <tr>
+              <th>Número</th>
+              <th>Fecha</th>
+              <th>Total</th>
+              <th>Detalles</th>
+              <th>Eliminar</th>
+          </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let venta of ventas">
-          <td>{{ venta.numero }}</td>
-          <td>{{ venta.fecha }}</td>
-          <td>${{ venta.total.toFixed(2) }}</td>
-          <td>
-            <button (click)="verDetalles(venta)">
-              <img src="assets/img/info.jpg" alt="Detalles">
-            </button>
-          </td>
-          <td>
-            <button class="eliminar-button" (click)="eliminarVenta(venta)">
-              <img src="assets/img/trash.jpg" alt="Eliminar">
-            </button>
-          </td>
-        </tr>
+          <tr *ngFor="let venta of ventas">
+              <td>{{ venta.numero }}</td>
+              <td>{{ venta.fecha }}</td>
+              <td>${{ venta.total.toFixed(2) }}</td>
+              <td>
+                  <button class="detalles-btn" (click)="verDetalles(venta)">
+                      <img src="assets/img/info.jpg" alt="Detalles">
+                  </button>
+              </td>
+              <td>
+                  <button class="eliminar-button" (click)="eliminarVenta(venta)">
+                      <img src="assets/img/trash.jpg" alt="Eliminar">
+                  </button>
+              </td>
+          </tr>
       </tbody>
-    </table>
-  
-    <div *ngIf="modalVisible">
+  </table>
+
+  <!-- Modal de detalles y eliminación -->
+  <div *ngIf="modalVisible" class="modal-overlay">
       <div class="modal">
-        <div class="modal-content">
-          <span class="close" (click)="cerrarModal()">&times;</span>
-  
-          <h2 *ngIf="ventaSeleccionada">Detalles de Venta #{{ ventaSeleccionada?.numero }}</h2>
-          <p *ngIf="ventaSeleccionada"><strong>Fecha:</strong> {{ ventaSeleccionada?.fecha }}</p>
-          <p *ngIf="ventaSeleccionada"><strong>Total:</strong> ${{ ventaSeleccionada?.total }}</p>
-  
-          <h3 *ngIf="ventaSeleccionada?.productos.length">Productos</h3>
-          <ul *ngIf="ventaSeleccionada?.productos.length">
-            <li *ngFor="let producto of ventaSeleccionada?.productos">
-              {{ producto.cantidad }}x {{ producto.nombre }} - ${{ producto.precio }}
-            </li>
-          </ul>
-  
-          <div *ngIf="ventaSeleccionada">
-            <h2>Eliminar Venta</h2>
-            <p>¿Está seguro de que desea eliminar la venta número {{ ventaSeleccionada?.numero }}?</p>
-            <input type="password" placeholder="Código de Administrador" #codigoAdmin>
-            <p *ngIf="errorMensaje" class="error">{{ errorMensaje }}</p>
-            <button (click)="confirmarEliminar(codigoAdmin.value)">Eliminar</button>
+          <div class="modal-content">
+              <span class="close" (click)="cerrarModal()">&times;</span>
+
+              <h2 *ngIf="ventaSeleccionada">Detalles de Venta #{{ ventaSeleccionada?.numero }}</h2>
+              <p *ngIf="ventaSeleccionada"><strong>Fecha:</strong> {{ ventaSeleccionada?.fecha }}</p>
+              <p *ngIf="ventaSeleccionada"><strong>Total:</strong> ${{ ventaSeleccionada?.total }}</p>
+
+              <div *ngIf="ventaSeleccionada?.productos.length">
+                  <h3>Productos</h3>
+                  <ul class="productos-list">
+                      <li *ngFor="let producto of ventaSeleccionada?.productos">
+                          {{ producto.cantidad }}x {{ producto.nombre }} - ${{ producto.precio }}
+                      </li>
+                  </ul>
+              </div>
+
+              <div *ngIf="ventaSeleccionada" class="eliminar-section">
+                  <h2>Eliminar Venta</h2>
+                  <p>¿Está seguro de que desea eliminar la venta número {{ ventaSeleccionada?.numero }}?</p>
+                  <input type="password" placeholder="Código de Administrador" #codigoAdmin>
+                  <p *ngIf="errorMensaje" class="error">{{ errorMensaje }}</p>
+                  <button class="confirmar-eliminar-btn" (click)="confirmarEliminar(codigoAdmin.value)">Eliminar</button>
+              </div>
           </div>
-        </div>
       </div>
-    </div>
   </div>
+</div>
   
