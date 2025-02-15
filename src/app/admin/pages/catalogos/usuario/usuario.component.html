@@ -1,116 +1,216 @@
-<div class="container-fluid px-4">
-  <app-breadscrumb [breadScrumbText]="breadText"></app-breadscrumb>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Usuarios</title>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <style>
+    /* Encabezado */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
 
-  <h2 class="mt-4">Lista de Usuarios</h2>
+    /* Estilos para los botones */
+    .btn-sm {
+      margin: 2px;
+    }
+
+    /* Estilos para los iconos */
+    .fas {
+      margin-right: 5px;
+    }
+
+    /* Barra de búsqueda */
+    .mb-3 input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    /* Tabla */
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .table th, .table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    .table th {
+      color: rgb(0, 0, 0);
+      background-color: #f2f2f2; /* Color de fondo gris claro */
+      font-weight: bold; /* Texto en negrita */
+      text-align: left; /* Alineación del texto a la izquierda */
+      padding: 10px; /* Espaciado interno */
+      border-bottom: 2px solid #ddd; /* Línea separadora */
+    }
+
+    /* Botones */
+    .btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background-color: #b02a37;
+    }
+
+    .btn-success {
+      background-color: #28a745;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .btn-success:hover {
+      background-color: #218838;
+    }
+
+    /* Estilos para el modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(100, 100, 100, 0.5);
+    }
+
+    .modal.show {
+      display: block;
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 50%;
+      text-align: center;
+    }
+
+    .modal .close {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Encabezado con el botón alineado a la derecha -->
+  <div class="header">
+    <h2 class="mt-4">Lista de Usuarios</h2>
+    <a href="/pages/agregarusuario" class="btn btn-success">
+      <i class="fas fa-plus"></i> Agregar Usuario
+    </a>
+  </div>
 
   <!-- Barra de búsqueda -->
   <div class="mb-3">
-    <input 
-      type="text" 
-      class="form-control" 
-      placeholder="Buscar en cualquier campo..." 
-      [(ngModel)]="filtro"
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Buscar en cualquier campo..."
     />
   </div>
 
   <!-- Tabla de usuarios -->
   <div class="table-responsive">
-    <table class="table table-striped">
+    <table class="table">
       <thead class="table-dark">
         <tr>
           <th>Nombre</th>
+          <th>Apellidos</th>
           <th>Correo</th>
           <th>Teléfono</th>
+          <th>Dirección</th>
+          <th>Rol</th>
+          <th>Fecha de Creación</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let usuario of usuariosFiltrados">
-          <td>{{ usuario.nombre }} {{ usuario.apellidos }}</td>
-          <td>{{ usuario.correo }}</td>
-          <td>{{ usuario.telefono }}</td>
+        <tr>
+          <td>Juan</td>
+          <td>Pérez</td>
+          <td>juan&#64;example.com</td>
+          <td>123456789</td>
+          <td>Calle Falsa 123</td>
+          <td>admin</td>
+          <td>15/02/2025</td>
+          <td>
+            <button class="btn btn-primary btn-sm" onclick="editarUsuario()">
+              <i class="fas fa-edit"></i> Editar
+            </button>
+            <button class="btn btn-danger btn-sm" onclick="mostrarModal()">
+              <i class="fas fa-trash"></i> Eliminar
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
-
-  <!-- Sección de registro -->
-  <h2 class="mt-4">Registrar Usuario</h2>
-  <form (ngSubmit)="registrarUsuario()" class="mb-4">
-    <div class="row">
-      <!-- Primera columna -->
-      <div class="col-md-6">
-        <div class="mb-3">
-          <label class="form-label">Nombre:</label>
-          <input 
-            type="text" 
-            [(ngModel)]="nuevoUsuario.nombre" 
-            name="nombre" 
-            class="form-control" 
-            required 
-          />
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Apellidos:</label>
-          <input 
-            type="text" 
-            [(ngModel)]="nuevoUsuario.apellidos" 
-            name="apellidos" 
-            class="form-control" 
-          />
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Correo:</label>
-          <input 
-            type="email" 
-            [(ngModel)]="nuevoUsuario.correo" 
-            name="correo" 
-            class="form-control" 
-            required 
-          />
-        </div>
-      </div>
-
-      <!-- Segunda columna -->
-      <div class="col-md-6">
-        <div class="mb-3">
-          <label class="form-label">Contraseña:</label>
-          <input 
-            type="password" 
-            [(ngModel)]="nuevoUsuario.contrasena" 
-            name="contrasena" 
-            class="form-control" 
-            required 
-          />
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Dirección:</label>
-          <input 
-            type="text" 
-            [(ngModel)]="nuevoUsuario.direccion" 
-            name="direccion" 
-            class="form-control" 
-          />
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Teléfono:</label>
-          <input 
-            type="text" 
-            [(ngModel)]="nuevoUsuario.telefono" 
-            name="telefono" 
-            class="form-control" 
-          />
-        </div>
-      </div>
-    </div>
-
-    <!-- Botón de registro -->
-    <button type="submit" class="btn btn-primary mt-3 w-100">Registrar</button>
-  </form>
-
-  <!-- Mensaje de error -->
-  <p *ngIf="mensajeError" class="text-danger">{{ mensajeError }}</p>
 </div>
+
+<!-- Modal de confirmación de eliminación -->
+<div id="modalEliminar" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="cerrarModal()">&times;</span>
+    <h2>Confirmar Eliminación</h2>
+    <p>¿Estás seguro de que deseas eliminar este usuario?</p>
+    <button class="btn btn-danger" onclick="eliminarUsuario()">Eliminar</button>
+  </div>
+</div>
+
+<script>
+  function mostrarModal() {
+    document.getElementById("modalEliminar").classList.add("show");
+  }
+
+  function cerrarModal() {
+    document.getElementById("modalEliminar").classList.remove("show");
+  }
+
+  function eliminarUsuario() {
+    alert("Usuario eliminado correctamente.");
+    cerrarModal();
+  }
+</script>
+
+</body>
+</html>
+
+

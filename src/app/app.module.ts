@@ -13,12 +13,16 @@ import {ErrorAutenticateInterceptor} from './auth/ErrorAutenticateInterceptor';
 import {ReactiveFormsModule} from '@angular/forms';
 import {AuthModule} from './auth/auth.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogConfirmacionComponent } from './admin/pages/catalogos/dialogo-confirmacion/dialogo-confirmacion.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
     RegisterComponent,
+    MatDialogConfirmacionComponent
   ],
   exports: [
   ],
@@ -29,6 +33,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     CommonModule,
     AdminModule,
     AuthModule,
+    MatDialogModule,
+    MatDialogModule
   ],
   providers: [
     provideClientHydration(withEventReplay()),
@@ -46,6 +52,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     },
     provideAnimationsAsync()
   ],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }
