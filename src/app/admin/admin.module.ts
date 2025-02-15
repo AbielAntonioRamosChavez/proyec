@@ -15,6 +15,8 @@ import { GestiondeventasComponent } from './pages/catalogos/gestiondeventas/gest
 import { PuntodeventaComponent } from './pages/catalogos/puntodeventa/puntodeventa.component'; // ✅ Corregido: PuntodeventaComponent
 import { EstadisticasComponent } from './pages/catalogos/estadisticas/estadisticas.component';
 import { HistorialComponent } from './pages/catalogos/historial/historial.component';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router'; 
 
 @NgModule({ // ✅ Corregido: NgModule
   declarations: [
@@ -30,6 +32,8 @@ import { HistorialComponent } from './pages/catalogos/historial/historial.compon
     EstadisticasComponent,
     HistorialComponent,
     ProductosComponent,
+    UsuarioComponent,
+    AgregarusuarioComponent
   ],
   exports: [
     FooterComponent,
@@ -41,6 +45,8 @@ import { HistorialComponent } from './pages/catalogos/historial/historial.compon
     CommonModule,
     AdminRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
+    RouterModule
   ]
 })
 export class AdminModule {}
