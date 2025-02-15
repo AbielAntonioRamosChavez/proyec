@@ -13,12 +13,14 @@ import {ErrorAutenticateInterceptor} from './auth/ErrorAutenticateInterceptor';
 import {ReactiveFormsModule} from '@angular/forms';
 import {AuthModule} from './auth/auth.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { CobroDialogComponent } from './cobro-dialog/cobro-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
     RegisterComponent,
+    CobroDialogComponent,
   ],
   exports: [
   ],

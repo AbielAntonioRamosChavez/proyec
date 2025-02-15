@@ -22,7 +22,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatFormField, MatFormFieldModule} from '@angular/material/form-field';
+import { CobroDialogComponent } from './pages/catalogos/puntodeventa/Mensaje/cobro-dialog/cobro-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     EstadisticasComponent,
     HistorialComponent,
     ProductosComponent,
-    PuntodeventaComponent
+    CobroDialogComponent
   ],
   exports: [
     FooterComponent,
@@ -60,7 +62,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatCardModule,
     FormsModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatFormField,
+    MatDialogModule
   ],
 })
 export class AdminModule {

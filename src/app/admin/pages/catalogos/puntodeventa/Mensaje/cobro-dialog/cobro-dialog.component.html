@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Cobrar Venta</h2>
+
+<div mat-dialog-content>
+  <p>Total a cobrar: {{ data.total | currency }}</p>
+
+  <mat-form-field>
+    <input matInput type="number" placeholder="Monto Pagado" [(ngModel)]="montoPagado" (input)="calcularCambio()">
+  </mat-form-field>
+
+  <p *ngIf="cambio >= 0">Cambio: {{ cambio | currency }}</p>
+  <p *ngIf="cambio < 0" style="color: red;">Monto insuficiente</p>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="cancelarCobro()">Cancelar</button>
+  <button mat-button color="primary" [disabled]="cambio < 0" (click)="confirmarCobro()">Aceptar</button>
+</div>
