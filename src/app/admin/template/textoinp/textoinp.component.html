@@ -1,0 +1,9 @@
+<mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{label}}</mat-label>
+    <input matInput [type]="type" [placeholder]="placeholder"
+    [formControl]="inputControl" (keypress)="validateInput($event)" 
+    (input)="onInputChange()">
+    <mat-error *ngIf="inputControl.invalid">
+        Campo requerido
+    </mat-error>
+</mat-form-field>

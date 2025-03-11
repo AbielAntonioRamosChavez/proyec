@@ -30,6 +30,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 // Componentes adicionales
 import { CobroDialogComponent } from './pages/catalogos/puntodeventa/Mensaje/cobro-dialog/cobro-dialog.component';
 import { DialogoEditarUsuarioComponent } from './pages/catalogos/dialogo-editar-usuario/dialogo-editar-usuario.component';
+import { TextoinpComponent } from './template/textoinp/textoinp.component';
 
 @NgModule({
   declarations: [
@@ -47,13 +48,15 @@ import { DialogoEditarUsuarioComponent } from './pages/catalogos/dialogo-editar-
     CobroDialogComponent,
     UsuarioComponent,
     AgregarusuarioComponent,
-    DialogoEditarUsuarioComponent
+    DialogoEditarUsuarioComponent,
+    TextoinpComponent
   ],
   exports: [
     FooterComponent,
     HeadermenuComponent,
     SidemenuComponent,
     BreadscrumbComponent,
+    TextoinpComponent
   ],
   imports: [
     CommonModule,

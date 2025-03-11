@@ -13,4 +13,10 @@ export class PrincipalComponent {
     'title2': 'Titulo2',
     'title3': 'Titulo3',
   }
+  onValueChangenombre(value: string) {
+    console.log('Valor ingresadonombre:', value);
+  }
+  onValueChangeedad(value: string) {
+    console.log('Valor ingresadoedad:', value);
+  }
 }

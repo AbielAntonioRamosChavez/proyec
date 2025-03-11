@@ -5,6 +5,18 @@
       <p class="mb-0">
        Carga inicial en la página
       </p>
+      <app-textoinp label="Nombre"
+              placeholder="Ingrese su nombre"
+              [type]="'text'"
+              [validation]="'letters'"
+              (valueChange)="onValueChangenombre($event)">
+      </app-textoinp>
+      <app-textoinp label="Edad"
+              placeholder="Ingrese su edad"
+              [type]="'text'"
+              [validation]="'numeric'"
+              (valueChange)="onValueChangeedad($event)">
+      </app-textoinp>
     </div>
   </div>
 
