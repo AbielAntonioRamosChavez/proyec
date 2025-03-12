@@ -25,6 +25,10 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
+    path: 'login2',
+    component: LoginComponent
+  },
+  {
     path: 'pages',
     loadChildren: ()=> import('./admin/admin.module').then( m => m.AdminModule ),
     canActivate: [RandomGuard],

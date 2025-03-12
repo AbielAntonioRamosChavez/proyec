@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,17 +11,21 @@
 
     <style>
         /* Hace que el desplazamiento sea suave */
+        
         html {
             scroll-behavior: smooth;
         }
-
         /* Evita que el navbar fijo oculte las secciones */
+        
         section {
-            scroll-margin-top: 80px; /* Ajusta según la altura del navbar */
-            padding: 100px 20px; /* Espaciado interno para mejorar la visualización */
+            scroll-margin-top: 80px;
+            /* Ajusta según la altura del navbar */
+            padding: 100px 20px;
+            /* Espaciado interno para mejorar la visualización */
         }
     </style>
 </head>
+
 <body>
 
     <!-- Navbar -->
@@ -29,8 +34,7 @@
             <a class="navbar-brand" href="#page-top">
                 <img src="assets/img/imagen11.jpg" alt="Logo" height="80">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars ms-1"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -40,288 +44,288 @@
                     <li class="nav-item"><a class="nav-link text-teal" href="#about">Nosotros</a></li>
                     <li class="nav-item"><a class="nav-link text-teal" href="#team">Equipo</a></li>
                     <li class="nav-item"><a class="nav-link text-teal" href="#contact">Contacto</a></li>
-                    <li class="nav-item"><a class="nav-link btn text-white px-3" style="background-color: #48c6ef;" href="/login">Ingresar</a></li>
+                    <li class="nav-item"><a class="nav-link btn text-white px-3" style="background-color: #48c6ef;" href="/login2">Ingresar</a></li>
                 </ul>
-            </div>            
+            </div>
         </div>
     </nav>
-<!-- Carrousel -->
-<section id="carousel"  class="carousel slide" data-bs-ride="carousel " style="scroll-margin-top: 80px;">
-  <div class="carousel-inner">
-      <div class="carousel-item active">
-          <img src="https://www.nutricionvitoria.com/wp-content/uploads/2015/04/verduras-y-hortalizas.jpg" class="d-block w-75" alt="Promoción 1">
-          <div class="carousel-caption d-none d-md-block">
-              <h5>Las mejores ofertas en abarrotes</h5>
-          </div>
-      </div>
-      <div class="carousel-item">
-          <img src="https://c4.wallpaperflare.com/wallpaper/66/550/409/caquuss-cerezas-frutas-melos-wallpaper-preview.jpg" class="d-block w-75" alt="Promoción 2">
-          <div class="carousel-caption d-none d-md-block">
-              <h5>Calidad y frescura garantizada</h5>
-          </div>
-      </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+    <!-- Carrousel -->
+    <section id="carousel" class="carousel slide" data-bs-ride="carousel " style="scroll-margin-top: 80px;">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://www.nutricionvitoria.com/wp-content/uploads/2015/04/verduras-y-hortalizas.jpg" class="d-block w-75" alt="Promoción 1">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Las mejores ofertas en abarrotes</h5>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://c4.wallpaperflare.com/wallpaper/66/550/409/caquuss-cerezas-frutas-melos-wallpaper-preview.jpg" class="d-block w-75" alt="Promoción 2">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Calidad y frescura garantizada</h5>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
   </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
   </button>
-</section>
-<!-- Masthead-->
+    </section>
+    <!-- Masthead-->
 
-<!-- Portfolio Grid-->
+    <!-- Portfolio Grid-->
 
-<section class="page-section bg-light" id="productos" style="scroll-margin-top: 80px;">
-  <div class="container">
-      <div class="text-center">
-          <h2 class="section-heading text-uppercase">Nuestros Productos</h2>
-          <h3 class="section-subheading text-muted">Encuentra los mejores productos de abarrotes al mejor precio.</h3>
-      </div>
-      <div class="row">
-          <div class="col-lg-4 col-sm-6 mb-4">
-              <!-- Sección de Granos -->
-              <div class="portfolio-item">
-                  <a class="portfolio-link" data-bs-toggle="modal" href="#productoModal1">
-                      <div class="portfolio-hover">
-                          <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                      </div>
-                      <img class="img-fluid" src="https://s1.elespanol.com/2019/10/01/ciencia/nutricion/nutricion_433466766_134563951_1706x1280.jpg" alt="Granos" />
-                  </a>
-                  <div class="portfolio-caption">
-                      <div class="portfolio-caption-heading">Granos</div>
-                      <div class="portfolio-caption-subheading text-muted">Arroz, frijoles, lentejas y más</div>
-                  </div>
-              </div>
-          </div>
-          <div class="col-lg-4 col-sm-6 mb-4">
-              <!-- Sección de Frutas -->
-              <div class="portfolio-item">
-                  <a class="portfolio-link" data-bs-toggle="modal" href="#productoModal2">
-                      <div class="portfolio-hover">
-                          <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                      </div>
-                      <img class="img-fluid" src="https://productosdeldia.com/cdn/shop/articles/Tips_para_saber_como_elegir_frutas_y_verduras.jpg?v=1672343945" alt="Frutas" />
-                  </a>
-                  <div class="portfolio-caption">
-                      <div class="portfolio-caption-heading">Frutas</div>
-                      <div class="portfolio-caption-subheading text-muted">Frescas y de temporada</div>
-                  </div>
-              </div>
-          </div>
-          <div class="col-lg-4 col-sm-6 mb-4">
-              <!-- Sección de Aceites y Condimentos -->
-              <div class="portfolio-item">
-                  <a class="portfolio-link" data-bs-toggle="modal" href="#productoModal3">
-                      <div class="portfolio-hover">
-                          <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                      </div>
-                      <img class="img-fluid" src="https://www.suertedeariza.com/wp-content/uploads/2022/09/aceites-especias.png" alt="Aceites y Condimentos" />
-                  </a>
-                  <div class="portfolio-caption">
-                      <div class="portfolio-caption-heading">Aceites y Condimentos</div>
-                      <div class="portfolio-caption-subheading text-muted">Aceite, sal, especias y más</div>
-                  </div>
-              </div>
-          </div>
-          <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
-              <!-- Sección de Azúcar y Endulzantes -->
-              <div class="portfolio-item">
-                  <a class="portfolio-link" data-bs-toggle="modal" href="#productoModal4">
-                      <div class="portfolio-hover">
-                          <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                      </div>
-                      <img class="img-fluid" src="https://tecnicana.org/wp-content/uploads/2024/04/image-19.png" alt="Azúcar y Endulzantes" />
-                  </a>
-                  <div class="portfolio-caption">
-                      <div class="portfolio-caption-heading">Azúcar y Endulzantes</div>
-                      <div class="portfolio-caption-subheading text-muted">Azúcar, miel y más</div>
-                  </div>
-              </div>
-          </div>
-          <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
-              <!-- Sección de Verduras -->
-              <div class="portfolio-item">
-                  <a class="portfolio-link" data-bs-toggle="modal" href="#productoModal5">
-                      <div class="portfolio-hover">
-                          <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                      </div>
-                      <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0271/8960/8525/files/5_verduras_que_te_ayudaran_a_bajar_de_peso_480x480.jpg?v=1675103142" alt="Verduras" />
-                  </a>
-                  <div class="portfolio-caption">
-                      <div class="portfolio-caption-heading">Verduras</div>
-                      <div class="portfolio-caption-subheading text-muted">Tomates, zanahorias, papas y más</div>
-                  </div>
-              </div>
-          </div>
-          <div class="col-lg-4 col-sm-6">
-              <!-- Sección de Lácteos y Huevos -->
-              <div class="portfolio-item">
-                  <a class="portfolio-link" data-bs-toggle="modal" href="#productoModal6">
-                      <div class="portfolio-hover">
-                          <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                      </div>
-                      <img class="img-fluid" src="https://www.sisinternational.com/wp-content/uploads/2023/02/Dairy-Market-Research.jpg" alt="Lácteos y Huevos" />
-                  </a>
-                  <div class="portfolio-caption">
-                      <div class="portfolio-caption-heading">Lácteos y Huevos</div>
-                      <div class="portfolio-caption-subheading text-muted">Leche, queso, crema y huevos</div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-</section>
+    <section class="page-section bg-light" id="productos" style="scroll-margin-top: 80px;">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Nuestros Productos</h2>
+                <h3 class="section-subheading text-muted">Encuentra los mejores productos de abarrotes al mejor precio.</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <!-- Sección de Granos -->
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#productoModal1">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="https://s1.elespanol.com/2019/10/01/ciencia/nutricion/nutricion_433466766_134563951_1706x1280.jpg" alt="Granos" />
+                        </a>
+                        <div class="portfolio-caption">
+                            <div class="portfolio-caption-heading">Granos</div>
+                            <div class="portfolio-caption-subheading text-muted">Arroz, frijoles, lentejas y más</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <!-- Sección de Frutas -->
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#productoModal2">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="https://productosdeldia.com/cdn/shop/articles/Tips_para_saber_como_elegir_frutas_y_verduras.jpg?v=1672343945" alt="Frutas" />
+                        </a>
+                        <div class="portfolio-caption">
+                            <div class="portfolio-caption-heading">Frutas</div>
+                            <div class="portfolio-caption-subheading text-muted">Frescas y de temporada</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <!-- Sección de Aceites y Condimentos -->
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#productoModal3">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="https://www.suertedeariza.com/wp-content/uploads/2022/09/aceites-especias.png" alt="Aceites y Condimentos" />
+                        </a>
+                        <div class="portfolio-caption">
+                            <div class="portfolio-caption-heading">Aceites y Condimentos</div>
+                            <div class="portfolio-caption-subheading text-muted">Aceite, sal, especias y más</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
+                    <!-- Sección de Azúcar y Endulzantes -->
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#productoModal4">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="https://tecnicana.org/wp-content/uploads/2024/04/image-19.png" alt="Azúcar y Endulzantes" />
+                        </a>
+                        <div class="portfolio-caption">
+                            <div class="portfolio-caption-heading">Azúcar y Endulzantes</div>
+                            <div class="portfolio-caption-subheading text-muted">Azúcar, miel y más</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
+                    <!-- Sección de Verduras -->
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#productoModal5">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0271/8960/8525/files/5_verduras_que_te_ayudaran_a_bajar_de_peso_480x480.jpg?v=1675103142" alt="Verduras" />
+                        </a>
+                        <div class="portfolio-caption">
+                            <div class="portfolio-caption-heading">Verduras</div>
+                            <div class="portfolio-caption-subheading text-muted">Tomates, zanahorias, papas y más</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <!-- Sección de Lácteos y Huevos -->
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#productoModal6">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="https://www.sisinternational.com/wp-content/uploads/2023/02/Dairy-Market-Research.jpg" alt="Lácteos y Huevos" />
+                        </a>
+                        <div class="portfolio-caption">
+                            <div class="portfolio-caption-heading">Lácteos y Huevos</div>
+                            <div class="portfolio-caption-subheading text-muted">Leche, queso, crema y huevos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- Servicios -->
-<section class="page-section bg-white" id="services" style="scroll-margin-top: 80px;">
-  <div class="container">
-      <div class="text-center">
-          <h2 class="section-heading text-uppercase text-success">Nuestros Servicios</h2>
-          <h3 class="section-subheading text-muted">Ofrecemos los mejores servicios para tu comodidad.</h3>
-      </div>
-      <div class="row text-center">
-          <div class="col-md-4">
-              <span class="fa-stack fa-4x text-success">
+    <!-- Servicios -->
+    <section class="page-section bg-white" id="services" style="scroll-margin-top: 80px;">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase text-success">Nuestros Servicios</h2>
+                <h3 class="section-subheading text-muted">Ofrecemos los mejores servicios para tu comodidad.</h3>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x text-success">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-truck fa-stack-1x fa-inverse"></i>
               </span>
-              <h4 class="my-3">Entrega a Domicilio</h4>
-              <p class="text-muted">Proximamente.</p>
-          </div>
-          <div class="col-md-4">
-              <span class="fa-stack fa-4x text-success">
+                    <h4 class="my-3">Entrega a Domicilio</h4>
+                    <p class="text-muted">Proximamente.</p>
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x text-success">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-store fa-stack-1x fa-inverse"></i>
               </span>
-              <h4 class="my-3">Compra en Tienda</h4>
-              <p class="text-muted">Visítanos y encuentra una gran variedad de productos frescos y de calidad.</p>
-          </div>
-          <div class="col-md-4">
-              <span class="fa-stack fa-4x text-success">
+                    <h4 class="my-3">Compra en Tienda</h4>
+                    <p class="text-muted">Visítanos y encuentra una gran variedad de productos frescos y de calidad.</p>
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x text-success">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-hand-holding-usd fa-stack-1x fa-inverse"></i>
               </span>
-              <h4 class="my-3">Promociones</h4>
-              <p class="text-muted">Aprovecha nuestras ofertas y descuentos exclusivos cada semana.</p>
-          </div>
-      </div>
-  </div>
-</section>
+                    <h4 class="my-3">Promociones</h4>
+                    <p class="text-muted">Aprovecha nuestras ofertas y descuentos exclusivos cada semana.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
 
-<!-- Misión y Visión -->
-<section class="page-section bg-light py-5" id="about" style="scroll-margin-top: 80px;">
-  <div class="container">
-      <div class="text-center mb-5">
-          <h2 class="section-heading text-uppercase text-success">Nuestra Misión y Visión</h2>
-          <p class="section-subheading text-muted">Comprometidos con la excelencia y el crecimiento sostenible.</p>
-      </div>
-      <div class="row align-items-center">
-          <!-- Misión -->
-          <div class="col-lg-6 text-center">
-              <div class="card border-0 shadow-lg p-4 bg-white rounded">
-                  <div class="mb-3">
-                      <i class="fas fa-bullseye text-success fa-3x"></i>
-                  </div>
-                  <h4 class="text-uppercase text-success">Nuestra Misión</h4>
-                  <p class="text-muted">Brindar productos y servicios de la más alta calidad, garantizando la satisfacción de nuestros clientes y el desarrollo sostenible de nuestra comunidad.</p>
-              </div>
-          </div>
-          
-          <!-- Visión -->
-          <div class="col-lg-6 text-center mt-4 mt-lg-0">
-              <div class="card border-0 shadow-lg p-4 bg-white rounded">
-                  <div class="mb-3">
-                      <i class="fas fa-eye text-success fa-3x"></i>
-                  </div>
-                  <h4 class="text-uppercase text-success">Nuestra Visión</h4>
-                  <p class="text-muted">Ser la empresa líder en nuestro sector, reconocida por la innovación, el compromiso con nuestros clientes y la responsabilidad social.</p>
-              </div>
-          </div>
-      </div>
-      
-      <!-- Valores -->
-      <div class="text-center mt-5">
-          <h3 class="text-uppercase text-success">Nuestros Valores</h3>
-      </div>
-      <div class="row text-center mt-4">
-          <div class="col-md-4">
-              <div class="card border-0 shadow-sm p-3">
-                  <i class="fas fa-handshake text-success fa-2x"></i>
-                  <h5 class="mt-3">Compromiso</h5>
-                  <p class="text-muted">Nos dedicamos a ofrecer el mejor servicio y productos de calidad.</p>
-              </div>
-          </div>
-          <div class="col-md-4">
-              <div class="card border-0 shadow-sm p-3">
-                  <i class="fas fa-lightbulb text-success fa-2x"></i>
-                  <h5 class="mt-3">Innovación</h5>
-                  <p class="text-muted">Buscamos mejorar continuamente para adaptarnos a las nuevas tendencias.</p>
-              </div>
-          </div>
-          <div class="col-md-4">
-              <div class="card border-0 shadow-sm p-3">
-                  <i class="fas fa-users text-success fa-2x"></i>
-                  <h5 class="mt-3">Trabajo en equipo</h5>
-                  <p class="text-muted">Fomentamos la colaboración para alcanzar nuestros objetivos.</p>
-              </div>
-          </div>
-      </div>
-  </div>
-</section>
+    <!-- Misión y Visión -->
+    <section class="page-section bg-light py-5" id="about" style="scroll-margin-top: 80px;">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-heading text-uppercase text-success">Nuestra Misión y Visión</h2>
+                <p class="section-subheading text-muted">Comprometidos con la excelencia y el crecimiento sostenible.</p>
+            </div>
+            <div class="row align-items-center">
+                <!-- Misión -->
+                <div class="col-lg-6 text-center">
+                    <div class="card border-0 shadow-lg p-4 bg-white rounded">
+                        <div class="mb-3">
+                            <i class="fas fa-bullseye text-success fa-3x"></i>
+                        </div>
+                        <h4 class="text-uppercase text-success">Nuestra Misión</h4>
+                        <p class="text-muted">Brindar productos y servicios de la más alta calidad, garantizando la satisfacción de nuestros clientes y el desarrollo sostenible de nuestra comunidad.</p>
+                    </div>
+                </div>
+
+                <!-- Visión -->
+                <div class="col-lg-6 text-center mt-4 mt-lg-0">
+                    <div class="card border-0 shadow-lg p-4 bg-white rounded">
+                        <div class="mb-3">
+                            <i class="fas fa-eye text-success fa-3x"></i>
+                        </div>
+                        <h4 class="text-uppercase text-success">Nuestra Visión</h4>
+                        <p class="text-muted">Ser la empresa líder en nuestro sector, reconocida por la innovación, el compromiso con nuestros clientes y la responsabilidad social.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Valores -->
+            <div class="text-center mt-5">
+                <h3 class="text-uppercase text-success">Nuestros Valores</h3>
+            </div>
+            <div class="row text-center mt-4">
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-3">
+                        <i class="fas fa-handshake text-success fa-2x"></i>
+                        <h5 class="mt-3">Compromiso</h5>
+                        <p class="text-muted">Nos dedicamos a ofrecer el mejor servicio y productos de calidad.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-3">
+                        <i class="fas fa-lightbulb text-success fa-2x"></i>
+                        <h5 class="mt-3">Innovación</h5>
+                        <p class="text-muted">Buscamos mejorar continuamente para adaptarnos a las nuevas tendencias.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-3">
+                        <i class="fas fa-users text-success fa-2x"></i>
+                        <h5 class="mt-3">Trabajo en equipo</h5>
+                        <p class="text-muted">Fomentamos la colaboración para alcanzar nuestros objetivos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 
 
-<!-- Contact -->
-<section class="page-section bg-white py-5" id="contact" style="scroll-margin-top: 80px;">
-  <div class="container">
-      <div class="text-center">
-          <h2 class="section-heading text-uppercase text-success">Contáctanos</h2>
-          <h3 class="section-subheading text-muted">Estamos aquí para ayudarte.</h3>
-      </div>
-      <div class="row">
-          <div class="col-lg-6">
-              <p class="text-muted"><strong>Teléfono:</strong> +52 123 456 7890</p>
-              <p class="text-muted"><strong>Correo:</strong> contacto&#64;tiendaabarrotes.com</p>
-              <p class="text-muted"><strong>Dirección:</strong> Calle Principal #123, Ciudad, País</p>
-              <a class="btn btn-success btn-lg" href="mailto:contacto&#64;tiendaabarrotes.com">Enviar Correo</a>
-          </div>
-          <div class="col-lg-6">
-              <form id="contactForm">
-                  <input class="form-control mb-3" type="text" placeholder="Tu Nombre *" required />
-                  <input class="form-control mb-3" type="email" placeholder="Tu Correo *" required />
-                  <textarea class="form-control mb-3" placeholder="Tu Mensaje *" required></textarea>
-                  <button class="btn btn-success btn-xl text-uppercase" type="submit">Enviar Mensaje</button>
-              </form>
-          </div>
-      </div>
-  </div>
-</section>
-<!-- Footer-->
-<footer class="footer py-4">
-  <div class="container">
-      <div class="row align-items-center">
-          <div class="col-lg-4 text-lg-start">Copyright &copy; Your Website 2023</div>
-          <div class="col-lg-4 my-3 my-lg-0">
-              <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-              <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-              <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-          </div>
-          <div class="col-lg-4 text-lg-end">
-              <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
-              <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
-          </div>
-      </div>
-  </div>
-</footer>
+    <!-- Contact -->
+    <section class="page-section bg-white py-5" id="contact" style="scroll-margin-top: 80px;">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase text-success">Contáctanos</h2>
+                <h3 class="section-subheading text-muted">Estamos aquí para ayudarte.</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <p class="text-muted"><strong>Teléfono:</strong> +52 123 456 7890</p>
+                    <p class="text-muted"><strong>Correo:</strong> contacto&#64;tiendaabarrotes.com</p>
+                    <p class="text-muted"><strong>Dirección:</strong> Calle Principal #123, Ciudad, País</p>
+                    <a class="btn btn-success btn-lg" href="mailto:contacto&#64;tiendaabarrotes.com">Enviar Correo</a>
+                </div>
+                <div class="col-lg-6">
+                    <form id="contactForm">
+                        <input class="form-control mb-3" type="text" placeholder="Tu Nombre *" required />
+                        <input class="form-control mb-3" type="email" placeholder="Tu Correo *" required />
+                        <textarea class="form-control mb-3" placeholder="Tu Mensaje *" required></textarea>
+                        <button class="btn btn-success btn-xl text-uppercase" type="submit">Enviar Mensaje</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer-->
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-4 text-lg-start">Copyright &copy; Your Website 2023</div>
+                <div class="col-lg-4 my-3 my-lg-0">
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
+                    <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-<!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Core theme JS-->
-<script src="public/js/scripts.js"></script>
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-<!-- * *                               SB Forms JS                               * *-->
-<!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="public/js/scripts.js"></script>
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <!-- * *                               SB Forms JS                               * *-->
+    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>

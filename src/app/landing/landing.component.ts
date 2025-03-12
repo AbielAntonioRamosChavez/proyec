@@ -14,7 +14,7 @@ export class LandingComponent {
   constructor(private router: Router) {
   }
   loadlogin(){
-    this.router.navigate(['/login']).then(() => {
+    this.router.navigate(['/login2']).then(() => {
     });
   }
 }

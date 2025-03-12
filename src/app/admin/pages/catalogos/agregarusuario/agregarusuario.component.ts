@@ -4,7 +4,7 @@ import { AuthService } from '../../../../auth/services/auth.service'; // Importa
 
 @Component({
   selector: 'app-agregarusuario',
-  standalone:false,
+  standalone: false,
   templateUrl: './agregarusuario.component.html',
   styleUrls: ['./agregarusuario.component.css']
 })
@@ -13,6 +13,8 @@ export class AgregarusuarioComponent {
     private router: Router,
     private authService: AuthService // Inyecta AuthService
   ) {}
+
+  
 
   // Datos del usuario nuevo
   nuevoUsuario = {
@@ -23,14 +25,32 @@ export class AgregarusuarioComponent {
     direccion: '',
     contrasena: '',
     rol: 'cliente',
-    fecha_creacion: new Date().toISOString().split('T')[0],
+    fecha_creacion: this.obtenerFechaHoy(), // Asegurar fecha de hoy
   };
 
   mensajeError: string = '';
 
   registrarUsuario() {
+    console.log('Intentando registrar usuario:', this.nuevoUsuario);
+    
+    // Validaciones antes de enviar el formulario
     if (!this.nuevoUsuario.nombre || !this.nuevoUsuario.correo || !this.nuevoUsuario.contrasena) {
       this.mensajeError = 'Por favor, complete todos los campos obligatorios.';
+      return;
+    }
+
+    if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(this.nuevoUsuario.nombre)) {
+      this.mensajeError = 'El nombre solo puede contener letras y espacios.';
+      return;
+    }
+
+    if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(this.nuevoUsuario.apellidos)) {
+      this.mensajeError = 'Los apellidos solo pueden contener letras y espacios.';
+      return;
+    }
+
+    if (!this.validarCorreo(this.nuevoUsuario.correo)) {
+      this.mensajeError = 'Por favor, ingrese un correo válido.';
       return;
     }
 
@@ -47,7 +67,7 @@ export class AgregarusuarioComponent {
           direccion: '',
           contrasena: '',
           rol: 'cliente',
-          fecha_creacion: new Date().toISOString().split('T')[0],
+          fecha_creacion: this.obtenerFechaHoy(), // Reset con la fecha actual
         };
         this.irAUsuarios(); // Redirige a la lista de usuarios
       },
@@ -62,8 +82,21 @@ export class AgregarusuarioComponent {
     );
   }
 
+  // Validar formato de correo electrónico
+  validarCorreo(correo: string): boolean {
+    const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regexCorreo.test(correo);
+  }
+
+  // Obtener la fecha de hoy en formato YYYY-MM-DD
+  obtenerFechaHoy(): string {
+    return new Date().toISOString().split('T')[0];
+  }
+
   // Redirigir a la lista de usuarios
   irAUsuarios() {
-    this.router.navigate(['/usuarios']);
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/usuarios']);
+    });
   }
 }

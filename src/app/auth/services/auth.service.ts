@@ -5,12 +5,14 @@ import { catchError, mapTo, tap } from 'rxjs/operators';
 import { Tokens } from '../models/tokens';
 import {environment} from "../../../environments/environment";
 import {Router} from "@angular/router";
+import {BehaviorSubject } from 'rxjs';
+
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthService {
-
+    private usuarios = new BehaviorSubject<any[]>([]);
     private readonly JWT_TOKEN = 'JWT_TOKEN';
     private readonly USER_CURRENT = 'USER_CURRENT';
     private loggedUser: string = '';
@@ -18,7 +20,9 @@ export class AuthService {
     constructor(
         private http: HttpClient,
         private router: Router,
-        ) {}
+        ) {
+            this.cargarUsuarios();
+        }
 
         login(user: { correo: string, contrasena: string }): Observable<any> {
           console.log('Datos enviados al backend:', user); // Depuración
@@ -53,8 +57,21 @@ export class AuthService {
       }
 
       register(data: any): Observable<any> {
-        const url = `${environment.api.authApis}/usuarios/registro`; // Asegúrate de que la URL sea correcta
-        return this.http.post(url, data);
+        const url = `${environment.api.authApis}/usuarios/registro`;
+        console.log('📡 Enviando datos a:', url);
+        console.log('📦 Datos enviados:', data);
+    
+        return this.http.post(url, data).pipe(
+            tap((response) => {
+                console.log('✅ Usuario registrado:', response);
+                this.cargarUsuarios(); // 🔹 Llama a cargarUsuarios() para actualizar la lista
+            }),
+            catchError((error) => {
+                console.error('❌ Error al registrar usuario:', error);
+                return throwError(error);
+            })
+        );
+    
     }
 
     isLoggedIn() {
@@ -107,4 +124,16 @@ export class AuthService {
       const url = `${environment.api.authApis}/usuarios/consultar`;
       return this.http.get(url);
     }
+
+
+    private cargarUsuarios() {
+        this.consultarUsuarios().subscribe((usuarios) => {
+          this.usuarios.next(usuarios);
+        });
+    }
+
+    getUsuarios(): Observable<any[]> {
+        return this.usuarios.asObservable();
+    }
+    
 }

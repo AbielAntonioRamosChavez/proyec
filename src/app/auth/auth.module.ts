@@ -6,17 +6,29 @@ import { RouterModule } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { AuthService } from './services/auth.service';
 import { RandomGuard } from './guards/random.guard';
-import {LoginModule} from './containers/login/login.module';
+import { Login2Component } from './containers/login2/login2.component';
+import { LoginFormComponent } from './containers/login-from/login-from.component';
+import { LoginComponent } from './containers/login/login.component';
+import { TokenInterceptor } from './token.interceptor';
 
-@NgModule({
-    declarations: [],
+
+@NgModule({    
+    declarations: [
+        Login2Component,
+        LoginComponent,
+        LoginFormComponent
+    ],
     providers: [
         AuthGuard,
         AuthService,
         RandomGuard,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TokenInterceptor,
+            multi: true
+        }
     ],
     imports: [
-        LoginModule,
         CommonModule,
         RouterModule,
         HttpClientModule,

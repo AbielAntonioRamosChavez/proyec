@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogConfirmacionComponent } from '../dialogo-confirmacion/dialogo-confirmacion.component';
 import { DialogoEditarUsuarioComponent } from '../../catalogos/dialogo-editar-usuario/dialogo-editar-usuario.component';
+import { AuthService } from '../../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-usuario',
@@ -9,11 +10,12 @@ import { DialogoEditarUsuarioComponent } from '../../catalogos/dialogo-editar-us
   styleUrls: ['./usuario.component.scss'],
   standalone: false
 })
-export class UsuarioComponent {
-  constructor(private dialog: MatDialog) {} // Inyectar MatDialog
+export class UsuarioComponent implements OnInit {
+  usuarios: any[] = []; // Lista de usuarios desde la API
+  filtro: string = ''; // Filtro para la búsqueda
 
-  // Lista de usuarios
-  usuarios = [
+  // 🔹 Lista de prueba (solo para desarrollo)
+  usuariosPrueba = [
     {
       nombre: 'Juan',
       apellidos: 'Pérez',
@@ -34,17 +36,27 @@ export class UsuarioComponent {
     },
   ];
 
-  // Filtro para la búsqueda
-  filtro: string = '';
+  constructor(private dialog: MatDialog, private authService: AuthService) {}
 
-  // Obtener usuarios filtrados
-  get usuariosFiltrados() {
-    return this.usuarios.filter((usuario) =>
-      Object.values(usuario).some((valor) =>
-        valor.toString().toLowerCase().includes(this.filtro.toLowerCase())
-      )
+  ngOnInit() {
+    this.authService.getUsuarios().subscribe(
+      (usuarios) => {
+        this.usuarios = usuarios; // Si la API no devuelve usuarios, usa la lista de prueba
+      },
+      (error) => {
+        console.error('Error al obtener usuarios:', error);
+        this.usuarios = this.usuariosPrueba; // Si hay error, usa la lista de prueba
+      }
     );
   }
+
+  get usuariosFiltrados() {
+  return this.usuarios.filter((usuario) =>
+    Object.values(usuario).some((valor) =>
+      (valor ? String(valor) : '').toLowerCase().includes(this.filtro.toLowerCase())
+    )
+  );
+}
 
   editarUsuario(usuario: any) {
     const dialogRef = this.dialog.open(DialogoEditarUsuarioComponent, {
@@ -61,7 +73,6 @@ export class UsuarioComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log('Usuario editado:', result);
-        // Actualizar el usuario en la lista
         const index = this.usuarios.findIndex(u => u.correo === usuario.correo);
         if (index !== -1) {
           this.usuarios[index] = result;
@@ -70,7 +81,6 @@ export class UsuarioComponent {
     });
   }
 
-  // Método para abrir el diálogo de confirmación antes de eliminar
   eliminarUsuario(usuario: any) {
     const dialogRef = this.dialog.open(MatDialogConfirmacionComponent, {
       width: '350px',
