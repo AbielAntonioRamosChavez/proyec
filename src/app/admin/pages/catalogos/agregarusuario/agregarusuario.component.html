@@ -39,13 +39,15 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Rol:</label>
-                    <select [(ngModel)]="nuevoUsuario.rol" name="rol" class="form-control" required>
-              <option value="admin">Admin</option>
-              <option value="empleado">Empleado</option>
-              <option value="cliente">Cliente</option>
-            </select>
+                    <label for="rol" class="form-label">Rol:</label>
+                    <select id="rol" [(ngModel)]="nuevoUsuario.rol" name="rol" class="form-control" required>
+                        <option value="" disabled selected>Seleccione un rol</option>
+                        <option value="admin">Admin</option>
+                        <option value="empleado">Empleado</option>
+                        <option value="cliente">Cliente</option>
+                    </select>
                 </div>
+
 
             </div>
         </div>

@@ -14,8 +14,6 @@ export class AgregarusuarioComponent {
     private authService: AuthService // Inyecta AuthService
   ) {}
 
-  
-
   // Datos del usuario nuevo
   nuevoUsuario = {
     nombre: '',
@@ -24,17 +22,17 @@ export class AgregarusuarioComponent {
     telefono: '',
     direccion: '',
     contrasena: '',
-    rol: 'cliente',
+    rol: '', // Se deja vacío para que el usuario lo seleccione
     fecha_creacion: this.obtenerFechaHoy(), // Asegurar fecha de hoy
   };
 
   mensajeError: string = '';
 
   registrarUsuario() {
-    console.log('Intentando registrar usuario:', this.nuevoUsuario);
-    
+    console.log('Rol seleccionado antes de enviar:', this.nuevoUsuario.rol);
+
     // Validaciones antes de enviar el formulario
-    if (!this.nuevoUsuario.nombre || !this.nuevoUsuario.correo || !this.nuevoUsuario.contrasena) {
+    if (!this.nuevoUsuario.nombre || !this.nuevoUsuario.correo || !this.nuevoUsuario.contrasena || !this.nuevoUsuario.rol) {
       this.mensajeError = 'Por favor, complete todos los campos obligatorios.';
       return;
     }
@@ -59,6 +57,8 @@ export class AgregarusuarioComponent {
       (response) => {
         console.log('Usuario registrado:', response);
         alert('Usuario registrado exitosamente');
+
+        // Reiniciar formulario
         this.nuevoUsuario = {
           nombre: '',
           apellidos: '',
@@ -66,9 +66,10 @@ export class AgregarusuarioComponent {
           telefono: '',
           direccion: '',
           contrasena: '',
-          rol: 'cliente',
-          fecha_creacion: this.obtenerFechaHoy(), // Reset con la fecha actual
+          rol: '', // Reiniciar rol vacío
+          fecha_creacion: this.obtenerFechaHoy(),
         };
+
         this.irAUsuarios(); // Redirige a la lista de usuarios
       },
       (error) => {

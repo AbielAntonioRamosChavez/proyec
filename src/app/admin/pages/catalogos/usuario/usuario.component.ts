@@ -40,15 +40,17 @@ export class UsuarioComponent implements OnInit {
 
   ngOnInit() {
     this.authService.getUsuarios().subscribe(
-      (usuarios) => {
-        this.usuarios = usuarios; // Si la API no devuelve usuarios, usa la lista de prueba
-      },
-      (error) => {
-        console.error('Error al obtener usuarios:', error);
-        this.usuarios = this.usuariosPrueba; // Si hay error, usa la lista de prueba
-      }
+        (usuarios) => {
+            console.log('📡 Lista de usuarios actualizada:', usuarios); // 🔍 Depuración
+            this.usuarios = usuarios;
+        },
+        (error) => {
+            console.error('❌ Error al obtener usuarios:', error);
+            this.usuarios = this.usuariosPrueba; // Usa la lista de prueba solo si hay error
+        }
     );
   }
+
 
   get usuariosFiltrados() {
   return this.usuarios.filter((usuario) =>

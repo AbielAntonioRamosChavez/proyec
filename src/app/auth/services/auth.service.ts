@@ -58,17 +58,31 @@ export class AuthService {
 
       register(data: any): Observable<any> {
         const url = `${environment.api.authApis}/usuarios/registro`;
+    
         console.log('📡 Enviando datos a:', url);
         console.log('📦 Datos enviados:', data);
     
         return this.http.post(url, data).pipe(
             tap((response) => {
                 console.log('✅ Usuario registrado:', response);
-                this.cargarUsuarios(); // 🔹 Llama a cargarUsuarios() para actualizar la lista
+    
+                // 🔹 Agrega el nuevo usuario a la lista local
+                this.usuarios.next([...this.usuarios.getValue(), response]);
+    
+                // 🔹 Llama a cargarUsuarios() por seguridad (aunque ya lo agregamos localmente)
+                this.cargarUsuarios(); 
             }),
             catchError((error) => {
                 console.error('❌ Error al registrar usuario:', error);
-                return throwError(error);
+                
+                let mensajeError = 'Ocurrió un error al registrar el usuario.';
+                if (error.status === 400) {
+                    mensajeError = '⚠️ El correo ya está registrado.';
+                } else if (error.status === 500) {
+                    mensajeError = '⚠️ Error interno del servidor.';
+                }
+    
+                return throwError(() => new Error(mensajeError));
             })
         );
     
@@ -127,11 +141,17 @@ export class AuthService {
 
 
     private cargarUsuarios() {
-        this.consultarUsuarios().subscribe((usuarios) => {
-          this.usuarios.next(usuarios);
-        });
+        this.consultarUsuarios().subscribe(
+            (usuarios) => {
+                console.log('📡 Usuarios cargados desde la API:', usuarios);
+                this.usuarios.next(usuarios);
+            },
+            (error) => {
+                console.error('❌ Error al cargar usuarios:', error);
+            }
+        );
     }
-
+    
     getUsuarios(): Observable<any[]> {
         return this.usuarios.asObservable();
     }
