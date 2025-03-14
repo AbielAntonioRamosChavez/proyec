@@ -24,7 +24,7 @@ export class LoginFormComponent {
   ) {
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(10)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     });
   }
 
@@ -55,7 +55,7 @@ export class LoginFormComponent {
         setTimeout(() => {
           const dataUser = JSON.parse(localStorage.getItem('USER_CURRENT') || '{}');
           if (dataUser.tipo !== "checkin") {
-            this.router.navigate(['/pages']).then(() => {
+            this.router.navigate(['/puntodeventa']).then(() => {
               this.isSubmited = false;
             });
           } else {

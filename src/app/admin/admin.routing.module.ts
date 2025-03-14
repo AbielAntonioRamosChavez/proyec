@@ -36,6 +36,9 @@ const routes: Routes = [
         component: GestiondeventasComponent
       },
       {
+        path:'', redirectTo: 'puntodeventa', pathMatch: 'full',
+      },
+      {
         path:'puntodeventa',
         component: PuntodeventaComponent
       },
