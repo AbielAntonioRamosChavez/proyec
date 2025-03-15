@@ -1,6 +1,6 @@
 <div class="container">
     <h2>Ventas</h2>
-    <button (click)="nuevaVenta()">Nueva +</button>
+    <button class="nueva-venta-button" (click)="nuevaVenta()">Nueva +</button>
 
     <table>
         <thead>
@@ -31,7 +31,7 @@
         </tbody>
     </table>
 
-    <!-- Modal de Detalles -->
+
     <div *ngIf="modalDetallesVisible">
         <div class="modal">
             <div class="modal-content">
@@ -40,8 +40,8 @@
                 <p *ngIf="ventaSeleccionada"><strong>Fecha:</strong> {{ ventaSeleccionada?.fecha }}</p>
                 <p *ngIf="ventaSeleccionada"><strong>Total:</strong> ${{ ventaSeleccionada?.total }}</p>
 
-                <h3 *ngIf="ventaSeleccionada?.productos.length">Productos</h3>
-                <ul *ngIf="ventaSeleccionada?.productos.length">
+                <h3 *ngIf="ventaSeleccionada?.productos?.length > 0">Productos</h3>
+                <ul *ngIf="ventaSeleccionada?.productos?.length > 0">
                     <li *ngFor="let producto of ventaSeleccionada?.productos">
                         {{ producto.cantidad }}x {{ producto.nombre }} - ${{ producto.precio }}
                     </li>
@@ -50,7 +50,7 @@
         </div>
     </div>
 
-    <!-- Modal de Eliminación -->
+    
     <div *ngIf="modalEliminarVisible">
         <div class="modal">
             <div class="modal-content">

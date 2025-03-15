@@ -1,4 +1,3 @@
-
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
@@ -63,6 +62,7 @@ button img {
   vertical-align: middle;
 }
 
+/* Botón de eliminar (rojo) */
 .eliminar-button {
   background-color: #ff4d4d;
   color: white;
@@ -70,6 +70,16 @@ button img {
 
 .eliminar-button:hover {
   background-color: #cc0000;
+}
+
+/* Botón de detalles (azul) */
+.detalles-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.detalles-button:hover {
+  background-color: #0056b3;
 }
 
 /* Estilos para el modal */
@@ -85,8 +95,10 @@ button img {
   align-items: center;
 }
 
+/* Modal azul */
 .modal-content {
-  background-color: #fff;
+  background-color: #007bff; /* Azul */
+  color: white; /* Texto en blanco para contraste */
   padding: 20px;
   border-radius: 8px;
   width: 400px;
@@ -95,17 +107,49 @@ button img {
   position: relative;
 }
 
+/* Botón de cierre (X) */
 .close {
   position: absolute;
   top: 10px;
   right: 15px;
   font-size: 24px;
   cursor: pointer;
-  color: #555;
+  color: white; /* Blanco para contraste */
 }
 
 .close:hover {
-  color: #000;
+  color: #ddd; /* Gris claro */
+}
+
+/* Input en el modal */
+input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  border: 1px solid white; /* Borde blanco */
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo claro */
+  color: black;
+}
+
+/* Botón Eliminar en el modal */
+.modal-content button {
+  background-color: white; /* Botón blanco */
+  color: #007bff; /* Azul */
+  font-weight: bold;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.modal-content button:hover {
+  background-color: #f8f9fa; /* Más claro */
 }
 
 /* Estilos para los mensajes de error */
@@ -113,16 +157,6 @@ button img {
   color: #ff4d4d;
   font-size: 14px;
   margin-top: 10px;
-}
-
-/* Estilos para los inputs */
-input[type="password"] {
-  width: 100%;
-  padding: 8px;
-  margin-top: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
 }
 
 /* Estilos para la lista de productos */
