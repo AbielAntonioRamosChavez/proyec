@@ -7,16 +7,13 @@ import { AuthGuard } from './guards/auth.guard';
 import { AuthService } from './services/auth.service';
 import { RandomGuard } from './guards/random.guard';
 import { Login2Component } from './containers/login2/login2.component';
-import { LoginFormComponent } from './containers/login-from/login-from.component';
 import { LoginComponent } from './containers/login/login.component';
 import { TokenInterceptor } from './token.interceptor';
-
 
 @NgModule({    
     declarations: [
         Login2Component,
         LoginComponent,
-        LoginFormComponent
     ],
     providers: [
         AuthGuard,
@@ -28,15 +25,17 @@ import { TokenInterceptor } from './token.interceptor';
             multi: true
         }
     ],
-    exports: [  // 👈 Agregar esta línea
-        LoginFormComponent
-    ],
     imports: [
         CommonModule,
         RouterModule,
         HttpClientModule,
-        ReactiveFormsModule,
         FormsModule,
+        ReactiveFormsModule, // ❌ Eliminé el duplicado
     ],
+    exports: [  // 👈 Esto es útil si otros módulos necesitan estos componentes
+        LoginComponent,
+        Login2Component
+    ]
 })
 export class AuthModule { }
+

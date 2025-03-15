@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent } from './app.component';  // ✅ Importado correctamente
 import { LandingComponent } from './landing/landing.component';
-import { AdminModule } from './admin/admin.module'; // ✅ Importación del módulo de administración
+import { AdminModule } from './admin/admin.module';
 import { RegisterComponent } from './auth/containers/register/register.component';
 import { AppService } from './app.service';
 import { APP_BASE_HREF } from '@angular/common';
@@ -11,28 +10,28 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { ErrorAutenticateInterceptor } from './auth/ErrorAutenticateInterceptor';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthModule } from './auth/auth.module'; // ✅ Módulo de autenticación
+import { AuthModule } from './auth/auth.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { MatDialogModule } from '@angular/material/dialog'; // ✅ Angular Material para diálogos
-import { RouterModule } from '@angular/router'; // ✅ Importación necesaria para router-outlet
+import { MatDialogModule } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
+import { routes } from './app.routes'; // ✅ Importamos las rutas correctamente
+import { MatDialogConfirmacionComponent } from './admin/pages/catalogos/dialogo-confirmacion/dialogo-confirmacion.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent,  // ✅ Ahora es parte de declarations
     LandingComponent,
     RegisterComponent,
+    MatDialogConfirmacionComponent
   ],
   imports: [
     BrowserModule,
-    RouterModule,   // Necesario para soporte de rutas
-    AppRoutingModule,
+    RouterModule.forRoot(routes),
     ReactiveFormsModule,
     AdminModule,
     AuthModule,
-    MatDialogModule,
-    RouterModule,
-    AuthModule
+    MatDialogModule
   ],
   providers: [
     provideClientHydration(),
@@ -50,7 +49,7 @@ import { RouterModule } from '@angular/router'; // ✅ Importación necesaria pa
     },
     provideAnimationsAsync(),
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent] // ✅ Ahora se usa correctamente aquí
 })
 export class AppModule { }
 

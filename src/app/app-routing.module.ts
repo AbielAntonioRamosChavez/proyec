@@ -4,6 +4,7 @@ import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './auth/containers/login/login.component';
 import { AgregarusuarioComponent } from './admin/pages/catalogos/agregarusuario/agregarusuario.component';
 
+
 const routes: Routes = [
   {
     path: '',

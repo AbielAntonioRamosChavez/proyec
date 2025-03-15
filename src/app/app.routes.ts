@@ -1,9 +1,7 @@
-import { ServerRoute } from '@angular/ssr';
+import { Routes } from '@angular/router';
 import { LandingComponent } from './landing/landing.component';
-import { LoginComponent } from './auth/containers/login/login.component';
 
-export const routes: ServerRoute[] = [
-  { path: '', redirectTo: '/landing', pathMatch: 'full', renderMode: 'ssr' },
-  { path: 'landing', component: LandingComponent, renderMode: 'ssr' },
-  { path: 'login', component: LoginComponent, renderMode: 'ssr' },
+export const routes: Routes = [
+  { path: '', redirectTo: '/landing', pathMatch: 'full' },
+  { path: 'landing', component: LandingComponent, data: { renderMode: 'ssr' } }, // ✅ Usa string 'ssr'
 ];
