@@ -6,7 +6,7 @@ import { catchError, mapTo, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 @Component({
-  selector: 'app-login-form',
+  selector: 'app-login',
   standalone: false,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
@@ -44,10 +44,12 @@ export class LoginComponent {
         this._authService.doLoginUser(this.form.value.email, tokens);
       }),
       mapTo(true),
-      catchError(error => {
+        catchError(error => {
+        console.error('❌ Error en login:', error);
+        console.log('🛠️ Respuesta completa del error:', error.error); // 🔍 Verifica el mensaje del backend
         this.handleError(error);
         return of(false);
-      })
+    })
     ).subscribe(res => {
       if (res) {
         this.loginSuccess.emit(); // 🔥 Emitimos el evento cuando el login es exitoso

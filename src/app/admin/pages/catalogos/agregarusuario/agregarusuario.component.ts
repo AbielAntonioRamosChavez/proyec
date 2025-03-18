@@ -54,7 +54,11 @@ export class AgregarusuarioComponent {
 
     // Verificar si hay un token antes de hacer la solicitud
     const token = localStorage.getItem('token');
-    console.log('🛂 Token actual:', token);
+    if (token) {
+      console.log('✅ Token encontrado:', token);
+      } else {
+      console.warn('⚠️ No hay token disponible.');
+    }
 
     if (!token) {
       console.error('❌ No hay token, el usuario no está autenticado.');

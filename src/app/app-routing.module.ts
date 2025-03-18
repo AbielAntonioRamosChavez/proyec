@@ -20,6 +20,10 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
+    path: 'login2',
+    component: LoginComponent
+  },
+  {
     path: 'agregarusuario',
     component: AgregarusuarioComponent
   },

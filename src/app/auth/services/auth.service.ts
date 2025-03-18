@@ -5,6 +5,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { Tokens } from '../models/tokens';
 import { environment } from "../../../environments/environment";
 import { Router } from "@angular/router";
+import { NgZone } from '@angular/core';
 
 @Injectable({
     providedIn: 'root',
@@ -15,10 +16,11 @@ export class AuthService {
     private readonly USER_CURRENT = 'USER_CURRENT';
     private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
     private loggedUser: string = '';
-
+    
     constructor(
         private http: HttpClient,
-        private router: Router
+        private router: Router,
+        private ngZone: NgZone
     ) {
         this.cargarUsuarios();
     }
@@ -27,33 +29,27 @@ export class AuthService {
         return this.http.post<any>(`${environment.api.authApis}/usuarios/login`, user).pipe(
             tap(response => {
                 console.log('✅ Respuesta del servidor:', response);
-                
-                if (response && response.token && response.refreshToken) {
-                    this.storeJwtToken(response.token); // Guarda el token de acceso
-                    this.storeRefreshToken(response.refreshToken); // Guarda el refresh token
-                    this.storeUser(response.user);
-                     // Guarda los datos del usuario
-                    
-                    console.log('🔑 Token guardado:', this.getJwtToken());
-                    console.log('🔄 Redirigiendo a /admin...');
-                    this.router.navigate(['/admin']);
+            
+                if (response && response.token) {
+                    this.storeJwtToken(response.token);
+                    console.log("🔑 Token guardado correctamente:", this.getJwtToken());
+    
+                    // 🔄 Agregar la redirección
+                    this.ngZone.run(() => {
+                        console.log("🚀 Redirigiendo a /admin/puntodeventa...");
+                        this.router.navigate(['/admin/puntodeventa']);
+                    });
                 } else {
-                    console.warn('⚠️ No se recibió token en la respuesta.');
+                    console.warn("⚠️ No se recibió token en la respuesta.");
                 }
             }),
             catchError(error => {
                 console.error('❌ Error en el login:', error);
-                return this.http.post<any>(`${environment.api.authApis}/usuarios/login`, user).pipe(
-                    tap(response => this.handleLoginResponse(response)),
-                    catchError(error => {
-                        console.error('❌ Error en el login:', error);
-                        return throwError(() => error);
-                    })
-                );
-                
+                return throwError(() => error);
             })
         );
     }
+    
 
     logout(): Observable<any> {
         return this.http.post<any>(`${environment.api.authApis}/logout`, {}).pipe(
@@ -151,10 +147,12 @@ export class AuthService {
     isLoggedIn(): boolean {
         return !!this.getJwtToken(); // 🔄 Corregido
     }
-
+    
+    
     public getJwtToken(): string | null {
-        return localStorage.getItem(this.JWT_TOKEN);
+        return localStorage.getItem(this.JWT_TOKEN) || sessionStorage.getItem(this.JWT_TOKEN);
     }
+    
 
     doLoginUser(username: string, tokens: Tokens) {
         this.loggedUser = username;
@@ -168,15 +166,14 @@ export class AuthService {
         this.removeRefreshToken(); // 🔥 Ahora también elimina el refresh token
     }
 
-    private storeJwtToken(token: string) {
-        console.log("📝 Guardando token en localStorage:", token);
-        localStorage.setItem('JWT_TOKEN', token);
+    private storeJwtToken(token: string): void {
+        localStorage.setItem(this.JWT_TOKEN, token);
+        sessionStorage.setItem(this.JWT_TOKEN, token); // Guarda también en sessionStorage
     }
     
     
-    private storeUser(user: any) {
-        console.log("👤 Guardando datos del usuario:", user);
-        localStorage.setItem('USER', JSON.stringify(user));
+    private storeUser(user: any): void {
+        localStorage.setItem('user', JSON.stringify(user)); // Guarda el usuario como string
     }
 
     private removeTokens() {
@@ -189,22 +186,23 @@ export class AuthService {
     }
 
     private cargarUsuarios() {
-        this.consultarUsuarios().subscribe(
+        this.consultarUsuarios().pipe(
+            catchError(error => {
+                console.error('❌ Error al cargar usuarios:', error);
+                return []; // Devuelve un array vacío para evitar errores
+            })
+        ).subscribe(
             usuarios => {
                 console.log('📡 Usuarios cargados desde la API:', usuarios);
-                this.usuarios.next(usuarios);
-            },
-            error => {
-                console.error('❌ Error al cargar usuarios:', error);
+                this.usuarios.next(usuarios || []); // Asegurar que siempre se pase un array
             }
         );
     }
+    
 
-    private storeRefreshToken(refreshToken: string) {
-        console.log("📝 Guardando refresh token en localStorage:", refreshToken);
-        localStorage.setItem('REFRESH_TOKEN', refreshToken);
+    private storeRefreshToken(refreshToken: string): void {
+        localStorage.setItem('refreshToken', refreshToken);
     }
-
     refreshToken(): Observable<any> {
         const refreshToken = this.getRefreshToken(); // Obtiene el refresh token guardado
     
@@ -226,6 +224,19 @@ export class AuthService {
             })
         );
     }
+    
+    getUser(): any {
+        const user = localStorage.getItem('USER');
+        return user ? JSON.parse(user) : null;
+    }
+    
+    setJwtToken(token: string): void { 
+        localStorage.setItem(this.JWT_TOKEN, token);
+        sessionStorage.setItem(this.JWT_TOKEN, token); // Guarda en sessionStorage como respaldo
+        console.log("✅ Token guardado en localStorage y sessionStorage:", token);
+    }
+    
+      
     
     
     getUsuarios(): Observable<any[]> {

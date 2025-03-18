@@ -9,6 +9,8 @@ import { GestiondeventasComponent } from './pages/catalogos/gestiondeventas/gest
 import { PuntodeventaComponent } from './pages/catalogos/puntodeventa/puntodeventa.component';
 import { EstadisticasComponent } from './pages/catalogos/estadisticas/estadisticas.component';
 import { HistorialComponent } from './pages/catalogos/historial/historial.component';
+import { RoleGuard } from '../guards/role.guard';
+
 
 const routes: Routes = [
   {
@@ -17,38 +19,56 @@ const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        component: PrincipalComponent
+        component: PrincipalComponent,
+        canActivate: [RoleGuard],
+        data: { roles: ['admin', 'empleado'] } // ✅ Ambos pueden acceder
       },
       {
         path: 'usuarios',
-        component: UsuarioComponent
+        component: UsuarioComponent,
+        canActivate: [RoleGuard],
+        data: { roles: ['admin'] } // ❌ Solo el administrador
       },
       {
         path: 'productos',
-        component: ProductosComponent
+        component: ProductosComponent,
+        canActivate: [RoleGuard],
+        data: { roles: ['admin', 'empleado'] }
       },
       {
-        path:'agregarusuario',
-        component: AgregarusuarioComponent
+        path: 'agregarusuario',
+        component: AgregarusuarioComponent,
+        canActivate: [RoleGuard],
+        data: { roles: ['admin'] } // ❌ Solo el administrador
       },
       {
-        path:'gestiondeventas',
-        component: GestiondeventasComponent
+        path: 'gestiondeventas',
+        component: GestiondeventasComponent,
+        canActivate: [RoleGuard],
+        data: { roles: ['admin', 'empleado'] }
       },
       {
-        path:'', redirectTo: 'puntodeventa', pathMatch: 'full',
+        path: '',
+        redirectTo: 'puntodeventa',
+        pathMatch: 'full',
       },
       {
-        path:'puntodeventa',
-        component: PuntodeventaComponent
+        path: 'puntodeventa',
+        component: PuntodeventaComponent,
+        canActivate: [RoleGuard],
+        data: { roles: ['admin', 'empleado'] }
       },
       {
-        path:'estadisticas',
-        component: EstadisticasComponent
+        path: 'estadisticas',
+        component: EstadisticasComponent,
+        canActivate: [RoleGuard],
+        data: { roles: ['admin'] } // ❌ Solo el administrador
       },
       {
-        path:'historial',
-        component: HistorialComponent
+        path: 'historial',
+        component: HistorialComponent,
+        canActivate: [RoleGuard],
+        data: { roles: ['admin'] } // ❌ Solo el administrador
       }
     ]
   }

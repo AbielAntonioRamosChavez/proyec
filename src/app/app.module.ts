@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-import { AppComponent } from './app.component';  // ✅ Importado correctamente
+import { AppComponent } from './app.component';
 import { LandingComponent } from './landing/landing.component';
-import { AdminModule } from './admin/admin.module';
 import { RegisterComponent } from './auth/containers/register/register.component';
 import { AppService } from './app.service';
 import { APP_BASE_HREF } from '@angular/common';
@@ -14,28 +13,28 @@ import { AuthModule } from './auth/auth.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
-import { routes } from './app.routes'; // ✅ Importamos las rutas correctamente
+import { routes } from './app.routes';
 import { MatDialogConfirmacionComponent } from './admin/pages/catalogos/dialogo-confirmacion/dialogo-confirmacion.component';
-
+import { RoleGuard } from './guards/role.guard';
 
 @NgModule({
   declarations: [
-    AppComponent,  // ✅ Ahora es parte de declarations
+    AppComponent,
     LandingComponent,
     RegisterComponent,
-    MatDialogConfirmacionComponent
+    MatDialogConfirmacionComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
     ReactiveFormsModule,
-    AdminModule,
     AuthModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   providers: [
     provideClientHydration(),
     AppService,
+    RoleGuard,
     { provide: APP_BASE_HREF, useValue: '/' },
     {
       provide: HTTP_INTERCEPTORS,
@@ -49,7 +48,7 @@ import { MatDialogConfirmacionComponent } from './admin/pages/catalogos/dialogo-
     },
     provideAnimationsAsync(),
   ],
-  bootstrap: [AppComponent] // ✅ Ahora se usa correctamente aquí
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
 

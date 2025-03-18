@@ -8,12 +8,16 @@ export class AuthHelperService {
 
   constructor() {}
 
-  public setJwtToken(token: string) {
+  public setJwtToken(token: string): void {
     this.jwtToken = token;
-  }
-
-  public getJwtToken(): string | null {
-    return this.jwtToken;
-  }
+    localStorage.setItem('jwt_token', token);  // También guarda en localStorage
+    sessionStorage.setItem('jwt_token', token); // O en sessionStorage como respaldo
+    console.log("✅ Token guardado en auth-helper:", token);
 }
 
+
+public getJwtToken(): string | null {
+  return localStorage.getItem(this.JWT_TOKEN) || sessionStorage.getItem(this.JWT_TOKEN);
+}
+
+}

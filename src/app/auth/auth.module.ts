@@ -12,8 +12,8 @@ import { TokenInterceptor } from './token.interceptor';
 
 @NgModule({    
     declarations: [
-        Login2Component,
         LoginComponent,
+        Login2Component,
     ],
     providers: [
         AuthGuard,
@@ -30,9 +30,9 @@ import { TokenInterceptor } from './token.interceptor';
         RouterModule,
         HttpClientModule,
         FormsModule,
-        ReactiveFormsModule, // ❌ Eliminé el duplicado
+        ReactiveFormsModule, 
     ],
-    exports: [  // 👈 Esto es útil si otros módulos necesitan estos componentes
+    exports: [  // 👈 Exportamos los componentes para usarlos fuera del módulo
         LoginComponent,
         Login2Component
     ]
