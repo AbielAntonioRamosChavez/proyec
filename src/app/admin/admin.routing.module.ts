@@ -56,7 +56,7 @@ const routes: Routes = [
         path: 'puntodeventa',
         component: PuntodeventaComponent,
         canActivate: [RoleGuard],
-        data: { roles: ['admin', 'empleado'] }
+        data: { roles: ['admin', 'empleado'] } // Roles permitidos
       },
       {
         path: 'estadisticas',

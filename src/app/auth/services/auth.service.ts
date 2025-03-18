@@ -30,17 +30,21 @@ export class AuthService {
             tap(response => {
                 console.log('✅ Respuesta del servidor:', response);
             
-                if (response && response.token) {
+                if (response && response.token && response.user) {
+                    // 1. Almacenar token JWT
                     this.storeJwtToken(response.token);
-                    console.log("🔑 Token guardado correctamente:", this.getJwtToken());
-    
-                    // 🔄 Agregar la redirección
+                    
+                    // 2. Almacenar datos del usuario en localStorage
+                    localStorage.setItem(this.USER_CURRENT, JSON.stringify(response.user));
+                    console.log("👤 Usuario almacenado:", response.user);
+                    
+                    // 3. Redirigir después de almacenar los datos
                     this.ngZone.run(() => {
                         console.log("🚀 Redirigiendo a /admin/puntodeventa...");
                         this.router.navigate(['/admin/puntodeventa']);
                     });
                 } else {
-                    console.warn("⚠️ No se recibió token en la respuesta.");
+                    console.warn("⚠️ Respuesta incompleta del servidor");
                 }
             }),
             catchError(error => {
@@ -162,9 +166,9 @@ export class AuthService {
 
     private doLogoutUser() {
         localStorage.removeItem(this.JWT_TOKEN);
-        localStorage.removeItem(this.USER_CURRENT);
-        this.removeRefreshToken(); // 🔥 Ahora también elimina el refresh token
-    }
+        localStorage.removeItem(this.USER_CURRENT); // Asegurar que se elimina
+        this.removeRefreshToken();
+      }
 
     private storeJwtToken(token: string): void {
         localStorage.setItem(this.JWT_TOKEN, token);
@@ -226,9 +230,9 @@ export class AuthService {
     }
     
     getUser(): any {
-        const user = localStorage.getItem('USER');
+        const user = localStorage.getItem(this.USER_CURRENT); // Usar this.USER_CURRENT
         return user ? JSON.parse(user) : null;
-    }
+      }
     
     setJwtToken(token: string): void { 
         localStorage.setItem(this.JWT_TOKEN, token);

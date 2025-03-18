@@ -55,7 +55,7 @@ export class Login2Component {
         setTimeout(() => {
           const dataUser = JSON.parse(localStorage.getItem('USER_CURRENT') || '{}');
           if (dataUser.tipo !== "checkin") {
-            this.router.navigate(['/puntodeventa']).then(() => {
+            this.router.navigate(['puntodeventa']).then(() => {
               this.isSubmited = false;
             });
           } else {

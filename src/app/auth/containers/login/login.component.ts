@@ -52,22 +52,8 @@ export class LoginComponent {
     })
     ).subscribe(res => {
       if (res) {
-        this.loginSuccess.emit(); // 🔥 Emitimos el evento cuando el login es exitoso
-
-        setTimeout(() => {
-          const dataUser = JSON.parse(localStorage.getItem('USER_CURRENT') || '{}');
-          if (dataUser.tipo !== "checkin") {
-            this.router.navigate(['/puntodeventa']).then(() => {
-              this.isSubmited = false;
-            });
-          } else {
-            this.router.navigate(['/login']).then(() => {
-              this.isSubmited = false;
-            });
-          }
-        }, 500);
-      } else {
-        this.isSubmited = false;
+        this.loginSuccess.emit();
+        this.router.navigate(['/admin/puntodeventa']); // Eliminar el setTimeout
       }
     });
   }
