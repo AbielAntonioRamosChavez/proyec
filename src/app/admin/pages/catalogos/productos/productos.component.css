@@ -1,128 +1,128 @@
 .productos-container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .productos-container h2 {
-    background-color: #3f51b5;
-    color: white;
-    padding: 10px;
-    border-radius: 4px;
-    text-align: center;
-  }
-  
-  .productos-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .productos-table th, .productos-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  .productos-table th {
-    background-color: #f2f2f2;
-    color: #333;
-  }
-  
-  .productos-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  .productos-table tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .pagination {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .pagination-info {
-    font-size: 14px;
-    color: #666;
-  }
-  
-  .pagination-controls {
-    display: flex;
-    align-items: center;
-  }
-  
-  .pagination-controls button {
-    background-color: #3f51b5;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin: 0 5px;
-  }
-  
-  .pagination-controls button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
-  .page-numbers {
-    display: flex;
-    gap: 5px;
-  }
-  
-  .page-numbers span {
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  .page-numbers span.active {
-    background-color: #3f51b5;
-    color: white;
-  }
-  /* Estilos para el header */
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.productos-container h2 {
+  background-color: #3f51b5;
+  color: white;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.productos-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.productos-table th, .productos-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.productos-table th {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.productos-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.productos-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pagination-info {
+  font-size: 14px;
+  color: #666;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+}
+
+.pagination-controls button {
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.pagination-controls button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 5px;
+}
+
+.page-numbers span {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.page-numbers span.active {
+  background-color: #3f51b5;
+  color: white;
+}
+/* Estilos para el header */
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  /* Estilos para los botones de acciones */
-  .btn-sm {
-    margin: 2px;
-  }
-  
-  /* Estilos para los iconos */
-  .fas {
-    margin-right: 5px;
-  }
-  
-  /* Estilos para el modal */
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  
-  .modal.show {
-    display: block;
-  }
-  
-  .modal-content {
-    background-color: white;
-    margin: 10% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 50%;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Estilos para los botones de acciones */
+.btn-sm {
+  margin: 2px;
+}
+
+/* Estilos para los iconos */
+.fas {
+  margin-right: 5px;
+}
+
+/* Estilos para el modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal.show {
+  display: block;
+}
+
+.modal-content {
+  background-color: white;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+}

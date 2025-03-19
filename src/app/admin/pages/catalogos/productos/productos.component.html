@@ -1,115 +1,115 @@
 <div class="productos-container">
     <div class="header">
-      <h2>Administrar Productos</h2>
-      <button (click)="openAddModal()" class="btn btn-success">
-        <i class="fas fa-plus"></i> Añadir
-      </button>
+        <h2>Administrar Productos</h2>
+        <button (click)="openAddModal()" class="btn btn-success">
+      <i class="fas fa-plus"></i> Añadir
+    </button>
     </div>
     <table class="productos-table">
-      <thead>
-        <tr>
-          <th>Código</th>
-          <th>Producto</th>
-          <th>Cartografia</th>
-          <th>Stock</th>
-          <th>Precio</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (producto of productos; track producto.codigo) {
-          <tr>
-            <td>{{ producto.codigo }}</td>
-            <td>{{ producto.producto }}</td>
-            <td>{{ producto.cartografia }}</td>
-            <td>{{ producto.stock }}</td>
-            <td>{{ producto.precio }}</td>
-            <td>
-              <button (click)="openEditModal(producto)" class="btn btn-primary btn-sm">
-                <i class="fas fa-edit"></i> <!-- Icono de editar -->
-              </button>
-              <button (click)="deleteProduct(producto)" class="btn btn-danger btn-sm">
-                <i class="fas fa-trash"></i> <!-- Icono de eliminar -->
-              </button>
-            </td>
-          </tr>
-        }
-      </tbody>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Producto</th>
+                <th>Categoría</th>
+                <th>Stock</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (producto of productos; track producto.codigo) {
+            <tr>
+                <td>{{ producto.codigo }}</td>
+                <td>{{ producto.producto }}</td>
+                <td>{{ producto.categoria }}</td>
+                <td>{{ producto.stock }}</td>
+                <td>{{ producto.precio }}</td>
+                <td>
+                    <button (click)="openEditModal(producto)" class="btn btn-primary btn-sm">
+              <i class="fas fa-edit"></i>
+            </button>
+                    <button (click)="deleteProduct(producto)" class="btn btn-danger btn-sm">
+              <i class="fas fa-trash"></i>
+            </button>
+                </td>
+            </tr>
+            }
+        </tbody>
     </table>
-  </div>
-  
-  <!-- Modal para añadir -->
-  <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addModalLabel">Añadir Producto</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<!-- Modal para añadir -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">Añadir Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Código</label>
+                        <input type="text" class="form-control" [(ngModel)]="newProduct.codigo" name="codigo">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Producto</label>
+                        <input type="text" class="form-control" [(ngModel)]="newProduct.producto" name="producto">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Categoría</label>
+                        <input type="text" class="form-control" [(ngModel)]="newProduct.categoria" name="categoria">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Stock</label>
+                        <input type="number" class="form-control" [(ngModel)]="newProduct.stock" name="stock">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Precio</label>
+                        <input type="number" class="form-control" [(ngModel)]="newProduct.precio" name="precio">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="addProduct()">Añadir</button>
+            </div>
         </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <label for="newProductCode" class="form-label">Código</label>
-              <input type="text" class="form-control" id="newProductCode" [(ngModel)]="newProduct.codigo" name="codigo">
-            </div>
-            <div class="mb-3">
-              <label for="newProductName" class="form-label">Producto</label>
-              <input type="text" class="form-control" id="newProductName" [(ngModel)]="newProduct.producto" name="producto">
-            </div>
-            <div class="mb-3">
-              <label for="newProductCategory" class="form-label">Cartografia</label>
-              <input type="text" class="form-control" id="newProductCategory" [(ngModel)]="newProduct.cartografia" name="cartografia">
-            </div>
-            <div class="mb-3">
-              <label for="newProductStock" class="form-label">Stock</label>
-              <input type="number" class="form-control" id="newProductStock" [(ngModel)]="newProduct.stock" name="stock">
-            </div>
-            <div class="mb-3">
-              <label for="newProductPrice" class="form-label">Precio</label>
-              <input type="number" class="form-control" id="newProductPrice" [(ngModel)]="newProduct.precio" name="precio">
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary" (click)="addProduct()">Añadir</button>
-        </div>
-      </div>
     </div>
-  </div>
-  
-  <!-- Modal para editar -->
-  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editModalLabel">Editar Producto</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<!-- Modal para editar -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Editar Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Producto</label>
+                        <input type="text" class="form-control" [(ngModel)]="selectedProduct.producto" name="producto">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Categoría</label>
+                        <input type="text" class="form-control" [(ngModel)]="selectedProduct.categoria" name="categoria">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Stock</label>
+                        <input type="number" class="form-control" [(ngModel)]="selectedProduct.stock" name="stock">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Precio</label>
+                        <input type="number" class="form-control" [(ngModel)]="selectedProduct.precio" name="precio">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="saveChanges()">Guardar cambios</button>
+            </div>
         </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <label for="productName" class="form-label">Producto</label>
-              <input type="text" class="form-control" id="productName" [(ngModel)]="selectedProduct.producto" name="producto">
-            </div>
-            <div class="mb-3">
-              <label for="productCategory" class="form-label">Cartografia</label>
-              <input type="text" class="form-control" id="productCategory" [(ngModel)]="selectedProduct.cartografia" name="cartografia">
-            </div>
-            <div class="mb-3">
-              <label for="productStock" class="form-label">Stock</label>
-              <input type="number" class="form-control" id="productStock" [(ngModel)]="selectedProduct.stock" name="stock">
-            </div>
-            <div class="mb-3">
-              <label for="productPrice" class="form-label">Precio</label>
-              <input type="number" class="form-control" id="productPrice" [(ngModel)]="selectedProduct.precio" name="precio">
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary" (click)="saveChanges()">Guardar cambios</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>

@@ -3,14 +3,15 @@ import { FormsModule } from '@angular/forms'; // Importa FormsModule para usar n
 
 @Component({
   selector: 'app-productos',
+  standalone: true,
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css'],
-  standalone: false // Importa FormsModule
+  imports: [FormsModule] // Importa FormsModule
 })
 export class ProductosComponent {
   productos = [
-    { codigo: '0015', producto: 'Avena quaker', cartografia: 'Cereales', stock: 49, precio: 4.25 },
-    { codigo: '003', producto: 'Coco Crunch', cartografia: 'Cereales', stock: 15, precio: 5.25 },
+    { codigo: '0015', producto: 'Avena quaker', categoria: 'Cereales', stock: 49, precio: 4.25 },
+    { codigo: '003', producto: 'Coco Crunch', categoria: 'Cereales', stock: 15, precio: 5.25 },
     // ... otros productos
   ];
 
@@ -24,6 +25,7 @@ export class ProductosComponent {
     if (modal) {
       modal.classList.add('show'); // Muestra el modal
       modal.style.display = 'block';
+      modal.setAttribute('aria-hidden', 'false');
     }
   }
 
@@ -40,6 +42,7 @@ export class ProductosComponent {
     if (modal) {
       modal.classList.add('show'); // Muestra el modal
       modal.style.display = 'block';
+      modal.setAttribute('aria-hidden', 'false');
     }
   }
 
@@ -58,6 +61,7 @@ export class ProductosComponent {
     if (modal) {
       modal.classList.remove('show'); // Oculta el modal
       modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
     }
   }
 

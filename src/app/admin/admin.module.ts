@@ -31,6 +31,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CobroDialogComponent } from './pages/catalogos/puntodeventa/Mensaje/cobro-dialog/cobro-dialog.component';
 import { DialogoEditarUsuarioComponent } from './pages/catalogos/dialogo-editar-usuario/dialogo-editar-usuario.component';
 import { TextoinpComponent } from './template/textoinp/textoinp.component';
+import { RouterModule } from '@angular/router';
+
 
 @NgModule({
   declarations: [
@@ -44,7 +46,6 @@ import { TextoinpComponent } from './template/textoinp/textoinp.component';
     PuntodeventaComponent,
     EstadisticasComponent,
     HistorialComponent,
-    ProductosComponent,
     CobroDialogComponent,
     UsuarioComponent,
     AgregarusuarioComponent,
@@ -73,6 +74,9 @@ import { TextoinpComponent } from './template/textoinp/textoinp.component';
     MatPaginatorModule,
     MatDividerModule,
     MatCardModule,
+    AdminRoutingModule,
+    ProductosComponent,
+    RouterModule,
     AdminRoutingModule
   ],
   providers: [
