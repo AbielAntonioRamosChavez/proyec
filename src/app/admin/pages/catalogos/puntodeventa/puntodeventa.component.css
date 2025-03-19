@@ -1,68 +1,61 @@
-.container {
-  font-family: sans-serif;
+.factura {
+  width: 90%;
+  margin: 20px auto;
+  border: 1px solid #ccc;
   padding: 20px;
+  font-family: Arial, sans-serif;
 }
 
-.title {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.input-container {
+.encabezado, .cliente, .totales, .botones {
   display: flex;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.campo {
+  flex: 1;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.producto-busqueda {
+  display: flex;
+  margin-bottom: 10px;
 }
 
 .input-field {
   flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
+  padding: 8px;
+  border: 1px solid #ddd;
   border-radius: 4px;
+  margin-right: 10px;
+  font-size: 14px;
 }
 
-.add-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 4px;
-  cursor: pointer;
+.action-button {
+  font-size: 14px;
 }
 
 .product-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
 }
 
-.product-table th, .product-table td {
+th, td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
+  font-size: 14px;
 }
 
-.product-table th {
+th {
   background-color: #f2f2f2;
 }
 
-.total-container {
-  text-align: right;
-  margin-bottom: 20px;
+.totales {
+  margin-top: 20px;
 }
 
-.total-label {
-  font-weight: bold;
-  margin-right: 10px;
-}
-
-.total-amount {
-  font-size: 1.2em;
-}
-
-.actions-container {
-  text-align: center;
-}
-
-.action-button {
-  margin: 0 10px;
+.botones button {
+  margin-right: 10px;
 }
