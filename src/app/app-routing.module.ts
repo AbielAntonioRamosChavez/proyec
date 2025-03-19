@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
-import {ExtraOptions, RouterModule, Routes} from '@angular/router';
-import {LandingComponent} from './landing/landing.component';
-import {LoginComponent} from './auth/containers/login/login.component';
-import {AdminComponent} from './admin/admin.component';
-import {RandomGuard} from './auth/guards/random.guard';
+import { ExtraOptions, RouterModule, Routes } from '@angular/router';
+import { LandingComponent } from './landing/landing.component';
+import { LoginComponent } from './auth/containers/login/login.component';
 import { AgregarusuarioComponent } from './admin/pages/catalogos/agregarusuario/agregarusuario.component';
+import { PuntodeventaComponent } from './admin/pages/catalogos/puntodeventa/puntodeventa.component';
+import { Login2Component } from './auth/containers/login2/login2.component';
+
 
 const routes: Routes = [
   {
@@ -17,28 +18,22 @@ const routes: Routes = [
     component: LandingComponent
   },
   {
-    path: 'agregarusuario',
-    component: AgregarusuarioComponent
-  },
-  {
     path: 'login',
     component: LoginComponent
   },
   {
     path: 'login2',
-    component: LoginComponent
+    component: Login2Component
   },
   {
-    path: 'pages',
-    loadChildren: ()=> import('./admin/admin.module').then( m => m.AdminModule ),
-    canActivate: [RandomGuard],
-    canLoad: [RandomGuard],
-  },
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-  declarations: [],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }
+

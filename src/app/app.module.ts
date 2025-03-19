@@ -1,46 +1,41 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { LandingComponent } from './landing/landing.component';
-import {AdminModule} from './admin/admin.module';
 import { RegisterComponent } from './auth/containers/register/register.component';
-import {AppService} from './app.service';
-import {APP_BASE_HREF, CommonModule} from '@angular/common';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {TokenInterceptor} from './auth/token.interceptor';
-import {ErrorAutenticateInterceptor} from './auth/ErrorAutenticateInterceptor';
-import {ReactiveFormsModule} from '@angular/forms';
-import {AuthModule} from './auth/auth.module';
+import { AppService } from './app.service';
+import { APP_BASE_HREF } from '@angular/common';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './auth/token.interceptor';
+import { ErrorAutenticateInterceptor } from './auth/ErrorAutenticateInterceptor';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AuthModule } from './auth/auth.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatDialogModule } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
+import { routes } from './app.routes';
 import { MatDialogConfirmacionComponent } from './admin/pages/catalogos/dialogo-confirmacion/dialogo-confirmacion.component';
-
-
+import { RoleGuard } from './guards/role.guard';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
     RegisterComponent,
-    MatDialogConfirmacionComponent
-  ],
-  exports: [
+    MatDialogConfirmacionComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    RouterModule.forRoot(routes),
     ReactiveFormsModule,
-    CommonModule,
-    AdminModule,
     AuthModule,
     MatDialogModule,
   ],
-  
   providers: [
-    provideClientHydration(withEventReplay()),
+    provideClientHydration(),
     AppService,
-    {provide: APP_BASE_HREF, useValue: '/'},
+    RoleGuard,
+    { provide: APP_BASE_HREF, useValue: '/' },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
@@ -51,9 +46,10 @@ import { MatDialogConfirmacionComponent } from './admin/pages/catalogos/dialogo-
       useClass: ErrorAutenticateInterceptor,
       multi: true,
     },
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
   ],
-  
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+

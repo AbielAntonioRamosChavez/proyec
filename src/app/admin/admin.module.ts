@@ -49,7 +49,8 @@ import { TextoinpComponent } from './template/textoinp/textoinp.component';
     UsuarioComponent,
     AgregarusuarioComponent,
     DialogoEditarUsuarioComponent,
-    TextoinpComponent
+    TextoinpComponent,
+    AdminComponent
   ],
   exports: [
     FooterComponent,
@@ -71,7 +72,8 @@ import { TextoinpComponent } from './template/textoinp/textoinp.component';
     MatButtonModule,
     MatPaginatorModule,
     MatDividerModule,
-    MatCardModule
+    MatCardModule,
+    AdminRoutingModule
   ],
   providers: [
   ]

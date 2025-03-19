@@ -1,76 +1,53 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lista de Usuarios</title>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link rel="stylesheet" href="./usuario.component.css">
-</head>
-<body>
-
 <div class="container">
-  <!-- Encabezado con el botón alineado a la derecha -->
-  <div class="header">
-    <h2 class="mt-4">Lista de Usuarios</h2>
-    <a routerLink="/agregarusuario" class="btn btn-success">
-      <i class="fas fa-plus"></i> Agregar Usuario
-    </a>
-  </div>
+    <!-- Encabezado con el botón alineado a la derecha -->
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h2>Lista de Usuarios</h2>
+        <a routerLink="/admin/agregarusuario" class="btn btn-success ms-auto">
+            <i class="fas fa-plus"></i> Agregar Usuario
+        </a>
+    </div>
 
-  <!-- Tabla de usuarios -->
-  <div class="table-responsive">
-    <table class="table">
-      <thead class="table-dark">
-        <tr>
-          <th>Nombre</th>
-          <th>Apellidos</th>
-          <th>Correo</th>
-          <th>Teléfono</th>
-          <th>Dirección</th>
-          <th>Rol</th>
-          <th>Fecha de Creación</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let usuario of usuariosFiltrados">
-          <td>{{ usuario.nombre }}</td>
-          <td>{{ usuario.apellidos }}</td>
-          <td>{{ usuario.correo }}</td>
-          <td>{{ usuario.telefono }}</td>
-          <td>{{ usuario.direccion }}</td>
-          <td>{{ usuario.rol }}</td>
-          <td>{{ usuario.fecha_creacion | date }}</td>
-          <td>
-            <button class="btn btn-primary btn-sm" (click)="editarUsuario(usuario)">
-              <i class="fas fa-edit"></i> Editar
-            </button>
-            <button mat-button color="warn" (click)="eliminarUsuario(usuario)">
-              <i class="fas fa-trash"></i> Eliminar
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <!-- Tabla de usuarios -->
+    <div class="card mt-3">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>Correo</th>
+                            <th>Teléfono</th>
+                            <th>Dirección</th>
+                            <th>Rol</th>
+                            <th>Fecha de Creación</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let usuario of usuariosFiltrados">
+                            <td>{{ usuario.nombre }}</td>
+                            <td>{{ usuario.apellidos }}</td>
+                            <td>{{ usuario.correo }}</td>
+                            <td>{{ usuario.telefono }}</td>
+                            <td>{{ usuario.direccion }}</td>
+                            <td>{{ usuario.rol }}</td>
+                            <td>{{ usuario.fecha_creacion | date }}</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm me-2" (click)="editarUsuario(usuario)">
+                                    <i class="fas fa-edit"></i> Editar
+                                </button>
+                                <button class="btn btn-danger btn-sm" (click)="eliminarUsuario(usuario)">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="usuariosFiltrados.length === 0" class="text-center text-muted mt-3">
+                    No hay usuarios disponibles.
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<!-- Modal de confirmación de eliminación -->
-<div id="modalEliminar" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="cerrarModal()">&times;</span>
-    <h2>Confirmar Eliminación</h2>
-    <p>¿Estás seguro de que deseas eliminar este usuario?</p>
-    <button class="btn btn-secondary" onclick="cerrarModal()">Cancelar</button>
-    <button class="btn btn-danger" onclick="eliminarUsuario()">Eliminar</button>
-  </div>
-</div>
-
-<script src="./usuario.component.ts"></script>
-
-</body>
-</html>
-
-

@@ -1,63 +1,86 @@
 import { Injectable, Injector } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
-import { catchError, filter, take, switchMap } from 'rxjs/operators';
-import { AuthService } from './services/auth.service'; // Asegúrate de que la ruta sea correcta
+import { catchError, filter, take, switchMap, tap } from 'rxjs/operators';
+import { AuthService } from './services/auth.service';
+import { HttpHeaders } from '@angular/common/http';
+
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-    private isRefreshing = false;
-    private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  private isRefreshing = false;
+  private refreshTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
 
-    constructor(private injector: Injector) {} // ⬅️ Cambia AuthService por Injector
+  constructor(private injector: Injector) {}
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const authService = this.injector.get(AuthService); // ⬅️ Obtén AuthService aquí
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const authService = this.injector.get(AuthService);
+    
+    // Excluir la solicitud de refresh token
+    if (request.url.includes('/refresh-token')) {
+      return next.handle(request);
+    }
 
-        if (authService.getJwtToken()) {
-            request = this.addToken(request, authService.getJwtToken());
+    const token = authService.getJwtToken();
+    const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : new HttpHeaders();
+    
+    if (token) {
+      request = this.addToken(request, token);
+    }
+
+    return next.handle(request).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401 && !request.url.includes('/refresh-token')) {
+          return this.handle401Error(request, next);
         }
+        return throwError(() => error);
+      })
+    );
+  }
 
-        return next.handle(request).pipe(
-            catchError((error: HttpErrorResponse) => {
-                if (error.status === 401) {
-                    return this.handle401Error(request, next, authService);
-                } else {
-                    return throwError(() => error);
-                }
-            })
-        );
+  private addToken(request: HttpRequest<any>, token: string): HttpRequest<any> {
+    return request.clone({
+      setHeaders: { Authorization: `Bearer ${token}` }
+    });
+  }
+
+  private handle401Error(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const authService = this.injector.get(AuthService);
+    const http = this.injector.get(HttpClient);
+
+    if (!this.isRefreshing) {
+      this.isRefreshing = true;
+      this.refreshTokenSubject.next(null);
+
+      const refreshToken = authService.getRefreshToken();
+      
+      return http.post<{ jwt: string }>('/api/refresh-token', { refreshToken }).pipe(
+        tap((response) => {
+          authService.setJwtToken(response.jwt);
+          this.isRefreshing = false;
+          this.refreshTokenSubject.next(response.jwt);
+        }),
+        switchMap(() => {
+          const newToken = authService.getJwtToken();
+          return next.handle(this.addToken(request, newToken!));
+        }),
+        catchError((err) => {
+          this.isRefreshing = false;
+          authService.logout();
+          return throwError(() => err);
+        })
+      );
+    } else {
+      return this.refreshTokenSubject.pipe(
+        filter(token => token !== null),
+        take(1),
+        switchMap((jwt) => {
+          return next.handle(this.addToken(request, jwt!));
+        })
+      );
     }
-
-    private addToken(request: HttpRequest<any>, token: string) {
-        return request.clone({
-            setHeaders: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-    }
-
-    private handle401Error(request: HttpRequest<any>, next: HttpHandler, authService: AuthService) {
-        if (!this.isRefreshing) {
-            this.isRefreshing = true;
-            this.refreshTokenSubject.next(null);
-
-            return authService.refreshToken().pipe(
-                switchMap((token: any) => {
-                    this.isRefreshing = false;
-                    this.refreshTokenSubject.next(token.jwt);
-                    return next.handle(this.addToken(request, token.jwt));
-                })
-            );
-        } else {
-            return this.refreshTokenSubject.pipe(
-                filter(token => token != null),
-                take(1),
-                switchMap(jwt => {
-                    return next.handle(this.addToken(request, jwt));
-                })
-            );
-        }
-    }
+  }
 }
+
+
 

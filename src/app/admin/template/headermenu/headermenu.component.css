@@ -4,3 +4,9 @@
 form.d-none {
     display: none !important;
   }
+
+  .navbar-nav {
+    transform: translateX(-50px) !important;
+}
+
+
