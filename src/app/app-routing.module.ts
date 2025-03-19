@@ -26,14 +26,6 @@ const routes: Routes = [
     component: Login2Component
   },
   {
-    path: 'puntodeventa',
-    component: PuntodeventaComponent
-  },
-  {
-    path: 'agregarusuario',
-    component: AgregarusuarioComponent
-  },
-  {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   }
