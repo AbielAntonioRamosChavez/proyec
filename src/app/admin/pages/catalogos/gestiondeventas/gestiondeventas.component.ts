@@ -39,18 +39,43 @@ export class GestiondeventasComponent {
     ];
 
     modalDetallesVisible = false;
-    modalEliminarVisible = false;
     ventaSeleccionada: any = null;
     errorMensaje = '';
 
-    nuevaVenta() {
-        const nueva = {
+    formularioNuevaVentaVisible = false;
+    productosNuevos: any[] = [{ cantidad: 1, numeroSerie: '', precio: 0 }];
+
+    mostrarFormularioNuevaVenta() {
+        this.formularioNuevaVentaVisible = true;
+    }
+
+    cerrarFormularioNuevaVenta() {
+        this.formularioNuevaVentaVisible = false;
+        this.productosNuevos = [{ cantidad: 1, numeroSerie: '', precio: 0 }];
+    }
+
+    agregarProducto() {
+        this.productosNuevos.push({ cantidad: 1, numeroSerie: '', precio: 0 });
+    }
+
+    guardarNuevaVenta() {
+        const nuevaVenta = {
             numero: this.ventas.length ? Math.max(...this.ventas.map(v => v.numero)) + 1 : 1,
             fecha: new Date().toISOString().split('T')[0],
-            total: 0,
-            productos: []
+            total: this.calcularTotal(this.productosNuevos),
+            productos: this.productosNuevos.map(p => ({
+                nombre: 'Producto', // Puedes pedir el nombre del producto también
+                cantidad: p.cantidad,
+                precio: p.precio
+            }))
         };
-        this.ventas = [...this.ventas, nueva];
+
+        this.ventas = [...this.ventas, nuevaVenta];
+        this.cerrarFormularioNuevaVenta();
+    }
+
+    calcularTotal(productos: any[]): number {
+        return productos.reduce((total, producto) => total + (producto.cantidad * producto.precio), 0);
     }
 
     verDetalles(venta: any) {
@@ -58,30 +83,9 @@ export class GestiondeventasComponent {
         this.modalDetallesVisible = true;
     }
 
-    prepararEliminar(venta: any) {
-        this.ventaSeleccionada = venta;
-        this.modalEliminarVisible = true;
-    }
-
     cerrarModal() {
         this.modalDetallesVisible = false;
-        this.modalEliminarVisible = false;
         this.ventaSeleccionada = null;
         this.errorMensaje = '';
-    }
-
-    confirmarEliminar(codigo: string) {
-        if (!codigo.trim()) {
-            this.errorMensaje = 'Por favor, ingrese el código de administrador.';
-            return;
-        }
-
-        if (codigo === 'codigo_admin_aqui') {
-            this.ventas = this.ventas.filter(v => v.numero !== this.ventaSeleccionada.numero);
-            console.log('Venta eliminada:', this.ventaSeleccionada.numero);
-            this.cerrarModal();
-        } else {
-            this.errorMensaje = 'Código incorrecto. Intente de nuevo.';
-        }
     }
 }

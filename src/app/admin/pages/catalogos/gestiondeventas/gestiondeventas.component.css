@@ -1,3 +1,4 @@
+/* Estilos generales */
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
@@ -5,6 +6,7 @@ body {
   padding: 0;
 }
 
+/* Contenedor principal */
 .container {
   width: 90%;
   margin: 20px auto;
@@ -42,11 +44,11 @@ table tr:hover {
   background-color: #f1f1f1;
 }
 
-/* Estilos para los botones */
+/* Botones */
 button {
-  padding: 8px 12px;
+  padding: 10px 15px;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s ease;
@@ -56,33 +58,33 @@ button:hover {
   opacity: 0.9;
 }
 
-button img {
-  width: 20px;
-  height: 20px;
-  vertical-align: middle;
-}
-
-/* Botón de eliminar (rojo) */
-.eliminar-button {
-  background-color: #ff4d4d;
+/* Botón "Nueva +" */
+.nueva-venta-button {
+  background-color: #28a745;
   color: white;
+  font-weight: bold;
 }
 
-.eliminar-button:hover {
-  background-color: #cc0000;
+.nueva-venta-button:hover {
+  background-color: #218838;
 }
 
-/* Botón de detalles (azul) */
+/* Botón de detalles (morado) */
 .detalles-button {
-  background-color: #007bff;
+  background-color: #800080;
   color: white;
+  border: none;
+  padding: 10px 20px;
 }
 
 .detalles-button:hover {
-  background-color: #0056b3;
+  background-color: #9932CC;
 }
 
-/* Estilos para el modal */
+/* ---------------------- */
+/* MODALES                */
+/* ---------------------- */
+
 .modal {
   position: fixed;
   top: 0;
@@ -95,81 +97,134 @@ button img {
   align-items: center;
 }
 
-/* Modal azul */
+/* Modal de detalles */
 .modal-content {
-  background-color: #007bff; /* Azul */
-  color: white; /* Texto en blanco para contraste */
+  background-color: #e0f2f7; /* Cambia el color de fondo a un azul claro */
+  color: #333;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 10px;
   width: 400px;
   max-width: 90%;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   position: relative;
+  font-family: sans-serif;
+  text-align: left;
 }
 
-/* Botón de cierre (X) */
-.close {
+.modal-content h2 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #b3e5fc; /* Barra divisoria azul claro */
+  padding-bottom: 10px;
+}
+
+.modal-content p {
+  margin-bottom: 15px;
+  font-size: 1.1em;
+  border-bottom: 1px solid #b3e5fc; /* Barra divisoria azul claro */
+  padding-bottom: 10px;
+}
+
+.modal-content h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 1.3em;
+  border-bottom: 2px solid #b3e5fc; /* Barra divisoria azul claro */
+  padding-bottom: 5px;
+}
+
+.modal-content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.modal-content li {
+  margin-bottom: 8px;
+  font-size: 1.1em;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #b3e5fc; /* Barra divisoria azul claro */
+  padding-bottom: 8px;
+}
+
+.modal-content li:last-child {
+  border-bottom: none; /* Elimina la barra divisoria del último elemento */
+}
+
+.modal-content li span:first-child {
+  font-weight: bold;
+}
+
+.modal-content .close {
   position: absolute;
   top: 10px;
   right: 15px;
   font-size: 24px;
   cursor: pointer;
-  color: white; /* Blanco para contraste */
+  color: #808080;
 }
 
-.close:hover {
-  color: #ddd; /* Gris claro */
+.modal-content .close:hover {
+  color: #555;
 }
 
-/* Input en el modal */
-input[type="password"] {
+/* Modal de "Nueva Venta" (color verde) */
+.modal-content.modal-nueva-venta {
+  background-color: #28a745;
+}
+
+/* Encabezado del modal */
+.modal-content.modal-nueva-venta h3 {
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 10px;
+}
+
+/* Etiquetas de los formularios */
+.modal-content label {
+  display: block;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: left;
+}
+
+/* Campos de entrada */
+.modal-content input {
   width: 100%;
   padding: 8px;
-  margin-top: 10px;
-  border: 1px solid white; /* Borde blanco */
-  border-radius: 4px;
+  margin-top: 5px;
+  border: none;
+  border-radius: 5px;
   font-size: 14px;
-  background-color: rgba(255, 255, 255, 0.8); /* Fondo claro */
   color: black;
 }
 
-/* Botón Eliminar en el modal */
+/* Botones dentro del modal */
 .modal-content button {
-  background-color: white; /* Botón blanco */
-  color: #007bff; /* Azul */
-  font-weight: bold;
-  padding: 8px 12px;
+  background-color: white;
+  color: #007bff;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
+  padding: 10px;
   width: 100%;
   margin-top: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.modal-content.modal-nueva-venta button {
+  color: #28a745;
 }
 
 .modal-content button:hover {
-  background-color: #f8f9fa; /* Más claro */
+  background-color: #f8f9fa;
 }
 
-/* Estilos para los mensajes de error */
+/* Estilos para mensajes de error */
 .error {
   color: #ff4d4d;
   font-size: 14px;
   margin-top: 10px;
-}
-
-/* Estilos para la lista de productos */
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-ul li {
-  padding: 8px;
-  border-bottom: 1px solid #ddd;
-}
-
-ul li:last-child {
-  border-bottom: none;
 }
