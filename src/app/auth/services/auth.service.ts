@@ -18,7 +18,7 @@ export class AuthService {
     private loggedUser: string = '';
     
     constructor(
-        private http: HttpClient,
+    public http: HttpClient,
         private router: Router,
         private ngZone: NgZone
     ) {
@@ -53,6 +53,39 @@ export class AuthService {
             })
         );
     }
+
+     /**
+   * Método específico para el login de clientes.
+   * @param user Datos del cliente (correo y contraseña).
+   * @returns Observable con la respuesta del servidor.
+   */
+  loginCliente(user: { correo: string; contrasena: string }): Observable<any> {
+    const url = `${environment.api.authApis}/usuarios/login`;
+    console.log('🌐 Iniciando sesión de cliente en:', url);
+    console.log('📦 Datos enviados:', user);
+
+    return this.http.post<any>(url, user).pipe(
+      tap((response) => {
+        console.log('✅ Respuesta del servidor:', response);
+        if (response && response.token && response.user) {
+    
+      // Almacenar token JWT y datos del usuario
+          this.storeJwtToken(response.token);
+          localStorage.setItem(this.USER_CURRENT, JSON.stringify(response.user));
+          console.log("👤 Usuario almacenado:", response.user);
+        } else {
+          console.warn("⚠️ Respuesta incompleta del servidor");
+        }
+      }),
+      catchError((error) => {
+        console.error('❌ Error en el login del cliente:', error);
+        let mensajeError = 'Ocurrió un error desconocido.';
+        if (error.status === 401) mensajeError = 'Credenciales incorrectas. Inténtelo de nuevo.';
+        if (error.status === 500) mensajeError = 'Error interno del servidor. Inténtelo más tarde.';
+        return throwError(() => new Error(mensajeError));
+      })
+    );
+  }
     
 
     logout(): Observable<any> {

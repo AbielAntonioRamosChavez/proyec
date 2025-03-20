@@ -12,8 +12,7 @@ import { of } from 'rxjs';
   styleUrls: ['./login2.component.css']
 })
 export class Login2Component {
-  @Output() loginSuccess = new EventEmitter<void>(); // Evento que notifica el éxito del login
-
+  @Output() loginSuccess = new EventEmitter<void>();
   public form: FormGroup;
   isSubmited: boolean = false;
   public error = '';
@@ -30,6 +29,7 @@ export class Login2Component {
 
   public onSubmit() {
     this.isSubmited = true;
+
     if (this.form.invalid) {
       return;
     }
@@ -39,32 +39,24 @@ export class Login2Component {
       contrasena: this.form.value.password
     };
 
-    this._authService.login(body).pipe(
-      tap((tokens: any) => {
-        this._authService.doLoginUser(this.form.value.email, tokens);
-      }),
-      mapTo(true),
-      catchError(error => {
-        this.handleError(error);
-        return of(false);
-      })
-    ).subscribe(res => {
-      if (res) {
-        this.loginSuccess.emit(); // 🔥 Emitimos el evento cuando el login es exitoso
-
+    this._authService.loginCliente(body).subscribe({
+      next: (response) => {
+        console.log('🚀 Login exitoso:', response);
+        this.loginSuccess.emit(); // Emitir evento de éxito
         setTimeout(() => {
           const dataUser = JSON.parse(localStorage.getItem('USER_CURRENT') || '{}');
-          if (dataUser.tipo !== "checkin") {
-            this.router.navigate(['puntodeventa']).then(() => {
+          if (dataUser.rol === "cliente") {
+            this.router.navigate(['/landing']).then(() => {
               this.isSubmited = false;
             });
           } else {
-            this.router.navigate(['/login']).then(() => {
-              this.isSubmited = false;
-            });
+            this.error = 'Acceso no autorizado para este tipo de usuario.';
+            this.isSubmited = false;
           }
         }, 500);
-      } else {
+      },
+      error: (err) => {
+        this.handleError(err);
         this.isSubmited = false;
       }
     });
@@ -80,9 +72,7 @@ export class Login2Component {
     } else {
       this.error = 'Ocurrió un error desconocido. Inténtelo de nuevo.';
     }
-
     console.error('Error en el login:', error);
-
     setTimeout(() => {
       this.error = '';
     }, 5000);

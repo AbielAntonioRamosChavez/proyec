@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
@@ -11,25 +12,24 @@ import { ErrorAutenticateInterceptor } from './auth/ErrorAutenticateInterceptor'
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthModule } from './auth/auth.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
-import { MatDialogConfirmacionComponent } from './admin/pages/catalogos/dialogo-confirmacion/dialogo-confirmacion.component';
 import { RoleGuard } from './guards/role.guard';
+import { CatalogosModule } from './admin/pages/catalogos/catalogos.module'; // Importa CatalogosModule
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
-    RegisterComponent,
-    MatDialogConfirmacionComponent,
+    RegisterComponent
+    // Elimina MatDialogConfirmacionComponent de aquí
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
     ReactiveFormsModule,
     AuthModule,
-    MatDialogModule,
+    CatalogosModule // Importa CatalogosModule para acceder a sus componentes exportados
   ],
   providers: [
     provideClientHydration(),
@@ -50,6 +50,4 @@ import { RoleGuard } from './guards/role.guard';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
-
-
+export class AppModule {}

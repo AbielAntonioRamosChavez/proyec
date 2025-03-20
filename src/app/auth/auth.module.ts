@@ -10,6 +10,7 @@ import { Login2Component } from './containers/login2/login2.component';
 import { LoginComponent } from './containers/login/login.component';
 import { TokenInterceptor } from './token.interceptor';
 
+
 @NgModule({    
     declarations: [
         LoginComponent,

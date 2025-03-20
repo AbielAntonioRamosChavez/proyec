@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatDialogConfirmacionComponent } from '../dialogo-confirmacion/dialogo-confirmacion.component';
-import { DialogoEditarUsuarioComponent } from '../../catalogos/dialogo-editar-usuario/dialogo-editar-usuario.component';
 import { AuthService } from '../../../../auth/services/auth.service';
+import { environment } from '../../../../../environments/environment';
+// usuario.component.ts
+
+import { DialogoEditarUsuarioComponent } from '../dialogo-editar-usuario/dialogo-editar-usuario.component';
+import { MatDialogConfirmacionComponent } from '../dialogo-confirmacion/dialogo-confirmacion.component';
 
 @Component({
   selector: 'app-usuario',
@@ -22,7 +25,7 @@ export class UsuarioComponent implements OnInit {
 
   // 🔄 Función reutilizable para obtener los usuarios
   cargarUsuarios() {
-    this.authService.getUsuarios().subscribe(
+    this.authService.consultarUsuarios().subscribe(
       (usuarios) => {
         console.log('📡 Lista de usuarios actualizada:', usuarios);
         this.usuarios = usuarios;
@@ -33,6 +36,7 @@ export class UsuarioComponent implements OnInit {
     );
   }
 
+  // 🔍 Propiedad computada para filtrar usuarios
   get usuariosFiltrados() {
     return this.usuarios.filter((usuario) =>
       Object.values(usuario).some((valor) =>
@@ -41,10 +45,12 @@ export class UsuarioComponent implements OnInit {
     );
   }
 
+  // ✏️ Función para editar un usuario
   editarUsuario(usuario: any) {
     const dialogRef = this.dialog.open(DialogoEditarUsuarioComponent, {
       width: '350px',
       data: {
+        id: usuario.id,
         nombre: usuario.nombre,
         correo: usuario.correo,
         telefono: usuario.telefono,
@@ -53,17 +59,24 @@ export class UsuarioComponent implements OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('Usuario editado:', result);
-        const index = this.usuarios.findIndex(u => u.correo === usuario.correo);
-        if (index !== -1) {
-          this.usuarios[index] = result;
-        }
+        console.log('Datos actualizados:', result);
+        const url = `${environment.api.authApis}/usuarios/actualizar/${result.id}`;
+        this.authService.http.put(url, result).subscribe({
+          next: () => {
+            console.log('✅ Usuario actualizado en el backend');
+            this.cargarUsuarios(); // Recarga la lista de usuarios
+          },
+          error: (error) => {
+            console.error('❌ Error al actualizar usuario:', error);
+          }
+        });
       }
     });
   }
 
+  // 🗑️ Función para eliminar un usuario
   eliminarUsuario(usuario: any) {
     const dialogRef = this.dialog.open(MatDialogConfirmacionComponent, {
       width: '350px',
@@ -72,7 +85,16 @@ export class UsuarioComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((confirmado) => {
       if (confirmado) {
-        this.usuarios = this.usuarios.filter((u) => u !== usuario);
+        const url = `${environment.api.authApis}/usuarios/eliminar/${usuario.id}`;
+        this.authService.http.delete(url).subscribe({
+          next: () => {
+            console.log('✅ Usuario eliminado en el backend');
+            this.usuarios = this.usuarios.filter((u) => u !== usuario); // Actualiza la lista local
+          },
+          error: (error) => {
+            console.error('❌ Error al eliminar usuario:', error);
+          }
+        });
       }
     });
   }

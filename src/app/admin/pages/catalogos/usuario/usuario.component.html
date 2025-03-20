@@ -8,46 +8,42 @@
     </div>
 
     <!-- Tabla de usuarios -->
-    <div class="card mt-3">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Apellidos</th>
-                            <th>Correo</th>
-                            <th>Teléfono</th>
-                            <th>Dirección</th>
-                            <th>Rol</th>
-                            <th>Fecha de Creación</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let usuario of usuariosFiltrados">
-                            <td>{{ usuario.nombre }}</td>
-                            <td>{{ usuario.apellidos }}</td>
-                            <td>{{ usuario.correo }}</td>
-                            <td>{{ usuario.telefono }}</td>
-                            <td>{{ usuario.direccion }}</td>
-                            <td>{{ usuario.rol }}</td>
-                            <td>{{ usuario.fecha_creacion | date }}</td>
-                            <td>
-                                <button class="btn btn-primary btn-sm me-2" (click)="editarUsuario(usuario)">
-                                    <i class="fas fa-edit"></i> Editar
-                                </button>
-                                <button class="btn btn-danger btn-sm" (click)="eliminarUsuario(usuario)">
-                                    <i class="fas fa-trash"></i> Eliminar
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div *ngIf="usuariosFiltrados.length === 0" class="text-center text-muted mt-3">
-                    No hay usuarios disponibles.
-                </div>
-            </div>
-        </div>
+<div class="table-responsive">
+    <table class="table table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Nombre</th>
+          <th>Apellidos</th>
+          <th>Correo</th>
+          <th>Teléfono</th>
+          <th>Dirección</th>
+          <th>Rol</th>
+          <th>Fecha de Creación</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuariosFiltrados">
+          <td>{{ usuario.nombre }}</td>
+          <td>{{ usuario.apellidos }}</td>
+          <td>{{ usuario.correo }}</td>
+          <td>{{ usuario.telefono }}</td>
+          <td>{{ usuario.direccion }}</td>
+          <td>{{ usuario.rol }}</td>
+          <td>{{ usuario.fecha_creacion | date }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm me-2" (click)="editarUsuario(usuario)">
+              <i class="fas fa-edit"></i> Editar
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="eliminarUsuario(usuario)">
+              <i class="fas fa-trash"></i> Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="usuariosFiltrados.length === 0" class="text-center text-muted mt-3">
+      No hay usuarios disponibles.
     </div>
+  </div>
 </div>

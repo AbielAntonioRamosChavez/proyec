@@ -3,10 +3,10 @@ import { FormsModule } from '@angular/forms'; // Importa FormsModule para usar n
 
 @Component({
   selector: 'app-productos',
-  standalone: true,
+  standalone: false,
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css'],
-  imports: [FormsModule] // Importa FormsModule
+
 })
 export class ProductosComponent {
   productos = [

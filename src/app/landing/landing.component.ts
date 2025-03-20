@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {Router} from '@angular/router';
+import {AuthService} from '../auth/services/auth.service';
 
 
 
@@ -10,11 +11,17 @@ import {Router} from '@angular/router';
   styleUrl: './landing.component.css'
 })
 export class LandingComponent {
+  usuarioActual: any = null;
 
-  constructor(private router: Router) {
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.usuarioActual = this.authService.getUser();
   }
-  loadlogin(){
-    this.router.navigate(['/login2']).then(() => {
+
+  logout(): void {
+    this.authService.logout().subscribe(() => {
+      this.usuarioActual = null;
     });
   }
 }
