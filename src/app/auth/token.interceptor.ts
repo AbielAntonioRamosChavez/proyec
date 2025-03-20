@@ -20,16 +20,18 @@ export class TokenInterceptor implements HttpInterceptor {
     if (request.url.includes('/refresh-token')) {
       return next.handle(request);
     }
-
+  
     const token = authService.getJwtToken();
-    const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : new HttpHeaders();
-    
+    console.log('Token obtenido en el interceptor:', token); // Log para verificar el token
+  
     if (token) {
       request = this.addToken(request, token);
+      console.log('Encabezados de la solicitud después de agregar el token:', request.headers); // Log para verificar los encabezados
     }
-
+  
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
+        console.error('❌ Error en la solicitud HTTP:', error); // Log para capturar errores HTTP
         if (error.status === 401 && !request.url.includes('/refresh-token')) {
           return this.handle401Error(request, next);
         }

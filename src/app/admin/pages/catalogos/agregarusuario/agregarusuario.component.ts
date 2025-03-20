@@ -1,6 +1,6 @@
-import { Component } from '@angular/core'; 
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../../auth/services/auth.service'; 
+import { AuthService } from '../../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-agregarusuario',
@@ -11,7 +11,7 @@ import { AuthService } from '../../../../auth/services/auth.service';
 export class AgregarusuarioComponent {
   constructor(
     private router: Router,
-    private authService: AuthService 
+    private authService: AuthService
   ) {}
 
   // Datos del usuario nuevo
@@ -21,7 +21,6 @@ export class AgregarusuarioComponent {
     correo: '',
     telefono: '',
     direccion: '',
-    contrasena: '',
     rol: '',
     fecha_creacion: this.obtenerFechaHoy(),
   };
@@ -30,44 +29,43 @@ export class AgregarusuarioComponent {
 
   registrarUsuario() {
     console.log('Rol seleccionado antes de enviar:', this.nuevoUsuario.rol);
-
+  
     // Validaciones antes de enviar el formulario
-    if (!this.nuevoUsuario.nombre || !this.nuevoUsuario.apellidos || !this.nuevoUsuario.correo || !this.nuevoUsuario.contrasena || !this.nuevoUsuario.rol) {
+    if (!this.nuevoUsuario.nombre || !this.nuevoUsuario.apellidos || !this.nuevoUsuario.correo || !this.nuevoUsuario.rol) {
       this.mensajeError = 'Por favor, complete todos los campos obligatorios.';
       return;
     }
-
+  
     if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(this.nuevoUsuario.nombre)) {
       this.mensajeError = 'El nombre solo puede contener letras y espacios.';
       return;
     }
-
+  
     if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(this.nuevoUsuario.apellidos)) {
       this.mensajeError = 'Los apellidos solo pueden contener letras y espacios.';
       return;
     }
-
+  
     if (!this.validarCorreo(this.nuevoUsuario.correo)) {
       this.mensajeError = 'Por favor, ingrese un correo válido.';
       return;
     }
-
-    // Verificar si hay un token antes de hacer la solicitud
-    const token = localStorage.getItem('token');
-    if (token) {
-      console.log('✅ Token encontrado:', token);
-      } else {
-      console.warn('⚠️ No hay token disponible.');
+  
+    if (!this.nuevoUsuario.rol || this.nuevoUsuario.rol.trim() === '') {
+      this.mensajeError = 'Por favor, seleccione un rol válido.';
+      return;
     }
-
+  
+    // Verificar si hay un token antes de hacer la solicitud
+    const token = localStorage.getItem('JWT_TOKEN');
     if (!token) {
       console.error('❌ No hay token, el usuario no está autenticado.');
       this.mensajeError = '⚠️ No tienes permisos para registrar usuarios. Inicia sesión.';
       return;
     }
-
+  
     let registroObservable;
-
+  
     if (this.nuevoUsuario.rol.toLowerCase() === 'admin' || this.nuevoUsuario.rol.toLowerCase() === 'empleado') {
       console.log('🛠️ Registrando usuario administrativo...');
       registroObservable = this.authService.registerAdmin(this.nuevoUsuario);
@@ -75,19 +73,19 @@ export class AgregarusuarioComponent {
       console.log('🛍️ Registrando cliente...');
       registroObservable = this.authService.registerCliente(this.nuevoUsuario);
     }
-
+  
     registroObservable.subscribe(
       (response) => {
         console.log('✅ Usuario registrado con éxito:', response);
-
+  
         if (!response) {
           console.error('❌ La respuesta del servidor es null o indefinida.');
           this.mensajeError = '⚠️ Ocurrió un problema con el servidor.';
           return;
         }
-
+  
         alert('✅ Usuario registrado exitosamente');
-
+  
         // Reiniciar formulario
         this.nuevoUsuario = {
           nombre: '',
@@ -95,12 +93,11 @@ export class AgregarusuarioComponent {
           correo: '',
           telefono: '',
           direccion: '',
-          contrasena: '',
           rol: '',
           fecha_creacion: this.obtenerFechaHoy(),
         };
-
-        // Agregar un pequeño delay antes de la redirección para evitar problemas
+  
+        // Redirigir a la lista de usuarios
         setTimeout(() => {
           console.log('🔄 Redirigiendo a la página de usuarios...');
           this.irAUsuarios();
@@ -108,7 +105,7 @@ export class AgregarusuarioComponent {
       },
       (error) => {
         console.error('❌ Error al registrar usuario:', error);
-
+  
         if (error.status === 400) {
           this.mensajeError = '⚠️ El correo ya está registrado';
         } else if (error.status === 401) {
@@ -121,7 +118,6 @@ export class AgregarusuarioComponent {
       }
     );
   }
-
 
   // Validar formato de correo electrónico
   validarCorreo(correo: string): boolean {
@@ -139,5 +135,3 @@ export class AgregarusuarioComponent {
     this.router.navigate(['/usuarios']);
   }
 }
-
-

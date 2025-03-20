@@ -1,15 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'; 
-import { Inject } from '@angular/core';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-dialogo-editar-usuario',
-  standalone: false,
-  
+  standalone:false,
   templateUrl: './dialogo-editar-usuario.component.html',
-  styleUrl: './dialogo-editar-usuario.component.css'
+  styleUrls: ['./dialogo-editar-usuario.component.css']
 })
 export class DialogoEditarUsuarioComponent {
   usuarioForm: FormGroup;
@@ -30,7 +27,16 @@ export class DialogoEditarUsuarioComponent {
 
   onSave(): void {
     if (this.usuarioForm.valid) {
-      this.dialogRef.close(this.usuarioForm.value);
+      const datosActualizados = {
+        id: this.data.id, // Asegúrate de incluir el ID
+        nombre: this.usuarioForm.value.nombre,
+        correo: this.usuarioForm.value.correo,
+        telefono: this.usuarioForm.value.telefono,
+        direccion: this.usuarioForm.value.direccion,
+        rol: this.usuarioForm.value.rol
+      };
+      console.log('Datos enviados al cerrar el diálogo:', datosActualizados); // Depuración
+      this.dialogRef.close(datosActualizados);
     }
   }
 

@@ -45,8 +45,13 @@ export class UsuarioComponent implements OnInit {
     );
   }
 
-  // ✏️ Función para editar un usuario
   editarUsuario(usuario: any) {
+    console.log('Usuario a editar:', usuario); // Depuración
+    if (!usuario || !usuario.id) {
+      console.error('❌ El usuario no tiene un ID válido');
+      return;
+    }
+  
     const dialogRef = this.dialog.open(DialogoEditarUsuarioComponent, {
       width: '350px',
       data: {
@@ -58,10 +63,14 @@ export class UsuarioComponent implements OnInit {
         rol: usuario.rol
       }
     });
-
+  
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Datos actualizados:', result);
+        if (!result.id) {
+          console.error('❌ El resultado no contiene un ID válido');
+          return;
+        }
         const url = `${environment.api.authApis}/usuarios/actualizar/${result.id}`;
         this.authService.http.put(url, result).subscribe({
           next: () => {

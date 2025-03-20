@@ -126,36 +126,34 @@ export class AuthService {
 
     registerAdmin(usuario: any): Observable<any> { 
         const url = `${environment.api.authApis}/usuarios/registro-admin`;
-        const token = this.getJwtToken(); // 🔄 Corregido
-
+        const token = this.getJwtToken(); // Obtener el token JWT
+        console.log('Token obtenido del localStorage:', token); // Log para verificar el token
+      
         if (!token) {
-            console.error('❌ No hay token disponible. El usuario no está autenticado.');
-            return throwError(() => new Error('⚠️ No tienes permisos para realizar esta acción.'));
+          console.error('❌ No hay token disponible. El usuario no está autenticado.');
+          return throwError(() => new Error('⚠️ No tienes permisos para realizar esta acción.'));
         }
-
+      
         const headers = new HttpHeaders({
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
         });
-
-        console.log('📡 Registrando administrador en:', url);
-        console.log('📦 Datos enviados:', usuario);
-        console.log('🛂 Token enviado:', token);
-
+      
+        console.log('Datos enviados al backend:', usuario); // Log para verificar los datos del usuario
+        console.log('Encabezados de la solicitud:', headers); // Log para verificar los encabezados
+      
         return this.http.post(url, usuario, { headers }).pipe(
-            tap(response => console.log('✅ Usuario administrativo registrado:', response)),
-            catchError(error => {
-                console.error('❌ Error al registrar usuario administrativo:', error);
-
-                let mensajeError = 'Ocurrió un error al registrar el usuario administrativo.';
-                if (error.status === 400) mensajeError = '⚠️ El correo ya está registrado.';
-                if (error.status === 401) mensajeError = '⚠️ No tienes permisos para registrar usuarios.';
-                if (error.status === 500) mensajeError = '⚠️ Error interno del servidor.';
-
-                return throwError(() => new Error(mensajeError));
-            })
+          tap(response => console.log('✅ Usuario administrativo registrado:', response)),
+          catchError(error => {
+            console.error('❌ Error al registrar usuario administrativo:', error);
+            let mensajeError = 'Ocurrió un error al registrar el usuario administrativo.';
+            if (error.status === 400) mensajeError = '⚠️ El correo ya está registrado.';
+            if (error.status === 401) mensajeError = '⚠️ No tienes permisos para registrar usuarios.';
+            if (error.status === 500) mensajeError = '⚠️ Error interno del servidor.';
+            return throwError(() => new Error(mensajeError));
+          })
         );
-    }
+      }
 
     private handleLoginResponse(response: any): void {
         if (response && response.token && response.refreshToken) {
@@ -272,10 +270,7 @@ export class AuthService {
         sessionStorage.setItem(this.JWT_TOKEN, token); // Guarda en sessionStorage como respaldo
         console.log("✅ Token guardado en localStorage y sessionStorage:", token);
     }
-    
-      
-    
-    
+   
     getUsuarios(): Observable<any[]> {
         return this.usuarios.asObservable();
     }
