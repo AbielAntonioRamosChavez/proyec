@@ -1,22 +1,57 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms'; // Importa FormsModule para usar ngModel
+// productos.component.ts
+import { Component, OnInit } from '@angular/core';
+import { ProductoService } from '../../../../auth/services/producto/producto.service';
+import { CategoriaService } from '../../../../auth/services/categoria/categoria.service';
 
 @Component({
   selector: 'app-productos',
-  standalone: false,
+  standalone:false,
   templateUrl: './productos.component.html',
-  styleUrls: ['./productos.component.css'],
-
+  styleUrls: ['./productos.component.css']
 })
-export class ProductosComponent {
-  productos = [
-    { codigo: '0015', producto: 'Avena quaker', categoria: 'Cereales', stock: 49, precio: 4.25 },
-    { codigo: '003', producto: 'Coco Crunch', categoria: 'Cereales', stock: 15, precio: 5.25 },
-    // ... otros productos
-  ];
-
+export class ProductosComponent implements OnInit {
+  productos: any[] = [];
   selectedProduct: any = {}; // Producto seleccionado para editar
   newProduct: any = {}; // Nuevo producto para añadir
+
+  constructor(private productoService: ProductoService,
+    private categoriaService: CategoriaService 
+  ) {}
+
+  ngOnInit(): void {
+    this.cargarProductos();
+    this.cargarCategorias();
+  }
+
+  cargarCategorias() {
+    this.categoriaService.obtenerCategorias().subscribe(
+      (data) => {
+        this.categorias = data;
+      },
+      (error) => {
+        console.error('Error al cargar categorías:', error);
+      }
+    );
+  }
+
+  categorias: any[] = [];
+
+  getNombreCategoria(categoriaId: number): string {
+    const categoria = this.categorias.find(c => c.id === categoriaId);
+    return categoria ? categoria.nombre : 'Sin categoría';
+}
+
+  // Cargar la lista de productos
+  cargarProductos() {
+    this.productoService.obtenerProductos().subscribe(
+      (data) => {
+        this.productos = data;
+      },
+      (error) => {
+        console.error('Error al cargar productos:', error);
+      }
+    );
+  }
 
   // Abre el modal de añadir
   openAddModal() {
@@ -31,8 +66,15 @@ export class ProductosComponent {
 
   // Añade un nuevo producto
   addProduct() {
-    this.productos.push({ ...this.newProduct }); // Añade el nuevo producto
-    this.closeModal('addModal');
+    this.productoService.crearProducto(this.newProduct).subscribe(
+      (response) => {
+        this.productos.push(response); // Añade el nuevo producto a la lista
+        this.closeModal('addModal');
+      },
+      (error) => {
+        console.error('Error al crear el producto:', error);
+      }
+    );
   }
 
   // Abre el modal de edición
@@ -46,13 +88,33 @@ export class ProductosComponent {
     }
   }
 
-  // Guarda los cambios del producto editado
   saveChanges() {
-    const index = this.productos.findIndex(p => p.codigo === this.selectedProduct.codigo);
-    if (index !== -1) {
-      this.productos[index] = { ...this.selectedProduct }; // Actualiza el producto
+    this.productoService.actualizarProducto(this.selectedProduct.id, this.selectedProduct).subscribe(
+      (response) => {
+        const index = this.productos.findIndex(p => p.id === response.id);
+        if (index !== -1) {
+          this.productos[index] = response; // Actualiza el producto en la lista
+        }
+        this.closeModal('editModal');
+      },
+      (error) => {
+        console.error('Error al actualizar el producto:', error);
+      }
+    );
+  }
+
+  // Elimina un producto
+  deleteProduct(producto: any) {
+    if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+      this.productoService.eliminarProducto(producto.id).subscribe(
+        () => {
+          this.productos = this.productos.filter(p => p.id !== producto.id); // Filtra y elimina el producto
+        },
+        (error) => {
+          console.error('Error al eliminar el producto:', error);
+        }
+      );
     }
-    this.closeModal('editModal');
   }
 
   // Cierra el modal
@@ -64,11 +126,25 @@ export class ProductosComponent {
       modal.setAttribute('aria-hidden', 'true');
     }
   }
-
-  // Elimina un producto
-  deleteProduct(producto: any) {
-    if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-      this.productos = this.productos.filter(p => p.codigo !== producto.codigo); // Filtra y elimina el producto
-    }
+  // productos.component.ts
+openDetailModal(producto: any) {
+  this.selectedProduct = producto; // Asigna el producto seleccionado
+  const modal = document.getElementById('detailModal');
+  if (modal) {
+    modal.classList.add('show'); // Muestra el modal
+    modal.style.display = 'block';
+    modal.setAttribute('aria-hidden', 'false');
   }
+}
+
+// productos.component.ts
+closeDetailModal() {
+  const modal = document.getElementById('detailModal');
+  if (modal) {
+    modal.classList.remove('show'); // Oculta el modal
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+  }
+}
+
 }
