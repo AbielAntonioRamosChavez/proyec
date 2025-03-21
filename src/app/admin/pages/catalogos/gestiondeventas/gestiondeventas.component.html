@@ -1,68 +1,67 @@
-<div class="container">
+< class="container">
     <h2>Ventas</h2>
-    <button class="nueva-venta-button" (click)="mostrarFormularioNuevaVenta()">Nueva +</button>
-
-    <div *ngIf="formularioNuevaVentaVisible" class="modal">
-        <div class="modal-content nueva-venta-modal">
-            <span class="close" (click)="cerrarFormularioNuevaVenta()">&times;</span>
-            <h2>Nueva Venta</h2>
-
-            <div *ngFor="let producto of productosNuevos; let i = index">
-                <h3>Producto {{ i + 1 }}</h3>
-                <label>Cantidad:</label>
-                <input type="number" [(ngModel)]="producto.cantidad" placeholder="Cantidad">
-
-                <label>Número de Serie:</label>
-                <input type="text" [(ngModel)]="producto.numeroSerie" placeholder="Número de Serie">
-
-                <label>Precio:</label>
-                <input type="number" [(ngModel)]="producto.precio" placeholder="Precio">
-            </div>
-
-            <button (click)="agregarProducto()">Agregar Producto</button>
-            <button (click)="guardarNuevaVenta()">Guardar Venta</button>
-        </div>
-    </div>
-
+    <button class="nueva-venta-button" (click)="mostrarFormularioNuevaVenta()">
+      Nueva +
+    </button>
+  
     <table>
-        <thead>
-            <tr>
-                <th>Número</th>
-                <th>Fecha</th>
-                <th>Total</th>
-                <th>Detalles</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let venta of ventas">
-                <td>{{ venta.numero }}</td>
-                <td>{{ venta.fecha | date:'yyyy-MM-dd' }}</td>
-                <td>${{ venta.total.toFixed(2) }}</td>
-                <td>
-                    <button class="detalles-button" (click)="verDetalles(venta)">
-                        Detalles
-                    </button>
-                </td>
-            </tr>
-        </tbody>
+      <thead>
+        <tr>
+          <th>Número</th>
+          <th>Fecha</th>
+          <th>Total</th>
+          <th>Cliente</th>
+          <th>Empleado</th>
+          <th>Detalles</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let venta of ventas">
+          <td>{{ venta.id }}</td>
+          <td>{{ venta.fecha_creacion | date: 'yyyy-MM-dd' }}</td>
+          <td>${{ venta.total }}</td>
+          <td>
+            <strong>{{ venta.cliente.nombre }}</strong><br />
+            {{ venta.cliente.correo }}
+          </td>
+          <td>{{ venta.empleado.correo }}</td>
+          <td>
+            <button class="detalles-button" (click)="verDetalles(venta)">
+              Detalles
+            </button>
+          </td>
+        </tr>
+      </tbody>
     </table>
-
-    <div *ngIf="modalDetallesVisible">
-        <div class="modal">
-            <div class="modal-content">
-                <span class="close" (click)="cerrarModal()">&times;</span>
-                <h2 *ngIf="ventaSeleccionada">Detalles de Venta #{{ ventaSeleccionada?.numero }}</h2>
-                <p *ngIf="ventaSeleccionada"><strong>Fecha:</strong> {{ ventaSeleccionada?.fecha | date:'yyyy-MM-dd' }}</p>
-                <p *ngIf="ventaSeleccionada"><strong>Total:</strong> ${{ ventaSeleccionada?.total.toFixed(2) }}</p>
-
-                <h3 *ngIf="ventaSeleccionada?.productos?.length > 0">Productos</h3>
-                <ul *ngIf="ventaSeleccionada?.productos?.length > 0">
-                    <li *ngFor="let producto of ventaSeleccionada?.productos">
-                        <span>{{ producto.cantidad }}x {{ producto.numeroSerie }}</span>
-                        <span>${{ producto.precio.toFixed(2) }}</span>
-                    </li>
-                </ul>
-            </div>
+  
+    <div *ngIf="modalDetallesVisible" class="modal">
+        <div class="modal-content">
+          <span class="close" (click)="cerrarModal()">&times;</span>
+          <h2>Ticket de Venta #{{ ventaSeleccionada?.id }}</h2>
+          <p><strong>Fecha:</strong> {{ ventaSeleccionada?.fecha_creacion | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
+          <p><strong>Total:</strong> ${{ ventaSeleccionada?.total }}</p>
+          <p><strong>Cliente:</strong> {{ ventaSeleccionada?.cliente?.nombre || 'N/A' }} ({{ ventaSeleccionada?.cliente?.correo || 'N/A' }})</p>
+          <p><strong>Empleado:</strong> {{ ventaSeleccionada?.empleado?.nombre }} ({{ ventaSeleccionada?.empleado?.correo }})</p>
+    
+          <h3>Productos Comprados</h3>
+          <table class="productos-table">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let producto of ventaSeleccionada?.productos || []">
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.cantidad }}</td>
+                <td>${{ producto.precio_unitario }}</td>
+                <td>${{ producto.subtotal }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-    </div>
-</div>
+
+  </div>
