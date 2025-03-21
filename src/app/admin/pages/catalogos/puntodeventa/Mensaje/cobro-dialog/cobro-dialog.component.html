@@ -12,6 +12,6 @@
 </div>
 
 <div mat-dialog-actions>
-  <button mat-button (click)="cancelarCobro()">Cancelar</button>
-  <button mat-button color="primary" [disabled]="cambio < 0" (click)="confirmarCobro()">Aceptar</button>
+  <button mat-button (click)="cancelarCobro()">Cancelar <small><strong>F3</strong></small></button>
+  <button mat-button color="primary" [disabled]="cambio < 0" (click)="confirmarCobro()">Aceptar <small><strong>Enter</strong></small></button>
 </div>

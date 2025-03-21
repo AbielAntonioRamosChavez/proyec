@@ -1,76 +1,90 @@
-<div class="venta">
-    <div class="encabezado">
-        <div class="campo">Venta N°: 0001</div>
-        <div class="campo">Fecha: 17/09/2018</div>
-        <div class="campo">Término: Crédito</div>
-        <div class="campo">Días: 45</div>
-        <div class="campo"><button mat-raised-button color="primary">Imprimir Factura</button></div>
-    </div>
-
+<div>
+    <!-- Sección de Cliente -->
     <div class="cliente">
-        <div class="campo">Cédula: <input type="text" value="1"></div>
-        <div class="campo">Nombre Cliente: <input type="text" value="VENTA DE CONTADO"></div>
-        <div class="campo">Teléfono: <input type="text" value="0"></div>
-        <div class="campo"><button mat-raised-button color="primary">Q Buscar</button></div>
-        <div class="campo">Dirección: <input type="text" value="GENERAL"></div>
-        <div class="campo">Cupo: <input type="text" value="0000"></div>
-        <div class="campo">Precio: <input type="text" value="Precio Venta1"></div>
+      <div class="campo">
+        <label>Nombre Cliente:</label>
+        <input
+          type="text"
+          [(ngModel)]="nombreCliente"
+          placeholder="Nombre del cliente"
+          (focus)="onFocusCliente()"
+          (blur)="onBlurCliente()"
+        >
+        <small><strong>F2</strong></small>
+      </div>
+      <div class="campo">
+        <label>Teléfono:</label>
+        <input type="text" [(ngModel)]="telefonoCliente" placeholder="Teléfono">
+      </div>
+      <div class="campo">
+        <label>Dirección:</label>
+        <input type="text" [(ngModel)]="direccionCliente" placeholder="Dirección">
+      </div>
     </div>
-
-
+  
+    <!-- Sección de Búsqueda de Productos -->
     <div class="producto-busqueda">
-        <input type="text" class="input-field" placeholder="Código del producto" [(ngModel)]="codigoBusqueda">
-        <button mat-raised-button color="warn" class="action-button" (click)="agregarProductoPorCodigo()">AGREGAR</button>
+      <input type="text" class="input-field" placeholder="Código del producto" [(ngModel)]="codigoBusqueda" autofocus>
+      <button mat-raised-button color="warn" class="action-button" (click)="agregarProductoPorCodigo()">AGREGAR</button>
+      <small><strong>Enter</strong></small>
     </div>
-
+  
+    <!-- Tabla de Productos en Venta -->
     <table mat-table [dataSource]="productosEnVenta" class="mat-elevation-z8 product-table">
-        <ng-container matColumnDef="codigo">
-            <th mat-header-cell *matHeaderCellDef>Código</th>
-            <td mat-cell *matCellDef="let element">{{element.codigo}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="descripcion">
-            <th mat-header-cell *matHeaderCellDef>Descripción</th>
-            <td mat-cell *matCellDef="let element">{{element.descripcion}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="precio">
-            <th mat-header-cell *matHeaderCellDef>Precio</th>
-            <td mat-cell *matCellDef="let element">{{element.precio | currency}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="cantidad">
-            <th mat-header-cell *matHeaderCellDef>Cantidad</th>
-            <td mat-cell *matCellDef="let element">{{element.cantidad}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="importe">
-            <th mat-header-cell *matHeaderCellDef>Importe</th>
-            <td mat-cell *matCellDef="let element">{{element.precio * element.cantidad | currency}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="acciones">
-            <th mat-header-cell *matHeaderCellDef>Acciones</th>
-            <td mat-cell *matCellDef="let element; let i = index;">
-                <button mat-icon-button color="warn" (click)="eliminarProducto(i)">
-          <mat-icon>delete</mat-icon>
-        </button>
-            </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <ng-container matColumnDef="codigo">
+        <th mat-header-cell *matHeaderCellDef>Código</th>
+        <td mat-cell *matCellDef="let element">{{ element.codigo }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="descripcion">
+        <th mat-header-cell *matHeaderCellDef>Descripción</th>
+        <td mat-cell *matCellDef="let element">{{ element.descripcion }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="precio">
+        <th mat-header-cell *matHeaderCellDef>Precio</th>
+        <td mat-cell *matCellDef="let element">{{ element.precio | currency }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="cantidad">
+        <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+        <td mat-cell *matCellDef="let element">
+          <input type="number" [(ngModel)]="element.cantidad" (change)="actualizarCantidad(element)" class="cantidad-input">
+        </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="importe">
+        <th mat-header-cell *matHeaderCellDef>Importe</th>
+        <td mat-cell *matCellDef="let element">{{ element.precio * element.cantidad | currency }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let element; let i = index;">
+          <button mat-icon-button color="warn" (click)="eliminarProducto(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-
+  
+    <!-- Total a Pagar -->
     <div class="totales">
-        <div class="campo">Abono:</div>
-        <div class="campo">Total a pagar: {{total | currency}}</div>
+      <div class="campo">Total a pagar: {{ total | currency }}</div>
     </div>
-
+  
+    <!-- Botones de Acción -->
     <div class="botones">
-        <button mat-raised-button color="primary">Nueva Factura</button>
-        <button mat-raised-button color="primary">Ingresar Producto</button>
-        <button mat-raised-button color="primary">Guardar Factura</button>
-        <button mat-raised-button color="primary">Salir</button>
+      <button mat-raised-button color="primary" (click)="vaciarTabla()">Vaciar tabla</button>
+      <small><strong>Supr</strong></small>
+  
+      <button mat-raised-button color="primary" (click)="cobrar()">Cobrar</button>
+      <small><strong>Ctrl + Enter</strong></small>
+  
+      <button mat-raised-button color="primary" (click)="borrarDatos()">Borrar datos</button>
+      <small><strong>Ctrl + D</strong></small>
     </div>
-</div>
+  </div>
