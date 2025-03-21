@@ -88,21 +88,41 @@ export class AuthService {
   }
     
 
-    logout(): Observable<any> {
-        return this.http.post<any>(`${environment.api.authApis}/logout`, {}).pipe(
-            tap(response => {
-                console.log('🔒 Logout exitoso:', response);
+  logout(): Observable<void> {
+    const usuario = this.getUser(); // Obtener el usuario antes de cerrar sesión
+
+    return new Observable<void>((observer) => {
+        this.http.post<any>(`${environment.api.authApis}/logout`, {}).pipe(
+            tap(() => {
+                console.log('🔒 Logout exitoso');
                 this.doLogoutUser();
-                this.router.navigate(['/login']);
+
+                if (usuario?.rol === 'cliente') {
+                    this.router.navigate(['/login2']);
+                } else {
+                    this.router.navigate(['/login']);
+                }
+
+                observer.next(); // Notificar que la operación se completó
+                observer.complete();
             }),
             catchError(error => {
                 console.error('❌ Error en logout:', error);
                 this.doLogoutUser();
-                this.router.navigate(['/login']);
+
+                if (usuario?.rol === 'cliente') {
+                    this.router.navigate(['/login2']);
+                } else {
+                    this.router.navigate(['/login']);
+                }
+
+                observer.error(error);
                 return throwError(() => error);
             })
-        );
-    }
+        ).subscribe();
+    });
+}
+
 
     registerCliente(usuario: any): Observable<any> { 
         const url = `${environment.api.authApis}/usuarios/registro`;
