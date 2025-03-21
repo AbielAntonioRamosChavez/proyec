@@ -1,3 +1,4 @@
+/* Colores personalizados */
 .bg-success {
   background-color: #01172e !important;
 }
@@ -10,18 +11,176 @@
   color: #01172e !important;
   border-color: #01172e !important;
 }
+
 .btn-success {
   background-color: #01172e !important;
   border-color: #01172e !important;
 }
 
-.navbar-brand img {
-  height: 80px; /* Ajusta según necesites */
-  width: auto; /* Mantiene la proporción */
-}
-
-
 .btn-success:hover {
   background-color: #022347 !important;
   border-color: #022347 !important;
+}
+
+/* Estilos para imágenes de tamaño fijo */
+.fixed-size-image {
+  width: 100%; /* Ajusta el ancho al 100% del contenedor */
+  height: 250px; /* Altura fija para todas las imágenes */
+  object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsionarse */
+  border-radius: 8px; /* Bordes redondeados */
+}
+
+/* Estilos para las tarjetas de servicios */
+.service-card {
+  min-height: 300px; /* Altura mínima para todas las tarjetas */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribuye el contenido uniformemente */
+  background-color: #f8f9fa; /* Fondo claro para resaltar */
+  border: 1px solid #e9ecef; /* Borde sutil */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-10px); /* Efecto de levantar */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Sombra más pronunciada */
+}
+
+.icon-wrapper {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  width: 80px;
+  height: 80px;
+  margin: 0 auto; /* Centra el ícono en su contenedor */
+  background-color: #01172e; /* Fondo verde */
+  border-radius: 50%; /* Forma circular */
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.icon-wrapper i {
+  color: white; /* Color del ícono */
+}
+
+.service-card:hover .icon-wrapper {
+  transform: scale(1.1); /* Efecto de escala en el ícono */
+  background-color: #022347; /* Cambio de color al hacer hover */
+}
+
+h4 {
+  color: #343a40; /* Color oscuro para los títulos */
+  font-weight: 600; /* Texto en negrita */
+}
+
+.text-muted {
+  color: #6c757d !important; /* Color gris para el texto */
+}
+
+.comments-section {
+  border-top: 1px solid #e9ecef;
+  padding-top: 15px;
+}
+
+.comment {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.like-btn {
+  cursor: pointer;
+  background: none;
+  border: 1px solid #ccc;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.like-btn:hover {
+  background-color: #01172e;
+  color: white;
+}
+
+.comment-list {
+  max-height: 150px; /* Ajusta la altura según tus necesidades */
+  overflow-y: auto;
+}
+
+/* Estilos para el modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal--visible {
+  display: flex;
+}
+
+.modal__content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Alinea verticalmente el título y el botón de cerrar */
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.modal__close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  margin-left: 10px; /* Añade un margen para separar el botón del título */
+  padding: 0; /* Elimina el padding predeterminado */
+  line-height: 1; /* Asegura que el botón no tenga espacio adicional */
+  color: #000; /* Color del texto del botón */
+}
+
+.modal__body {
+  margin-bottom: 20px;
+}
+
+.btn-submit {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-close {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Hace que el desplazamiento sea suave */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Evita que el navbar fijo oculte las secciones */
+section {
+  scroll-margin-top: 80px; /* Ajusta según la altura del navbar */
+  padding: 100px 20px; /* Espaciado interno para mejorar la visualización */
 }

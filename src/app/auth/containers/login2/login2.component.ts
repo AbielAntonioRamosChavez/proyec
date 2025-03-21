@@ -77,4 +77,9 @@ export class Login2Component {
       this.error = '';
     }, 5000);
   }
+
+  loginWithGoogle() {
+    console.log("🔵 Iniciando sesión con Google...");
+    // Aquí va la lógica para autenticar con Google
+  }
 }

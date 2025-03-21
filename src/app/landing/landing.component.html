@@ -4,63 +4,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Navbar Bootstrap</title>
+    <title>BIENVENIDO</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Enlace a FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <style>
-        /* Hace que el desplazamiento sea suave */
-        
-        html {
-            scroll-behavior: smooth;
-        }
-        /* Evita que el navbar fijo oculte las secciones */
-        
-        section {
-            scroll-margin-top: 80px;
-            /* Ajusta según la altura del navbar */
-            padding: 100px 20px;
-            /* Espaciado interno para mejorar la visualización */
-        }
-    </style>
 </head>
 
 <body>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-success" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#page-top">Tienda de Abarrotes</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars ms-1"></i>
+        </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                    <li class="nav-item"><a class="nav-link text-teal" href="#productos">Productos</a></li>
+                    <li class="nav-item"><a class="nav-link text-teal" href="#services">Servicios</a></li>
+                    <li class="nav-item"><a class="nav-link text-teal" href="#about">Nosotros</a></li>
+                    <li class="nav-item"><a class="nav-link text-teal" href="#team">Equipo</a></li>
+                    <li class="nav-item"><a class="nav-link text-teal" href="#contact">Contacto</a></li>
 
-   <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-success" id="mainNav">
-    <div class="container">
-      <a class="navbar-brand" href="#page-top">
-        <img src="assets/img/imagen11.jpg" alt="Logo" height="80">
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="fas fa-bars ms-1"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-          <li class="nav-item"><a class="nav-link text-teal" href="#productos">Productos</a></li>
-          <li class="nav-item"><a class="nav-link text-teal" href="#services">Servicios</a></li>
-          <li class="nav-item"><a class="nav-link text-teal" href="#about">Nosotros</a></li>
-          <li class="nav-item"><a class="nav-link text-teal" href="#team">Equipo</a></li>
-          <li class="nav-item"><a class="nav-link text-teal" href="#contact">Contacto</a></li>
-  
-          <!-- Mostrar el nombre del usuario o el botón "Ingresar" -->
-          <li class="nav-item" *ngIf="usuarioActual; else ingresarLink">
-            <span class="nav-link text-white">
-              Bienvenido, {{ usuarioActual.nombre }}
-            </span>
-          </li>
-          <ng-template #ingresarLink>
-            <li class="nav-item">
-              <a class="nav-link btn text-white px-3" style="background-color: #48c6ef;" href="/login2">Ingresar</a>
-            </li>
-          </ng-template>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  
+                    <!-- Si el usuario está autenticado, mostrar su nombre y el botón de cerrar sesión -->
+                    <li class="nav-item" *ngIf="usuarioActual; else ingresarLink">
+                        <span class="nav-link text-white">
+                            Bienvenido, {{ usuarioActual.nombre }}
+                        </span>
+                        <button class="btn btn-danger ms-2" (click)="logout()">Cerrar sesión</button>
+                    </li>
+
+                    <!-- Si el usuario NO está autenticado, mostrar el botón de ingresar -->
+                    <ng-template #ingresarLink>
+                        <li class="nav-item">
+                            <a class="nav-link btn text-white px-3" style="background-color: #48c6ef;" href="/login2">Ingresar</a>
+                        </li>
+                    </ng-template>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <!-- Carrousel -->
     <section id="carousel" class="carousel slide" data-bs-ride="carousel " style="scroll-margin-top: 80px;">
         <div class="carousel-inner">
@@ -87,8 +76,7 @@
     <!-- Masthead-->
 
     <!-- Portfolio Grid-->
-
-    <section class="page-section bg-light" id="productos" style="scroll-margin-top: 80px;">
+    <section class="page-section bg-light" id="products" style="scroll-margin-top: 80px;">
         <div class="container">
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">Nuestros Productos</h2>
@@ -100,9 +88,9 @@
                     <div class="portfolio-item">
                         <a class="portfolio-link" data-bs-toggle="modal" href="#productoModal1">
                             <div class="portfolio-hover">
-                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                <div class="portfolio-hover-content"></div>
                             </div>
-                            <img class="img-fluid" src="https://s1.elespanol.com/2019/10/01/ciencia/nutricion/nutricion_433466766_134563951_1706x1280.jpg" alt="Granos" />
+                            <img class="img-fluid fixed-size-image" src="https://s1.elespanol.com/2019/10/01/ciencia/nutricion/nutricion_433466766_134563951_1706x1280.jpg" alt="Granos" />
                         </a>
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">Granos</div>
@@ -115,9 +103,9 @@
                     <div class="portfolio-item">
                         <a class="portfolio-link" data-bs-toggle="modal" href="#productoModal2">
                             <div class="portfolio-hover">
-                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                <div class="portfolio-hover-content"></div>
                             </div>
-                            <img class="img-fluid" src="https://productosdeldia.com/cdn/shop/articles/Tips_para_saber_como_elegir_frutas_y_verduras.jpg?v=1672343945" alt="Frutas" />
+                            <img class="img-fluid fixed-size-image" src="https://productosdeldia.com/cdn/shop/articles/Tips_para_saber_como_elegir_frutas_y_verduras.jpg?v=1672343945" alt="Frutas" />
                         </a>
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">Frutas</div>
@@ -130,9 +118,9 @@
                     <div class="portfolio-item">
                         <a class="portfolio-link" data-bs-toggle="modal" href="#productoModal3">
                             <div class="portfolio-hover">
-                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                <div class="portfolio-hover-content"></div>
                             </div>
-                            <img class="img-fluid" src="https://www.suertedeariza.com/wp-content/uploads/2022/09/aceites-especias.png" alt="Aceites y Condimentos" />
+                            <img class="img-fluid fixed-size-image" src="https://www.suertedeariza.com/wp-content/uploads/2022/09/aceites-especias.png" alt="Aceites y Condimentos" />
                         </a>
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">Aceites y Condimentos</div>
@@ -145,9 +133,9 @@
                     <div class="portfolio-item">
                         <a class="portfolio-link" data-bs-toggle="modal" href="#productoModal4">
                             <div class="portfolio-hover">
-                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                <div class="portfolio-hover-content"></div>
                             </div>
-                            <img class="img-fluid" src="https://tecnicana.org/wp-content/uploads/2024/04/image-19.png" alt="Azúcar y Endulzantes" />
+                            <img class="img-fluid fixed-size-image" src="https://tecnicana.org/wp-content/uploads/2024/04/image-19.png" alt="Azúcar y Endulzantes" />
                         </a>
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">Azúcar y Endulzantes</div>
@@ -160,9 +148,9 @@
                     <div class="portfolio-item">
                         <a class="portfolio-link" data-bs-toggle="modal" href="#productoModal5">
                             <div class="portfolio-hover">
-                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                <div class="portfolio-hover-content"></div>
                             </div>
-                            <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0271/8960/8525/files/5_verduras_que_te_ayudaran_a_bajar_de_peso_480x480.jpg?v=1675103142" alt="Verduras" />
+                            <img class="img-fluid fixed-size-image" src="https://cdn.shopify.com/s/files/1/0271/8960/8525/files/5_verduras_que_te_ayudaran_a_bajar_de_peso_480x480.jpg?v=1675103142" alt="Verduras" />
                         </a>
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">Verduras</div>
@@ -175,9 +163,9 @@
                     <div class="portfolio-item">
                         <a class="portfolio-link" data-bs-toggle="modal" href="#productoModal6">
                             <div class="portfolio-hover">
-                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                <div class="portfolio-hover-content"></div>
                             </div>
-                            <img class="img-fluid" src="https://www.sisinternational.com/wp-content/uploads/2023/02/Dairy-Market-Research.jpg" alt="Lácteos y Huevos" />
+                            <img class="img-fluid fixed-size-image" src="https://www.sisinternational.com/wp-content/uploads/2023/02/Dairy-Market-Research.jpg" alt="Lácteos y Huevos" />
                         </a>
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">Lácteos y Huevos</div>
@@ -193,38 +181,79 @@
     <section class="page-section bg-white" id="services" style="scroll-margin-top: 80px;">
         <div class="container">
             <div class="text-center">
-                <h2 class="section-heading text-uppercase text-success">Nuestros Servicios</h2>
-                <h3 class="section-subheading text-muted">Ofrecemos los mejores servicios para tu comodidad.</h3>
+                <h2 class="section-heading text-uppercase">Nuestros servicios</h2>
+                <h3 class="section-subheading text-muted">Los mejores servicios en la palma de tu mano</h3>
             </div>
             <div class="row text-center">
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x text-success">
-                  <i class="fas fa-circle fa-stack-2x"></i>
-                  <i class="fas fa-truck fa-stack-1x fa-inverse"></i>
-              </span>
-                    <h4 class="my-3">Entrega a Domicilio</h4>
-                    <p class="text-muted">Proximamente.</p>
+                <!-- Servicio 1: Entrega a Domicilio -->
+                <div class="col-md-4 mb-4">
+                    <div class="service-card p-4 shadow-sm rounded-lg hover-effect" (click)="abrirModal('entrega')">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-truck fa-2x"></i>
+                        </div>
+                        <h4 class="my-3">Entrega a Domicilio</h4>
+                        <p class="text-muted">Próximamente.</p>
+                        <button class="btn btn-outline-primary btn-sm">Ver detalles y comentarios</button>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x text-success">
-                  <i class="fas fa-circle fa-stack-2x"></i>
-                  <i class="fas fa-store fa-stack-1x fa-inverse"></i>
-              </span>
-                    <h4 class="my-3">Compra en Tienda</h4>
-                    <p class="text-muted">Visítanos y encuentra una gran variedad de productos frescos y de calidad.</p>
+
+                <!-- Servicio 2: Compra en Tienda -->
+                <div class="col-md-4 mb-4">
+                    <div class="service-card p-4 shadow-sm rounded-lg hover-effect" (click)="abrirModal('tienda')">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-store fa-2x"></i>
+                        </div>
+                        <h4 class="my-3">Compra en Tienda</h4>
+                        <p class="text-muted">Visítanos y encuentra una gran variedad de productos frescos y de calidad.</p>
+                        <button class="btn btn-outline-primary btn-sm">Ver detalles y comentarios</button>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x text-success">
-                  <i class="fas fa-circle fa-stack-2x"></i>
-                  <i class="fas fa-hand-holding-usd fa-stack-1x fa-inverse"></i>
-              </span>
-                    <h4 class="my-3">Promociones</h4>
-                    <p class="text-muted">Aprovecha nuestras ofertas y descuentos exclusivos cada semana.</p>
+
+                <!-- Servicio 3: Promociones -->
+                <div class="col-md-4 mb-4">
+                    <div class="service-card p-4 shadow-sm rounded-lg hover-effect" (click)="abrirModal('promociones')">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-hand-holding-usd fa-2x"></i>
+                        </div>
+                        <h4 class="my-3">Promociones</h4>
+                        <p class="text-muted">Aprovecha nuestras ofertas y descuentos exclusivos cada semana.</p>
+                        <button class="btn btn-outline-primary btn-sm">Ver detalles y comentarios</button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Modal personalizado -->
+    <div class="modal" [ngClass]="{ 'modal--visible': modalVisible }">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h2>{{ modalTitle }}</h2>
+                <button (click)="cerrarModal()" class="modal__close-btn">&times;</button>
+            </div>
+            <div class="modal__body">
+                <p>{{ modalDescription }}</p>
+                <div class="comments-section">
+                    <h3>Comentarios</h3>
+                    <div class="comment-list">
+                        <div class="comment" *ngFor="let comentario of comentariosModal">
+                            <p><strong>{{ comentario.usuario }}:</strong> {{ comentario.texto }}</p>
+                            <button (click)="darLike(comentario, modalType)" class="like-btn">
+                            👍 {{ comentario.likes }}
+                        </button>
+                        </div>
+                    </div>
+                    <form (ngSubmit)="agregarComentario(modalType, nuevoComentarioModal)">
+                        <textarea class="form-control" placeholder="Añade un comentario..." [(ngModel)]="nuevoComentarioModal" name="comentario" required></textarea>
+                        <button type="submit" class="btn-submit">Enviar</button>
+                    </form>
+                </div>
+            </div>
+            <div class="modal__footer">
+                <button (click)="cerrarModal()" class="btn-close">Cerrar</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Misión y Visión -->
     <section class="page-section bg-light py-5" id="about" style="scroll-margin-top: 80px;">
@@ -288,7 +317,6 @@
     </section>
 
 
-
     <!-- Contact -->
     <section class="page-section bg-white py-5" id="contact" style="scroll-margin-top: 80px;">
         <div class="container">
@@ -315,22 +343,6 @@
         </div>
     </section>
     <!-- Footer-->
-    <footer class="footer py-4">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-4 text-lg-start">Copyright &copy; Your Website 2023</div>
-                <div class="col-lg-4 my-3 my-lg-0">
-                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-                <div class="col-lg-4 text-lg-end">
-                    <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
-                    <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

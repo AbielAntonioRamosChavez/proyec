@@ -9,7 +9,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { ErrorAutenticateInterceptor } from './auth/ErrorAutenticateInterceptor';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthModule } from './auth/auth.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { RouterModule } from '@angular/router';
@@ -29,7 +29,8 @@ import { CatalogosModule } from './admin/pages/catalogos/catalogos.module'; // I
     RouterModule.forRoot(routes),
     ReactiveFormsModule,
     AuthModule,
-    CatalogosModule // Importa CatalogosModule para acceder a sus componentes exportados
+    CatalogosModule,
+    FormsModule // Importa CatalogosModule para acceder a sus componentes exportados
   ],
   providers: [
     provideClientHydration(),

@@ -5,8 +5,8 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
-                            <div class="card-header">
-                                <h3 class="text-center font-weight-light my-4">Ingresar</h3>
+                            <div class="card-header text-center">
+                                <h3 class="font-weight-light my-4">Ingresar</h3>
                                 <div *ngIf="error" class="alert alert-danger">
                                     {{ error }}
                                 </div>
@@ -15,12 +15,11 @@
                                 <form [formGroup]="form" (ngSubmit)="form.valid && onSubmit()" autocomplete="off">
                                     <!-- Campo Correo Electrónico -->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" name="email" id="email" formControlName="email" type="email" placeholder="name@example.com" />
+                                        <input class="form-control" id="email" formControlName="email" type="email" placeholder="name@example.com" />
                                         <label for="email">Correo Electrónico</label>
-                                        <!-- Errores del campo email -->
-                                        <div *ngIf="form.get('email')?.dirty && form.get('email')?.invalid" class="">
-                                            <div *ngIf="form.get('email')?.errors?.['required']">El campo correo electrónico es requerido</div>
-                                            <div *ngIf="form.get('email')?.errors?.['email']">El correo electrónico debe ser un formato válido</div>
+                                        <div *ngIf="form.get('email')?.dirty && form.get('email')?.invalid">
+                                            <small class="text-danger" *ngIf="form.get('email')?.errors?.['required']">El correo es requerido</small>
+                                            <small class="text-danger" *ngIf="form.get('email')?.errors?.['email']">Formato inválido</small>
                                         </div>
                                     </div>
 
@@ -28,19 +27,28 @@
                                     <div class="form-floating mb-3">
                                         <input class="form-control" id="password" formControlName="password" type="password" placeholder="Contraseña" />
                                         <label for="password">Contraseña</label>
-                                        <!-- Errores del campo password -->
-                                        <div *ngIf="form.get('password')?.dirty && form.get('password')?.invalid" class="feedback">
-                                            <div *ngIf="form.get('password')?.errors?.['required']">La contraseña es requerida</div>
-                                            <div *ngIf="form.get('password')?.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres</div>
-                                            <div *ngIf="form.get('password')?.errors?.['maxlength']">La contraseña no puede tener más de 10 caracteres</div>
+                                        <div *ngIf="form.get('password')?.dirty && form.get('password')?.invalid">
+                                            <small class="text-danger" *ngIf="form.get('password')?.errors?.['required']">La contraseña es requerida</small>
+                                            <small class="text-danger" *ngIf="form.get('password')?.errors?.['minlength']">Mínimo 6 caracteres</small>
                                         </div>
                                     </div>
 
-                                    <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                    <div class="d-grid gap-2">
                                         <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Ingresar</button>
                                     </div>
-
                                 </form>
+
+                                <!-- Botones adicionales -->
+                                <div class="mt-3 text-center">
+                                    <button class="btn btn-outline-dark w-100" (click)="loginWithGoogle()">
+                                        <img src="assets/google-icon.svg" alt="Google" width="20" class="me-2">
+                                        Ingresar con Google
+                                    </button>
+                                    <p class="mt-3">¿No tienes cuenta?
+                                        <a routerLink="/register" class="text-primary">Regístrate aquí</a>
+                                    </p>
+                                </div>
+
                             </div>
                         </div>
                     </div>
