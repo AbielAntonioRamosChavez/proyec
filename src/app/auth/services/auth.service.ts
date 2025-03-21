@@ -294,4 +294,14 @@ export class AuthService {
     getUsuarios(): Observable<any[]> {
         return this.usuarios.asObservable();
     }
+
+    buscarUsuarioPorCorreo(correo: string): Observable<any> {
+        const url = `${environment.api.authApis}/usuarios/buscar/${correo}`;
+        return this.http.get(url).pipe(
+          catchError((error) => {
+            console.error('Error al buscar usuario por correo:', error);
+            return throwError(() => error);
+          })
+        );
+      }
 }
