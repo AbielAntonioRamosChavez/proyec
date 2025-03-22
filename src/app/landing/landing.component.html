@@ -182,6 +182,56 @@
             </div>
         </div>
     </section>
+
+    
+    <div class="modal" [ngClass]="{ 'modal--visible': modalVisible }">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h2>{{ servicioSeleccionado?.nombre }}</h2>
+                <button (click)="cerrarModal()" class="modal__close-btn">&times;</button>
+            </div>
+            <div class="modal__body">
+                <p>{{ servicioSeleccionado?.descripcion }}</p>
+                <div class="comments-section">
+                    <h3>Comentarios</h3>
+                    <div class="comment-list">
+                        <div class="comment" *ngFor="let comentario of comentariosModal">
+                            <p><strong>{{ comentario.usuario.nombre }}:</strong> {{ comentario.contenido }}</p>
+                            <button (click)="darLike(comentario._id)" class="like-btn" [ngClass]="{ 'liked': comentario.usuarioDioLike }" [disabled]="comentario.usuarioDioLike">
+                    👍 {{ comentario.likesCount }}
+                  </button>
+                            <button (click)="reportarComentario(comentario._id)" class="report-btn" [disabled]="comentario.usuarioReporto">
+                    🚨 Reportar
+                  </button>
+                            <button (click)="verRespuestas(comentario._id)" class="respuestas-btn">
+                    💬 Ver respuestas
+                  </button>
+                        </div>
+                    </div>
+                    <form (ngSubmit)="agregarComentario()">
+                        <textarea class="form-control" placeholder="Añade un comentario..." [(ngModel)]="nuevoComentarioModal" name="comentario" required></textarea>
+                        <button type="submit" class="btn-submit">Enviar</button>
+                    </form>
+                </div>
+                <div class="respuestas-section" *ngIf="comentarioSeleccionado">
+                    <h3>Respuestas</h3>
+                    <div class="respuesta-list">
+                        <div class="respuesta" *ngFor="let respuesta of respuestasModal">
+                            <p><strong>{{ respuesta.usuario.nombre }}:</strong> {{ respuesta.contenido }}</p>
+                        </div>
+                    </div>
+                    <form (ngSubmit)="agregarRespuesta()">
+                        <textarea class="form-control" placeholder="Añade una respuesta..." [(ngModel)]="nuevaRespuestaModal" name="respuesta" required></textarea>
+                        <button type="submit" class="btn-submit" [disabled]="usuarioEsAutor(comentarioSeleccionado)">Enviar</button>
+                    </form>
+                </div>
+            </div>
+            <div class="modal__footer">
+                <button (click)="cerrarModal()" class="btn-close">Cerrar</button>
+            </div>
+        </div>
+    </div>
+    
     <!-- Servicios -->
     <section id="services" class="page-section bg-white" style="scroll-margin-top: 80px;">
         <div class="container">
