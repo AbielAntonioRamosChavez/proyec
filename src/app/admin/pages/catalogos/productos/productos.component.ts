@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductoService } from '../../../../auth/services/producto/producto.service';
 import { CategoriaService } from '../../../../auth/services/categoria/categoria.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-productos',
@@ -71,9 +72,21 @@ export class ProductosComponent implements OnInit {
         (response) => {
           this.productos.push(response); // Añade el nuevo producto a la lista
           this.closeModal('addModal');
+          Swal.fire({
+            title: '¡Éxito!',
+            text: 'El producto se ha creado correctamente.',
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+          });
         },
         (error) => {
           console.error('Error al crear el producto:', error);
+          Swal.fire({
+            title: 'Error',
+            text: 'No se pudo crear el producto. Por favor, inténtalo de nuevo.',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
         }
       );
     }
@@ -98,25 +111,58 @@ export class ProductosComponent implements OnInit {
             this.productos[index] = response; // Actualiza el producto en la lista
           }
           this.closeModal('editModal');
+          Swal.fire({
+            title: '¡Éxito!',
+            text: 'El producto se ha actualizado correctamente.',
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+          });
         },
         (error) => {
           console.error('Error al actualizar el producto:', error);
+          Swal.fire({
+            title: 'Error',
+            text: 'No se pudo actualizar el producto. Por favor, inténtalo de nuevo.',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
         }
       );
     }
   }
 
   deleteProduct(producto: any) {
-    if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-      this.productoService.eliminarProducto(producto.id).subscribe(
-        () => {
-          this.productos = this.productos.filter((p) => p.id !== producto.id); // Filtra y elimina el producto
-        },
-        (error) => {
-          console.error('Error al eliminar el producto:', error);
-        }
-      );
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'No podrás revertir esta acción.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.productoService.eliminarProducto(producto.id).subscribe(
+          () => {
+            this.productos = this.productos.filter((p) => p.id !== producto.id); // Filtra y elimina el producto
+            Swal.fire({
+              title: '¡Éxito!',
+              text: 'El producto se ha eliminado correctamente.',
+              icon: 'success',
+              confirmButtonText: 'Aceptar'
+            });
+          },
+          (error) => {
+            console.error('Error al eliminar el producto:', error);
+            Swal.fire({
+              title: 'Error',
+              text: 'No se pudo eliminar el producto. Por favor, inténtalo de nuevo.',
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            });
+          }
+        );
+      }
+    });
   }
 
   closeModal(modalId: string) {
