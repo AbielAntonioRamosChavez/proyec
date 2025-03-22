@@ -1,110 +1,201 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+// landing.component.ts
+import { Component, OnInit } from '@angular/core';
+import { ServicioService } from '../auth/services/servicio/servicio.service';
+import { ComentarioService } from '../auth/services/comentario/comentario.service';
 import { AuthService } from '../auth/services/auth.service';
 
+// Definir la interfaz para el tipo Comentario
+interface Comentario {
+  _id: string;
+  usuario: {
+    id_pg: string;
+    nombre: string;
+  };
+  contenido: string;
+  likes?: string[]; // Array de IDs de usuarios que dieron like
+  reports?: string[]; // Array de IDs de usuarios que reportaron
+  likesCount?: number; // Número de likes
+  usuarioDioLike?: boolean; // Si el usuario actual dio like
+  usuarioReporto?: boolean; // Si el usuario actual reportó
+  estado?: string; // Estado del comentario
+}
+
 @Component({
-  selector: 'app-landing', // Corregido el selector
-  standalone: false, // Se mantiene explícitamente
+  selector: 'app-landing',
+  standalone: false,
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.css'],
 })
-export class LandingComponent {
-
+export class LandingComponent implements OnInit {
+  servicios: any[] = [];
+  comentariosModal: Comentario[] = []; // Usar la interfaz Comentario
+  nuevoComentarioModal: string = '';
+  servicioSeleccionado: any = null;
+  respuestasModal: any[] = [];
+  nuevaRespuestaModal: string = '';
+  comentarioSeleccionado: Comentario | null = null; // Usar la interfaz Comentario
+  modalVisible: boolean = false;
   usuarioActual: any = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private servicioService: ServicioService,
+    private comentarioService: ComentarioService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
+    this.obtenerServicios();
     this.usuarioActual = this.authService.getUser();
   }
 
   logout(): void {
     this.authService.logout();
-    this.usuarioActual = null; // 🔄 Actualizar la vista eliminando el usuario
+    this.usuarioActual = null;
   }
 
-
-
-  // Variables para el modal
-  modalVisible: boolean = false;
-  modalTitle: string = '';
-  modalDescription: string = '';
-  modalType: string = '';
-  comentariosModal: any[] = [];
-  nuevoComentarioModal: string = '';
-
-  // Comentarios para cada servicio
-  comentariosEntrega = [
-    { usuario: 'Usuario1', texto: '¡Excelente servicio!', likes: 12, usuariosQueDieronLike: [] as string[] },
-    { usuario: 'Usuario2', texto: 'Muy puntuales.', likes: 8, usuariosQueDieronLike: [] as string[] },
-  ];
-
-  comentariosTienda = [
-    { usuario: 'Usuario3', texto: 'Buen ambiente.', likes: 5, usuariosQueDieronLike: [] as string[] },
-  ];
-
-  comentariosPromociones = [
-    { usuario: 'Usuario4', texto: '¡Grandes descuentos!', likes: 20, usuariosQueDieronLike: [] as string[] },
-  ];
-
-  // Abrir el modal
-  abrirModal(tipo: string) {
-    this.modalType = tipo;
-    this.modalVisible = true;
-
-    if (tipo === 'entrega') {
-      this.modalTitle = 'Entrega a Domicilio';
-      this.modalDescription = 'Próximamente.';
-      this.comentariosModal = this.comentariosEntrega;
-    } else if (tipo === 'tienda') {
-      this.modalTitle = 'Compra en Tienda';
-      this.modalDescription = 'Visítanos y encuentra una gran variedad de productos frescos y de calidad.';
-      this.comentariosModal = this.comentariosTienda;
-    } else if (tipo === 'promociones') {
-      this.modalTitle = 'Promociones';
-      this.modalDescription = 'Aprovecha nuestras ofertas y descuentos exclusivos cada semana.';
-      this.comentariosModal = this.comentariosPromociones;
-    }
+  obtenerServicios(): void {
+    this.servicioService.obtenerServicios().subscribe(
+      (data) => {
+        this.servicios = data;
+      },
+      (error) => {
+        console.error('Error al obtener servicios:', error);
+      }
+    );
   }
 
-  // Cerrar el modal
-  cerrarModal() {
+  abrirModal(servicioSlug: string): void {
+    this.servicioService.obtenerServicioPorSlug(servicioSlug).subscribe(
+      (servicio) => {
+        this.servicioSeleccionado = servicio;
+        this.obtenerComentarios(servicio._id);
+        this.modalVisible = true;
+      },
+      (error) => {
+        console.error('Error al obtener servicio:', error);
+      }
+    );
+  }
+
+  cerrarModal(): void {
     this.modalVisible = false;
   }
 
-  // Agregar un comentario
-  agregarComentario(servicio: string, comentario: string) {
-    if (comentario.trim()) {
-      const nuevoComentario = {
-        usuario: 'UsuarioNuevo', // Puedes cambiar esto por un sistema de autenticación
-        texto: comentario,
-        likes: 0,
-        usuariosQueDieronLike: [] as string[],
+  verRespuestas(comentarioId: string): void {
+    this.comentarioSeleccionado = this.comentariosModal.find((c) => c._id === comentarioId) || null;
+    if (this.comentarioSeleccionado) {
+      this.comentarioService.obtenerRespuestasPorComentario(comentarioId).subscribe(
+        (respuestas) => {
+          this.respuestasModal = respuestas;
+        },
+        (error) => {
+          console.error('Error al obtener respuestas:', error);
+        }
+      );
+    }
+  }
+
+  agregarRespuesta(): void {
+    const usuario = this.authService.getUser();
+    if (usuario && this.nuevaRespuestaModal.trim() && this.comentarioSeleccionado) {
+      const respuesta = {
+        comentario_id: this.comentarioSeleccionado._id,
+        contenido: this.nuevaRespuestaModal,
+        usuario: { id_pg: usuario.id },
       };
 
-      if (servicio === 'entrega') {
-        this.comentariosEntrega.push(nuevoComentario);
-      } else if (servicio === 'tienda') {
-        this.comentariosTienda.push(nuevoComentario);
-      } else if (servicio === 'promociones') {
-        this.comentariosPromociones.push(nuevoComentario);
-      }
-
-      this.nuevoComentarioModal = ''; // Limpiar el textarea
+      this.comentarioService.crearRespuesta(respuesta).subscribe(
+        (response) => {
+          this.respuestasModal.push(response);
+          this.nuevaRespuestaModal = '';
+        },
+        (error) => {
+          console.error('Error al crear respuesta:', error);
+        }
+      );
     }
   }
 
-  // Dar like a un comentario
-  darLike(comentario: any, servicio: string) {
-    const usuarioActual = 'UsuarioActual'; // Reemplaza esto con el usuario autenticado
-    if (!comentario.usuariosQueDieronLike.includes(usuarioActual)) {
-      comentario.likes++;
-      comentario.usuariosQueDieronLike.push(usuarioActual);
+  obtenerComentarios(servicioId: string): void {
+    this.comentarioService.obtenerComentariosPorServicio(servicioId).subscribe(
+      (comentarios: Comentario[]) => {
+        this.comentariosModal = comentarios.map((comentario) => ({
+          ...comentario,
+          likesCount: comentario.likes ? comentario.likes.length : 0,
+          usuarioDioLike: comentario.likes ? comentario.likes.includes(this.usuarioActual?.id) : false,
+          usuarioReporto: comentario.reports ? comentario.reports.includes(this.usuarioActual?.id) : false,
+        }));
+      },
+      (error) => {
+        console.error('Error al obtener comentarios:', error);
+      }
+    );
+  }
+
+  agregarComentario(): void {
+    const usuario = this.authService.getUser();
+    if (usuario && this.nuevoComentarioModal.trim()) {
+      const comentario = {
+        servicio: this.servicioSeleccionado._id,
+        contenido: this.nuevoComentarioModal,
+        usuario: { id_pg: usuario.id },
+      };
+
+      this.comentarioService.crearComentario(comentario).subscribe(
+        (response: Comentario) => {
+          this.comentariosModal.push({
+            ...response,
+            likesCount: 0,
+            usuarioDioLike: false,
+            usuarioReporto: false,
+          });
+          this.nuevoComentarioModal = '';
+        },
+        (error) => {
+          console.error('Error al crear comentario:', error);
+        }
+      );
     }
+  }
+
+  darLike(comentarioId: string): void {
+    const usuario = this.authService.getUser();
+    if (usuario) {
+      this.comentarioService.darLike(comentarioId, usuario.id).subscribe(
+        (response) => {
+          const comentario = this.comentariosModal.find((c) => c._id === comentarioId);
+          if (comentario) {
+            comentario.likes = response.likes;
+            comentario.likesCount = response.likes.length;
+            comentario.usuarioDioLike = true;
+          }
+        },
+        (error) => {
+          console.error('Error al dar like:', error);
+        }
+      );
+    }
+  }
+
+  reportarComentario(comentarioId: string): void {
+    const usuario = this.authService.getUser();
+    if (usuario) {
+      this.comentarioService.reportarComentario(comentarioId, usuario.id).subscribe(
+        (response) => {
+          const comentario = this.comentariosModal.find((c) => c._id === comentarioId);
+          if (comentario) {
+            comentario.estado = response.estado;
+            comentario.usuarioReporto = true;
+          }
+        },
+        (error) => {
+          console.error('Error al reportar comentario:', error);
+        }
+      );
+    }
+  }
+
+  usuarioEsAutor(comentario: Comentario): boolean {
+    return comentario.usuario.id_pg === this.usuarioActual?.id;
   }
 }
-
-
-
-
-
