@@ -184,7 +184,6 @@ buscarCliente(event?: KeyboardEvent) {
       dialogRef.afterClosed().subscribe((result: { cambio: number }) => {
         if (result) {
           this.crearVenta();
-          alert(`Cobro exitoso. Cambio: ${result.cambio}`);
           this.vaciarTabla();
           this.borrarDatos();
         }

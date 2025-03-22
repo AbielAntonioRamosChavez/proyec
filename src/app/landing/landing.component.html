@@ -231,29 +231,29 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Servicios -->
-    <section id="services" class="page-section bg-white" style="scroll-margin-top: 80px;">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-heading text-uppercase">Nuestros servicios</h2>
-                <h3 class="section-subheading text-muted">Los mejores servicios en la palma de tu mano</h3>
-            </div>
-            <div class="row text-center">
-                <!-- Servicios dinámicos -->
-                <div class="col-md-4 mb-4" *ngFor="let servicio of servicios">
-                    <div class="service-card p-4 shadow-sm rounded-lg hover-effect" (click)="abrirModal(servicio.slug)">
-                        <div class="icon-wrapper mb-3">
-                            <i class="fas fa-truck fa-2x"></i>
-                        </div>
-                        <h4 class="my-3">{{ servicio.nombre }}</h4>
-                        <p class="text-muted">{{ servicio.descripcion }}</p>
-                        <button class="btn btn-outline-primary btn-sm">Ver detalles y comentarios</button>
+<section id="services" class="page-section bg-white" style="scroll-margin-top: 80px;">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Nuestros servicios</h2>
+            <h3 class="section-subheading text-muted">Los mejores servicios en la palma de tu mano</h3>
+        </div>
+        <div class="row text-center">
+            <!-- Servicios dinámicos -->
+            <div class="col-md-4 mb-4" *ngFor="let servicio of servicios">
+                <div class="service-card p-4 shadow-sm rounded-lg hover-effect" (click)="abrirModal(servicio.slug)">
+                    <div class="icon-wrapper mb-3">
+                        <i class="fas fa-handshake fa-2x"></i> <!-- Icono genérico -->
                     </div>
+                    <h4 class="my-3">{{ servicio.nombre }}</h4>
+                    <p class="text-muted">{{ servicio.descripcion }}</p>
+                    <button class="btn btn-outline-primary btn-sm">Ver detalles y comentarios</button>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
     <!-- Misión y Visión -->
     <section id="about" class="page-section bg-light py-5" style="scroll-margin-top: 80px;">
         <div class="container">

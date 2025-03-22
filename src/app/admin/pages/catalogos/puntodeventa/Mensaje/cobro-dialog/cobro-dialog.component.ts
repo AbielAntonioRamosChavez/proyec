@@ -1,5 +1,6 @@
 import { Component, Inject, HostListener } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import Swal from 'sweetalert2'; // Importar SweetAlert2
 
 @Component({
   selector: 'app-cobro-dialog',
@@ -37,21 +38,46 @@ export class CobroDialogComponent {
   confirmarCobro() {
     // Validar que el monto pagado no esté vacío
     if (this.montoPagado === null || this.montoPagado === undefined || this.montoPagado === 0) {
-      alert('Por favor, ingrese el monto pagado.');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Monto Inválido',
+        text: 'Por favor, ingrese el monto pagado.',
+        confirmButtonText: 'Aceptar',
+      });
       return;
     }
 
     // Validar que el monto pagado sea suficiente
     if (this.montoPagado < this.data.total) {
-      alert('El monto pagado es insuficiente.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Monto Insuficiente',
+        text: 'El monto pagado es menor al total a cobrar.',
+        confirmButtonText: 'Aceptar',
+      });
       return;
     }
 
     // Si pasa las validaciones, cerrar el diálogo con el resultado
     this.dialogRef.close({ montoPagado: this.montoPagado, cambio: this.cambio });
+
+    // Mostrar mensaje de éxito
+    Swal.fire({
+      icon: 'success',
+      title: 'Cobro Exitoso',
+      text: `Cambio: ${this.cambio.toFixed(2)} MXN`,
+      confirmButtonText: 'Aceptar',
+    });
   }
 
   cancelarCobro() {
-    this.dialogRef.close();
+    Swal.fire({
+      icon: 'info',
+      title: 'Cobro Cancelado',
+      text: 'El proceso de cobro ha sido cancelado.',
+      confirmButtonText: 'Aceptar',
+    }).then(() => {
+      this.dialogRef.close(); // Cerrar el diálogo después de la alerta
+    });
   }
 }
