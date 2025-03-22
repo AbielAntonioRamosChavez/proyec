@@ -1,157 +1,173 @@
 <div class="productos-container">
-    <div class="header">
-        <h2>Administrar Productos</h2>
-        <button (click)="openAddModal()" class="btn btn-success">
+  <div class="header">
+    <h2>Administrar Productos</h2>
+    <button (click)="openAddModal()" class="btn btn-success">
       <i class="fas fa-plus"></i> Añadir
     </button>
-    </div>
-    <table class="productos-table">
-        <thead>
-          <tr>
-            <th>SKU</th>
-            <th>Nombre</th>
-            <th>Categoría</th>
-            <th>Stock</th>
-            <th>Precio</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (producto of productos; track producto.sku) {
-          <tr (click)="openDetailModal(producto)">
-            <td>{{ producto.sku }}</td>
-            <td>{{ producto.nombre }}</td>
-            <td>{{ getNombreCategoria(producto.categoria_id) }}</td>
-            <td>{{ producto.stock }}</td>
-            <td>{{ producto.precio | currency }}</td>
-            <td>
-              <button (click)="openEditModal(producto)" class="btn btn-primary btn-sm">
-                <i class="fas fa-edit"></i>
-              </button>
-              <button (click)="deleteProduct(producto)" class="btn btn-danger btn-sm">
-                <i class="fas fa-trash"></i>
-              </button>
-            </td>
-          </tr>
-          }
-        </tbody>
-      </table>
+  </div>
+
+  <!-- Tabla de productos -->
+  <table class="productos-table">
+    <thead>
+      <tr>
+        <th>SKU</th>
+        <th>Nombre</th>
+        <th>Categoría</th>
+        <th>Stock</th>
+        <th>Precio</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let producto of productos; trackBy: trackProducto">
+        <td>{{ producto.sku }}</td>
+        <td>{{ producto.nombre }}</td>
+        <td>{{ getNombreCategoria(producto.categoria_id) }}</td>
+        <td>{{ producto.stock }}</td>
+        <td>{{ producto.precio | currency }}</td>
+        <td>
+          <button (click)="openEditModal(producto)" class="btn btn-primary btn-sm">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button (click)="deleteProduct(producto)" class="btn btn-danger btn-sm">
+            <i class="fas fa-trash"></i>
+          </button>
+          <button (click)="openDetailModal(producto)" class="btn btn-info btn-sm">
+            <i class="fas fa-eye"></i> Ver Detalles
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
+<!-- Modal para añadir un producto -->
 <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addModalLabel">Añadir Producto</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">Añadir Producto</h5>
+        <button type="button" class="btn-close" (click)="closeModal('addModal')" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form #addProductForm="ngForm" (ngSubmit)="addProduct(addProductForm)">
+          <div class="mb-3">
+            <label class="form-label">SKU</label>
+            <input type="text" class="form-control" [(ngModel)]="newProduct.sku" name="sku" required #sku="ngModel">
+            <div *ngIf="sku.invalid && sku.touched" class="text-danger">
+              El SKU es obligatorio.
             </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label class="form-label">SKU</label>
-                        <input type="text" class="form-control" [(ngModel)]="newProduct.sku" name="sku">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" [(ngModel)]="newProduct.nombre" name="nombre">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Descripción</label>
-                        <textarea class="form-control" [(ngModel)]="newProduct.descripcion" name="descripcion"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Categoría</label>
-                        <select class="form-control" [(ngModel)]="newProduct.categoria_id" name="categoria_id">
-                            <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nombre }}</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Stock</label>
-                        <input type="number" class="form-control" [(ngModel)]="newProduct.stock" name="stock">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Precio</label>
-                        <input type="number" class="form-control" [(ngModel)]="newProduct.precio" name="precio">
-                    </div>
-                </form>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" [(ngModel)]="newProduct.nombre" name="nombre" required #nombre="ngModel">
+            <div *ngIf="nombre.invalid && nombre.touched" class="text-danger">
+              El nombre es obligatorio.
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" (click)="addProduct()">Añadir</button>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <textarea class="form-control" [(ngModel)]="newProduct.descripcion" name="descripcion"></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Categoría</label>
+            <select class="form-control" [(ngModel)]="newProduct.categoria_id" name="categoria_id" required #categoria="ngModel">
+              <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nombre }}</option>
+            </select>
+            <div *ngIf="categoria.invalid && categoria.touched" class="text-danger">
+              La categoría es obligatoria.
             </div>
-        </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Stock</label>
+            <input type="number" class="form-control" [(ngModel)]="newProduct.stock" name="stock" required min="1" #stock="ngModel">
+            <div *ngIf="stock.invalid && stock.touched" class="text-danger">
+              El stock es obligatorio y debe ser mayor a 0.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Precio</label>
+            <input type="number" class="form-control" [(ngModel)]="newProduct.precio" name="precio" required min="0.01" #precio="ngModel">
+            <div *ngIf="precio.invalid && precio.touched" class="text-danger">
+              El precio es obligatorio y debe ser mayor a 0.
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal('addModal')">Cerrar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="addProductForm.invalid">Añadir</button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 
+<!-- Modal para editar un producto -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editModalLabel">Editar Producto</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <label class="form-label">SKU</label>
-              <input type="text" class="form-control" [(ngModel)]="selectedProduct.sku" name="sku" readonly>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Nombre</label>
-              <input type="text" class="form-control" [(ngModel)]="selectedProduct.nombre" name="nombre">
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Descripción</label>
-              <textarea class="form-control" [(ngModel)]="selectedProduct.descripcion" name="descripcion"></textarea>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Categoría</label>
-              <select class="form-control" [(ngModel)]="selectedProduct.categoria_id" name="categoria_id">
-                <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nombre }}</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Stock</label>
-              <input type="number" class="form-control" [(ngModel)]="selectedProduct.stock" name="stock">
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Precio</label>
-              <input type="number" class="form-control" [(ngModel)]="selectedProduct.precio" name="precio">
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary" (click)="saveChanges()">Guardar cambios</button>
-        </div>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Editar Producto</h5>
+        <button type="button" class="btn-close" (click)="closeModal('editModal')" aria-label="Cerrar"></button>
       </div>
-    </div>
-  </div>
-
-  <!-- Modal para ver el detalle del producto -->
-<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="detailModalLabel">Detalle del Producto</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <div *ngIf="selectedProduct">
-            <p><strong>SKU:</strong> {{ selectedProduct.sku }}</p>
-            <p><strong>Nombre:</strong> {{ selectedProduct.nombre }}</p>
-            <p><strong>Descripción:</strong> {{ selectedProduct.descripcion }}</p>
-            <p><strong>Categoría:</strong> {{ getNombreCategoria(selectedProduct.categoria_id) }}</p>
-            <p><strong>Stock:</strong> {{ selectedProduct.stock }}</p>
-            <p><strong>Precio:</strong> {{ selectedProduct.precio | currency }}</p>
-            <p><strong>Fecha de Creación:</strong> {{ selectedProduct.fecha_creacion | date }}</p>
-            <p><strong>Imagen:</strong></p>
-            <img [src]="selectedProduct.imagen_url" alt="Imagen del producto" class="img-fluid">
+      <div class="modal-body">
+        <form #editProductForm="ngForm" (ngSubmit)="saveChanges(editProductForm)">
+          <div class="mb-3">
+            <label class="form-label">SKU</label>
+            <input type="text" class="form-control" [(ngModel)]="selectedProduct.sku" name="sku" readonly>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        </div>
+
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" [(ngModel)]="selectedProduct.nombre" name="nombre" required #nombre="ngModel">
+            <div *ngIf="nombre.invalid && nombre.touched" class="text-danger">
+              El nombre es obligatorio.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <textarea class="form-control" [(ngModel)]="selectedProduct.descripcion" name="descripcion"></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Categoría</label>
+            <select class="form-control" [(ngModel)]="selectedProduct.categoria_id" name="categoria_id" required #categoria="ngModel">
+              <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nombre }}</option>
+            </select>
+            <div *ngIf="categoria.invalid && categoria.touched" class="text-danger">
+              La categoría es obligatoria.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Stock</label>
+            <input type="number" class="form-control" [(ngModel)]="selectedProduct.stock" name="stock" required min="1" #stock="ngModel">
+            <div *ngIf="stock.invalid && stock.touched" class="text-danger">
+              El stock es obligatorio y debe ser mayor a 0.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Precio</label>
+            <input type="number" class="form-control" [(ngModel)]="selectedProduct.precio" name="precio" required min="0.01" #precio="ngModel">
+            <div *ngIf="precio.invalid && precio.touched" class="text-danger">
+              El precio es obligatorio y debe ser mayor a 0.
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal('editModal')">Cerrar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="editProductForm.invalid">Guardar cambios</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
+</div>
