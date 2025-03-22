@@ -5,3 +5,17 @@
 .sb-sidenav-menu-heading {
     color: white !important;
 }
+
+.active-link {
+    background-color: #1a73e8 !important; /* Azul brillante */
+    color: white !important; /* Letra blanca */
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Cambiar color del icono dentro del enlace activo */
+.active-link .sb-nav-link-icon i {
+    color: white !important;
+}
+

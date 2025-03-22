@@ -56,13 +56,13 @@ button[type="submit"]:hover {
 
 /* Botón Volver (Gris) */
 .btn-secondary {
-    background-color: #6c757d;
+    background-color:var(--bs-primary);
     border: none;
     margin-top: 10px;
 }
 
 .btn-secondary:hover {
-    background-color: #5a6268;
+    background-color:blue;
     transform: scale(1.05);
 }
 
