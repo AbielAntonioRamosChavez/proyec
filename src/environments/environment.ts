@@ -9,8 +9,10 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-    production: false,
-    api: {
-      authApis: 'http://localhost:5000/api',
-    },
+  production: false,
+  api: {
+    authApis: 'http://localhost:5000/api',
+  },
+  googleClientId: '697877393629-4eq720u2afuqoemqqmirr9gt3c0lib4d.apps.googleusercontent.com' // 👈 CLIENTE ANTERIOR
 };
+

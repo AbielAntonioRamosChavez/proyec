@@ -7,6 +7,8 @@ import { environment } from "../../../environments/environment";
 import { Router } from "@angular/router";
 import { NgZone } from '@angular/core';
 
+
+
 @Injectable({
     providedIn: 'root',
 })
@@ -16,6 +18,8 @@ export class AuthService {
     private readonly USER_CURRENT = 'USER_CURRENT';
     private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
     private loggedUser: string = '';
+    private apiUrl = 'http://localhost:5000/api/usuarios';
+
     
     constructor(
     public http: HttpClient,
@@ -24,6 +28,42 @@ export class AuthService {
     ) {
         this.cargarUsuarios();
     }
+
+    registrarUsuario(usuario: any) {
+        return this.http.post(`${this.apiUrl}/registro`, usuario); // Cambiar "register" por "registro"
+    }
+
+    loginWithGoogle(idToken: string): Observable<any> {
+        return this.http.post<any>(`${environment.api.authApis}/usuarios/login-google`, { idToken }).pipe(
+          tap(response => {
+            console.log('✅ Respuesta del servidor (Google Login):', response);
+    
+            if (response && response.token && response.user) {
+              // 1️⃣ Guardar token JWT
+              localStorage.setItem('JWT_TOKEN', response.token);
+    
+              // 2️⃣ Guardar usuario en localStorage
+              localStorage.setItem(this.USER_CURRENT, JSON.stringify(response.user));
+              console.log("👤 Usuario almacenado:", response.user);
+    
+              // 3️⃣ Redirigir a la Landing Page dentro de NgZone
+              this.ngZone.run(() => {
+                console.log("🚀 Redirigiendo a /landing...");
+                this.router.navigate(['/landing']);
+              });
+            } else {
+              console.warn("⚠️ Respuesta incompleta del servidor");
+            }
+          }),
+          catchError(error => {
+            console.error('❌ Error en login con Google:', error);
+            return throwError(() => error);
+          })
+        );
+      }
+    
+      
+
 
     login(user: { correo: string; contrasena: string }): Observable<any> {
         return this.http.post<any>(`${environment.api.authApis}/usuarios/login`, user).pipe(

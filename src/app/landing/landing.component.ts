@@ -46,6 +46,10 @@ export class LandingComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerServicios();
     this.usuarioActual = this.authService.getUser();
+    const userData = localStorage.getItem('USER_CURRENT');
+    if (userData) {
+      this.usuarioActual = JSON.parse(userData);
+    }
   }
 
   logout(): void {
