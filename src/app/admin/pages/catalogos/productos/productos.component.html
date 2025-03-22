@@ -74,7 +74,7 @@
 
           <div class="mb-3">
             <label class="form-label">Categoría</label>
-            <select class="form-control" [(ngModel)]="newProduct.categoria_id" name="categoria_id" required #categoria="ngModel">
+            <select class="form-control" [(ngModel)]="newProduct.id_categoria" name="id_categoria" required #categoria="ngModel">
               <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nombre }}</option>
             </select>
             <div *ngIf="categoria.invalid && categoria.touched" class="text-danger">
@@ -103,6 +103,31 @@
             <button type="submit" class="btn btn-primary" [disabled]="addProductForm.invalid">Añadir</button>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para ver detalles del producto -->
+<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailModalLabel">Detalles del Producto</h5>
+        <button type="button" class="btn-close" (click)="closeDetailModal()" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="selectedProduct">
+          <p><strong>SKU:</strong> {{ selectedProduct.sku }}</p>
+          <p><strong>Nombre:</strong> {{ selectedProduct.nombre }}</p>
+          <p><strong>Descripción:</strong> {{ selectedProduct.descripcion }}</p>
+          <p><strong>Categoría:</strong> {{ getNombreCategoria(selectedProduct.categoria_id) }}</p>
+          <p><strong>Stock:</strong> {{ selectedProduct.stock }}</p>
+          <p><strong>Precio:</strong> {{ selectedProduct.precio | currency }}</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeDetailModal()">Cerrar</button>
       </div>
     </div>
   </div>
