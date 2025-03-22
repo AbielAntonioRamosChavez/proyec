@@ -1,61 +1,104 @@
-.factura {
-  width: 90%;
-  margin: 20px auto;
-  border: 1px solid #ccc;
+/* Estilos generales */
+body {
+  font-family: sans-serif;
+  margin: 0;
   padding: 20px;
-  font-family: Arial, sans-serif;
 }
 
-.encabezado, .cliente, .totales, .botones {
+.venta {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Estilos para el cliente */
+.cliente {
+  margin-bottom: 20px;
+}
+
+.example-form {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
+  flex-direction: column;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.cliente table {
+  width: 100%;
 }
 
 .campo {
-  flex: 1;
-  padding: 5px;
-  font-size: 14px;
+  margin-top: 10px;
 }
 
+/* Estilos para la búsqueda de producto */
 .producto-busqueda {
   display: flex;
-  margin-bottom: 10px;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.input-field {
-  flex: 1;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+.producto-busqueda mat-form-field {
+  flex-grow: 1;
   margin-right: 10px;
-  font-size: 14px;
 }
 
-.action-button {
-  font-size: 14px;
-}
-
+/* Estilos para la tabla de productos */
 .product-table {
   width: 100%;
   border-collapse: collapse;
 }
 
-th, td {
+.product-table th, .product-table td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
-  font-size: 14px;
 }
 
-th {
+.product-table th {
   background-color: #f2f2f2;
 }
 
+/* Estilos para los totales */
 .totales {
-  margin-top: 20px;
+  margin-top: 40px;
+  text-align: right;
+  font-weight: bold;
 }
 
-.botones button {
-  margin-right: 10px;
+/* Estilos para los botones */
+.botones {
+  margin-top: 10px;
+  display: flex;
+  justify-content: right;
+}
+
+.action-button {
+  min-width: 120px;
+}
+
+.table-container {
+    max-height: 300px; /* Ajusta la altura máxima según tus necesidades */
+    overflow-y: auto;  /* Habilita el scroll vertical cuando sea necesario */
+}
+
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.product-table th, .product-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    white-space: nowrap; /* Evita el salto de línea en las celdas */
+}
+
+.product-table th {
+    background-color: #f2f2f2;
+}
+
+.venta-container {
+  margin: 30px; /* Aplica un margen de 30px a todos los lados */
 }

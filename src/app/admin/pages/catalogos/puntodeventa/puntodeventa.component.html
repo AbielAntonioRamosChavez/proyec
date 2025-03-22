@@ -1,32 +1,48 @@
-<div>
+<div class="venta-container">
+  <h2 class="mt-4">Nueva Venta</h2>
     <!-- Sección de Cliente -->
     <div class="cliente">
-      <div class="campo">
-        <label>Nombre Cliente:</label>
-        <input
-          type="text"
-          [(ngModel)]="nombreCliente"
-          placeholder="Nombre del cliente"
-          (focus)="onFocusCliente()"
-          (blur)="onBlurCliente()"
-        >
-        <small><strong>F2</strong></small>
-      </div>
-      <div class="campo">
-        <label>Teléfono:</label>
-        <input type="text" [(ngModel)]="telefonoCliente" placeholder="Teléfono">
-      </div>
-      <div class="campo">
-        <label>Dirección:</label>
-        <input type="text" [(ngModel)]="direccionCliente" placeholder="Dirección">
-      </div>
-    </div>
-  
+
+    <form class="example-form">
+      <table class="example-full-width" cellspacing="0">
+          <tr>
+              <td>
+                  <mat-form-field class="example-full-width">
+                      <mat-label>Nombre del Cliente</mat-label>
+                      <input matInput 
+                      type="text"
+                      [(ngModel)]="nombreCliente"
+                      placeholder="F2 para buscar"
+                      (focus)="onFocusCliente()"
+                      (blur)="onBlurCliente()"
+                      >
+                  </mat-form-field>
+                  
+              </td>
+              <td>
+                  <mat-form-field class="example-full-width">
+                      <mat-label>Teléfono</mat-label>
+                      <input matInput type="text" [(ngModel)]="telefonoCliente" placeholder="Teléfono">
+                  </mat-form-field>
+              </td>
+          </tr>
+      </table>
+
+      <p>
+          <mat-form-field class="example-full-width">
+              <mat-label>Direccion</mat-label>
+              <textarea matInput type="text" [(ngModel)]="direccionCliente" placeholder="Dirección"></textarea>
+          </mat-form-field>
+      </p>
+  </form>
+</div>
     <!-- Sección de Búsqueda de Productos -->
     <div class="producto-busqueda">
-      <input type="text" class="input-field" placeholder="Código del producto" [(ngModel)]="codigoBusqueda" autofocus>
-      <button mat-raised-button color="warn" class="action-button" (click)="agregarProductoPorCodigo()">AGREGAR</button>
-      <small><strong>Enter</strong></small>
+      <mat-form-field class="example-form-field">
+        <mat-label>Codigo del producto</mat-label>
+        <input matInput  type="text" class="input-field" placeholder="Enter para buscar" [(ngModel)]="codigoBusqueda" autofocus>
+    </mat-form-field>
+    <button mat-flat-button class="action-button" (click)="borrarDatos()">Borrar datos</button>
     </div>
   
     <!-- Tabla de Productos en Venta -->
@@ -75,16 +91,15 @@
     <div class="totales">
       <div class="campo">Total a pagar: {{ total | currency }}</div>
     </div>
-  
+    <h6 class="mt-4">F2= Buscar Cliente
+      <br>Enter= Buscar Codigo
+      <br>Ctrl + D= Borra todo los datos
+      <br>Ctrl + Enter= Cobrar
+      <br>Supr= Vacia Tabla
+    </h6>
     <!-- Botones de Acción -->
     <div class="botones">
-      <button mat-raised-button color="primary" (click)="vaciarTabla()">Vaciar tabla</button>
-      <small><strong>Supr</strong></small>
-  
-      <button mat-raised-button color="primary" (click)="cobrar()">Cobrar</button>
-      <small><strong>Ctrl + Enter</strong></small>
-  
-      <button mat-raised-button color="primary" (click)="borrarDatos()">Borrar datos</button>
-      <small><strong>Ctrl + D</strong></small>
+      <button mat-flat-button class="action-button" (click)="vaciarTabla()">Vaciar tabla</button>
+      <button mat-flat-button class="action-button" (click)="cobrar()">Cobrar</button>
     </div>
   </div>
