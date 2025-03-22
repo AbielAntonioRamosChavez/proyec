@@ -9,21 +9,24 @@ import { AuthService } from '../auth/services/auth.service';
   styleUrls: ['./landing.component.css'],
 })
 export class LandingComponent {
-
   usuarioActual: any = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.usuarioActual = this.authService.getUser();
+    const userData = localStorage.getItem('USER_CURRENT');
+    if (userData) {
+      this.usuarioActual = JSON.parse(userData);
+    }
   }
 
   logout(): void {
     this.authService.logout();
-    this.usuarioActual = null; // 🔄 Actualizar la vista eliminando el usuario
+    this.usuarioActual = null;
+    localStorage.removeItem('USER_CURRENT');
+    this.router.navigate(['/login2']);
   }
-
-
 
   // Variables para el modal
   modalVisible: boolean = false;
@@ -103,6 +106,7 @@ export class LandingComponent {
     }
   }
 }
+
 
 
 
