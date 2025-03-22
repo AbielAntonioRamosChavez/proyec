@@ -9,4 +9,8 @@ form.d-none {
     transform: translateX(-50px) !important;
 }
 
+.dropdown-menu {
+  margin-left: -20px; /* Ajusta el valor según sea necesario */
+}
+
 

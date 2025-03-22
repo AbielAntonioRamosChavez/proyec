@@ -2,40 +2,46 @@
   <h2 class="mt-4">Nueva Venta</h2>
     <!-- Sección de Cliente -->
     <div class="cliente">
-
-    <form class="example-form">
-      <table class="example-full-width" cellspacing="0">
+      <form class="example-form">
+        <table class="example-full-width" cellspacing="0">
           <tr>
-              <td>
-                  <mat-form-field class="example-full-width">
-                      <mat-label>Nombre del Cliente</mat-label>
-                      <input matInput 
-                      type="text"
-                      [(ngModel)]="nombreCliente"
-                      placeholder="F2 para buscar"
-                      (focus)="onFocusCliente()"
-                      (blur)="onBlurCliente()"
-                      >
-                  </mat-form-field>
-                  
-              </td>
-              <td>
-                  <mat-form-field class="example-full-width">
-                      <mat-label>Teléfono</mat-label>
-                      <input matInput type="text" [(ngModel)]="telefonoCliente" placeholder="Teléfono">
-                  </mat-form-field>
-              </td>
+            <td>
+              <mat-form-field class="example-full-width">
+                <mat-label>Nombre del Cliente</mat-label>
+                <input matInput 
+                       type="text"
+                       [(ngModel)]="nombreCliente"
+                       name="nombreCliente" 
+                       placeholder="F2 para buscar"
+                       (focus)="onFocusCliente()"
+                       (blur)="onBlurCliente()">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field class="example-full-width">
+                <mat-label>Teléfono</mat-label>
+                <input matInput 
+                       type="text" 
+                       [(ngModel)]="telefonoCliente" 
+                       name="telefonoCliente" 
+                       placeholder="Teléfono">
+              </mat-form-field>
+            </td>
           </tr>
-      </table>
-
-      <p>
+        </table>
+  
+        <p>
           <mat-form-field class="example-full-width">
-              <mat-label>Direccion</mat-label>
-              <textarea matInput type="text" [(ngModel)]="direccionCliente" placeholder="Dirección"></textarea>
+            <mat-label>Direccion</mat-label>
+            <textarea matInput 
+                      type="text" 
+                      [(ngModel)]="direccionCliente" 
+                      name="direccionCliente" 
+                      placeholder="Dirección"></textarea>
           </mat-form-field>
-      </p>
-  </form>
-</div>
+        </p>
+      </form>
+    </div>
     <!-- Sección de Búsqueda de Productos -->
     <div class="producto-busqueda">
       <mat-form-field class="example-form-field">

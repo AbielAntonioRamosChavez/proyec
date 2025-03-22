@@ -66,26 +66,31 @@ export class PuntodeventaComponent implements OnInit {
 
   // Buscar cliente por correo con F2
   @HostListener('document:keydown.f2', ['$event'])
-  buscarCliente(event?: KeyboardEvent) {
-    if (event) event.preventDefault();
-    const correoCliente = this.nombreCliente;
-    this.authService.buscarUsuarioPorCorreo(correoCliente).subscribe(
-      (usuario) => {
-        if (usuario) {
-          this.nombreCliente = usuario.nombre;
-          this.telefonoCliente = usuario.telefono || '0';
-          this.direccionCliente = usuario.direccion || 'GENERAL';
-          this.clienteId = usuario.id;
-        } else {
-          alert('Cliente no encontrado');
-        }
-      },
-      (error) => {
-        console.error('Error al buscar cliente:', error);
-        alert('Error al buscar cliente');
-      }
-    );
+buscarCliente(event?: KeyboardEvent) {
+  if (event) event.preventDefault();
+  const correoCliente = this.nombreCliente.trim(); // Asegúrate de que el correo esté limpio
+  if (!correoCliente) {
+    alert('Por favor, ingrese un correo válido.');
+    return;
   }
+
+  this.authService.buscarUsuarioPorCorreo(correoCliente).subscribe(
+    (usuario) => {
+      if (usuario) {
+        this.nombreCliente = usuario.nombre;
+        this.telefonoCliente = usuario.telefono || '0';
+        this.direccionCliente = usuario.direccion || 'GENERAL';
+        this.clienteId = usuario.id;
+      } else {
+        alert('Cliente no encontrado');
+      }
+    },
+    (error) => {
+      console.error('Error al buscar cliente:', error);
+      alert('Error al buscar cliente');
+    }
+  );
+}
 
   // Buscar producto por código
   buscarProducto() {
