@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServicioService } from '../auth/services/servicio/servicio.service';
 import { ComentarioService } from '../auth/services/comentario/comentario.service';
 import { AuthService } from '../auth/services/auth.service';
+import Swal from 'sweetalert2';
 
 // Definir la interfaz para el tipo Comentario
 interface Comentario {
@@ -53,8 +54,18 @@ export class LandingComponent implements OnInit {
   }
 
   logout(): void {
-    this.authService.logout();
-    this.usuarioActual = null;
+    // Mostrar alerta de SweetAlert2
+    Swal.fire({
+      title: 'Sesión cerrada',
+      text: 'Has cerrado la sesión correctamente.',
+      icon: 'success',
+      timer: 2000, // La alerta se cerrará automáticamente después de 2 segundos
+      showConfirmButton: false, // No mostrar el botón de confirmación
+    }).then(() => {
+      // Cerrar sesión después de que la alerta se cierre
+      this.authService.logout();
+      this.usuarioActual = null;
+    });
   }
 
   obtenerServicios(): void {
