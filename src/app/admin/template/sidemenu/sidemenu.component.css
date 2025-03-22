@@ -1,3 +1,7 @@
 .custom-sidenav {
     background-color: #01172e !important;
 }
+
+.sb-sidenav-menu-heading {
+    color: white !important;
+}

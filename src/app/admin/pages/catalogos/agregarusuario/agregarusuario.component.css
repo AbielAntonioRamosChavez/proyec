@@ -1,9 +1,68 @@
 .from-container {
-    margin-top: 10px;
-    margin-bottom: 50px;
-    padding: 60px;
-    border: 1px solid #ccc;
-    border-radius: 100px;
-    background-color: #f9f9f9;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px; /* Limita el ancho */
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out; /* Animación suave */
 }
+
+.from-container:hover {
+    transform: scale(1.02); /* Pequeño zoom al pasar el mouse */
+}
+
+h2 {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+form {
+    padding: 10px;
+}
+
+/* Animación para los campos del formulario */
+.form-control {
+    border-radius: 6px;
+    transition: all 0.3s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #007bff; /* Azul al seleccionar */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    transform: scale(1.02);
+}
+
+/* Botones */
+button[type="submit"],
+.btn-secondary {
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 6px;
+    transition: 0.3s ease-in-out;
+}
+
+/* Botón Registrar (Verde) */
+button[type="submit"] {
+    background-color: #28a745; /* Verde Bootstrap */
+    border: none;
+}
+
+button[type="submit"]:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+/* Botón Volver (Gris) */
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+    margin-top: 10px;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
+}
+
