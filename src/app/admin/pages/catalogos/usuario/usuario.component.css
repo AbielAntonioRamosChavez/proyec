@@ -1,65 +1,101 @@
-/* Encabezado */
-.header {
+/* Contenedor de usuarios */
+.usuarios-container {
+  padding: 20px;
+  background-color: #ffffff; /* Fondo blanco */
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Título */
+.titulo-usuarios {
+  font-size: 22px;
+  font-weight: bold;
+  color: #212529;
+}
+
+/* Botón agregar usuario */
+.boton-agregar {
+  font-size: 14px;
+  font-weight: bold;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.boton-agregar:hover {
+  background-color: #28a745; /* Verde más oscuro */
+  transform: scale(1.05);
 }
 
 /* Tabla */
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.table th, .table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-
-.table th {
-  color: rgb(0, 0, 0);
-  background-color: #f2f2f2;
-  font-weight: bold;
-  padding: 10px;
-  border-bottom: 2px solid #ddd;
-}
-
-/* Estilos para el modal */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1050; /* Asegura que esté sobre otros elementos */
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
-}
-
-.modal.show {
-  display: flex;
-}
-
-.modal-content {
+.tabla-usuarios {
   background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 400px;
-  text-align: center;
-  position: relative; /* Asegura que la X esté bien posicionada */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #dee2e6;
 }
 
-.modal .close {
-  position: absolute;
-  right: 15px;
-  top: 10px;
-  font-size: 20px;
-  cursor: pointer;
-  color: red;
+/* Encabezado de la tabla */
+.tabla-usuarios thead {
+  background-color: #f8f9fa; /* Color gris claro */
+  color: #212529;
+  font-weight: bold;
+}
+
+/* Estilo de filas */
+.tabla-usuarios tbody tr:hover {
+  background-color: #f1f1f1;
+  transition: background-color 0.3s ease;
+}
+
+/* Botones de acciones */
+.acciones button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+/* Efectos hover en los botones */
+.acciones .btn-primary:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
+}
+
+.acciones .btn-danger:hover {
+  background-color: #c82333;
+  transform: scale(1.1);
+}
+
+/* Mensaje si no hay usuarios */
+.mensaje-vacio {
+  font-size: 16px;
+  color: #6c757d;
+}
+
+.acciones {
+  display: flex;
+  gap: 10px; /* Espacio entre los botones */
+  justify-content: center;
+}
+
+.acciones button {
+  font-size: 16px; /* Aumenta el tamaño del icono */
+  padding: 8px 12px; /* Aumenta el área del botón */
+  border-radius: 6px; /* Bordes más redondeados */
+}
+
+.acciones .btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.acciones .btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
 }
 

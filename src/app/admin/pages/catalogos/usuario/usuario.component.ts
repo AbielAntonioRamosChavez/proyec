@@ -10,7 +10,7 @@ import { MatDialogConfirmacionComponent } from '../dialogo-confirmacion/dialogo-
 @Component({
   selector: 'app-usuario',
   templateUrl: './usuario.component.html',
-  styleUrls: ['./usuario.component.scss'],
+  styleUrls: ['./usuario.component.css'],
   standalone: false
 })
 export class UsuarioComponent implements OnInit {
