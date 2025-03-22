@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
@@ -16,21 +15,23 @@ import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
 import { RoleGuard } from './guards/role.guard';
 import { CatalogosModule } from './admin/pages/catalogos/catalogos.module'; // Importa CatalogosModule
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
-    RegisterComponent
-    // Elimina MatDialogConfirmacionComponent de aquí
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes), // Solo una vez
     ReactiveFormsModule,
+    FormsModule,
     AuthModule,
     CatalogosModule,
-    FormsModule // Importa CatalogosModule para acceder a sus componentes exportados
+    AppRoutingModule,
+    AuthModule 
+     // Asegura que está correctamente importado
   ],
   providers: [
     provideClientHydration(),

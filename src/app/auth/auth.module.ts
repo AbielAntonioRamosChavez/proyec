@@ -6,23 +6,40 @@ import { RouterModule } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { AuthService } from './services/auth.service';
 import { RandomGuard } from './guards/random.guard';
-import { Login2Component } from './containers/login2/login2.component';
-import { LoginComponent } from './containers/login/login.component';
 import { TokenInterceptor } from './token.interceptor';
 
-// ✅ Importamos los módulos de Google Sign-In
+// ✅ Importamos los componentes standalone en "imports"
+import { LoginComponent } from './containers/login/login.component';
+import { Login2Component } from './containers/login2/login2.component';
+import { RegisterComponent } from './containers/register/register.component';
+
+// ✅ Google Sign-In
 import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
-
-// ✅ Importamos el entorno (environment) para el CLIENT_ID
 import { environment } from '../../environments/environment';
 
+// ✅ Importa Angular Material si usas MatSnackBar
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-@NgModule({    
+@NgModule({
     declarations: [
         LoginComponent,
         Login2Component,
-        
+        RegisterComponent
+    ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SocialLoginModule,
+        MatSnackBarModule
+    ],
+    exports: [
+        LoginComponent,
+        Login2Component,
+        RegisterComponent
     ],
     providers: [
         AuthGuard,
@@ -34,13 +51,13 @@ import { environment } from '../../environments/environment';
             multi: true
         },
         {
-            provide: 'SocialAuthServiceConfig',  // ✅ Configuración de Google Sign-In
+            provide: 'SocialAuthServiceConfig',
             useValue: {
                 autoLogin: false,
                 providers: [
                     {
                         id: GoogleLoginProvider.PROVIDER_ID,
-                        provider: new GoogleLoginProvider(environment.googleClientId) // ✅ Usamos el CLIENT_ID del environment
+                        provider: new GoogleLoginProvider(environment.googleClientId)
                     }
                 ],
                 onError: (err) => {
@@ -48,21 +65,11 @@ import { environment } from '../../environments/environment';
                 }
             } as SocialAuthServiceConfig,
         }
-    ],
-    imports: [
-        CommonModule,
-        RouterModule,
-        HttpClientModule,
-        FormsModule,
-        ReactiveFormsModule,
-        SocialLoginModule // ✅ Importamos el módulo de Google Sign-In
-    ],
-    exports: [
-        LoginComponent,
-        Login2Component
     ]
 })
 export class AuthModule { }
+
+
 
 
 

@@ -18,6 +18,8 @@ export class AuthService {
     private readonly USER_CURRENT = 'USER_CURRENT';
     private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
     private loggedUser: string = '';
+    private apiUrl = 'http://localhost:5000/api/usuarios';
+
     
     constructor(
     public http: HttpClient,
@@ -25,6 +27,10 @@ export class AuthService {
         private ngZone: NgZone
     ) {
         this.cargarUsuarios();
+    }
+
+    registrarUsuario(usuario: any) {
+        return this.http.post(`${this.apiUrl}/registro`, usuario); // Cambiar "register" por "registro"
     }
 
     loginWithGoogle(idToken: string): Observable<any> {
