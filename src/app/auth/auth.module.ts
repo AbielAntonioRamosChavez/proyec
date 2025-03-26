@@ -10,7 +10,6 @@ import { TokenInterceptor } from './token.interceptor';
 
 // ✅ Importamos los componentes standalone en "imports"
 import { LoginComponent } from './containers/login/login.component';
-import { Login2Component } from './containers/login2/login2.component';
 import { RegisterComponent } from './containers/register/register.component';
 
 // ✅ Google Sign-In
@@ -24,7 +23,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
     declarations: [
         LoginComponent,
-        Login2Component,
         RegisterComponent
     ],
     imports: [
@@ -38,7 +36,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ],
     exports: [
         LoginComponent,
-        Login2Component,
         RegisterComponent
     ],
     providers: [

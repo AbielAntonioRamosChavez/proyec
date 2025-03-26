@@ -29,8 +29,7 @@ import { AppRoutingModule } from './app-routing.module';
     FormsModule,
     AuthModule,
     CatalogosModule,
-    AppRoutingModule,
-    AuthModule 
+    AppRoutingModule, 
      // Asegura que está correctamente importado
   ],
   providers: [
