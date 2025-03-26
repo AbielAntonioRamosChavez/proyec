@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../auth/services/auth.service';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-agregarusuario',
@@ -28,33 +30,28 @@ export class AgregarusuarioComponent {
   mensajeError: string = '';
 
   registrarUsuario() {
-    console.log('Rol seleccionado antes de enviar:', this.nuevoUsuario.rol);
-
-    // Validaciones antes de enviar el formulario
+    this.mensajeError = ''; // 🔥 Limpiar errores previos antes de validar
+  
     if (!this.nuevoUsuario.nombre || !this.nuevoUsuario.apellidos || !this.nuevoUsuario.correo || !this.nuevoUsuario.rol) {
       this.mensajeError = 'Por favor, complete todos los campos obligatorios.';
       return;
     }
-
+  
     if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(this.nuevoUsuario.nombre)) {
       this.mensajeError = 'El nombre solo puede contener letras y espacios.';
       return;
     }
-
+  
     if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(this.nuevoUsuario.apellidos)) {
       this.mensajeError = 'Los apellidos solo pueden contener letras y espacios.';
       return;
     }
-
+  
     if (!this.validarCorreo(this.nuevoUsuario.correo)) {
       this.mensajeError = 'Por favor, ingrese un correo válido.';
       return;
     }
-
-    if (!this.nuevoUsuario.rol || this.nuevoUsuario.rol.trim() === '') {
-      this.mensajeError = 'Por favor, seleccione un rol válido.';
-      return;
-    }
+  
 
     // Verificar si hay un token antes de hacer la solicitud
     const token = localStorage.getItem('JWT_TOKEN');
@@ -73,51 +70,66 @@ export class AgregarusuarioComponent {
       console.log('️ Registrando cliente...');
       registroObservable = this.authService.registerCliente(this.nuevoUsuario);
     }
+    
 
     registroObservable.subscribe(
       (response) => {
         console.log('✅ Usuario registrado con éxito:', response);
-
+    
         if (!response) {
           console.error('❌ La respuesta del servidor es null o indefinida.');
           this.mensajeError = '⚠️ Ocurrió un problema con el servidor.';
           return;
         }
 
-        alert('✅ Usuario registrado exitosamente');
-
-        // Limpiar el mensaje de error aquí
-        this.mensajeError = '';
-
-        // Reiniciar formulario
-        this.nuevoUsuario = {
-          nombre: '',
-          apellidos: '',
-          correo: '',
-          telefono: '',
-          direccion: '',
-          rol: '',
-          fecha_creacion: this.obtenerFechaHoy(),
-        };
-
-        // Redirigir a la lista de usuarios
-        setTimeout(() => {
-          console.log(' Redirigiendo a la página de usuarios...');
-          this.irAUsuarios();
-        }, 500);
+        Swal.fire({
+          title: '¡Éxito!',
+          text: 'Usuario registrado correctamente',
+          icon: 'success',
+          showCancelButton: true,
+          confirmButtonText: '👤 Ver usuarios',
+          cancelButtonText: '➕ Agregar otro usuario',
+          timer: 5000,
+          timerProgressBar: true
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.irAUsuarios(); // 📌 Ir a la lista de usuarios
+          } else {
+            // 🔄 Limpiar formulario para agregar otro usuario
+            this.nuevoUsuario = {
+              nombre: '',
+              apellidos: '',
+              correo: '',
+              telefono: '',
+              direccion: '',
+              rol: '',
+              fecha_creacion: this.obtenerFechaHoy(),
+            };
+          }
+        });
+        
       },
       (error) => {
         console.error('❌ Error al registrar usuario:', error);
-
-        if (error.status === 400 && error.error && error.error.message === 'El correo ya está registrado') {
-          this.mensajeError = '⚠️ Correo existente.';
+      
+        let mensaje = '⚠️ Ocurrió un error inesperado. Inténtalo nuevamente.';
+      
+        if (error.status === 400 && error.error?.message === 'El correo ya está registrado') {
+          mensaje = '⚠️ Este correo ya está registrado.';
         } else if (error.status === 401) {
-          this.mensajeError = '⚠️ No tienes permisos para realizar esta acción.';
+          mensaje = '⚠️ No tienes permisos para realizar esta acción.';
         } else if (error.status === 500) {
-          this.mensajeError = '⚠️ Error interno en el servidor. Inténtalo más tarde.';
-        } else {
-          this.mensajeError = '⚠️ Correo existente';
+          mensaje = '⚠️ Error interno en el servidor. Inténtalo más tarde.';
         }
+      
+        Swal.fire({
+          title: 'Error',
+          text: mensaje,
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      
+        this.mensajeError = mensaje;
       }
     );
   }
@@ -135,7 +147,9 @@ export class AgregarusuarioComponent {
   }
 
   // Redirigir a la lista de usuarios
-  irAUsuarios() {
-    this.router.navigate(['/usuarios']);
-  }
+irAUsuarios() {
+  this.router.navigate(['admin/usuarios']);
+}
+
+
 }
