@@ -73,37 +73,37 @@ export class LoginComponent implements OnInit {
     public onSubmit() {
       this.isSubmited = true;
       if (this.form.invalid) return;
-    
+  
       const body = {
-        correo: this.form.value.email.toLowerCase(),
-        contrasena: this.form.value.password
+          correo: this.form.value.email.toLowerCase(),
+          contrasena: this.form.value.password
       };
-    
+  
       this._authService.login(body).subscribe({
-        next: (response) => {
-          console.log('🚀 Login exitoso:', response);
-          this.usuarioActual = response.user;
-    
-          // Guardamos el usuario en localStorage
-          localStorage.setItem('USER_CURRENT', JSON.stringify(response.user));
-    
-          // Verificar el rol del usuario para redirigirlo a la vista correcta
-          if (response.user.rol === 'cliente') {
-            this.router.navigate(['/landing']);
-          } else {
-            this.router.navigate(['/admin/puntodeventa']);
+          next: (response) => {
+              console.log('🚀 Login exitoso:', response);
+              this.usuarioActual = response.user;
+  
+              // Guardamos el usuario en localStorage
+              localStorage.setItem('USER_CURRENT', JSON.stringify(response.user));
+  
+              // Verificar el rol del usuario para redirigirlo (usar rol_nombre)
+              if (response.user.rol_nombre === 'cliente') { // Cambiado de rol a rol_nombre
+                  this.router.navigate(['/landing']);
+              } else {
+                  this.router.navigate(['/admin/puntodeventa']);
+              }
+  
+              this.loginSuccess.emit();
+          },
+          error: (err) => {
+              console.error('❌ Error en login:', err);
+              console.log('🛠️ Respuesta completa del error:', err.error);
+              this.handleError(err);
+              this.isSubmited = false;
           }
-    
-          this.loginSuccess.emit();
-        },
-        error: (err) => {
-          console.error('❌ Error en login:', err);
-          console.log('🛠️ Respuesta completa del error:', err.error);
-          this.handleError(err);
-          this.isSubmited = false;
-        }
       });
-    }
+  }
     
 
     handleError(error: any) {

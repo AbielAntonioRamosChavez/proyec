@@ -78,10 +78,15 @@ export class AuthService {
                     localStorage.setItem(this.USER_CURRENT, JSON.stringify(response.user));
                     console.log("👤 Usuario almacenado:", response.user);
                     
-                    // 3. Redirigir después de almacenar los datos
+                    // 3. Redirigir basado en el rol (usar rol_nombre en lugar de rol)
                     this.ngZone.run(() => {
-                        console.log("🚀 Redirigiendo a /admin/puntodeventa...");
-                        this.router.navigate(['/admin/puntodeventa']);
+                        if (response.user.rol_nombre === 'admin') { // Cambiado de rol a rol_nombre
+                            console.log("🚀 Redirigiendo a /admin/puntodeventa...");
+                            this.router.navigate(['/admin/puntodeventa']);
+                        } else {
+                            console.log("🚀 Redirigiendo a /landing...");
+                            this.router.navigate(['/landing']);
+                        }
                     });
                 } else {
                     console.warn("⚠️ Respuesta incompleta del servidor");
@@ -129,7 +134,7 @@ export class AuthService {
     
 
   logout(): Observable<void> {
-    const usuario = this.getUser(); // Obtener el usuario antes de cerrar sesión
+    const usuario = this.getUser();
 
     return new Observable<void>((observer) => {
         this.http.post<any>(`${environment.api.authApis}/logout`, {}).pipe(
@@ -137,20 +142,20 @@ export class AuthService {
                 console.log('🔒 Logout exitoso');
                 this.doLogoutUser();
 
-                if (usuario?.rol === 'cliente') {
+                if (usuario?.rol_nombre === 'cliente') { // Cambiado de rol a rol_nombre
                     this.router.navigate(['/login2']);
                 } else {
                     this.router.navigate(['/login']);
                 }
 
-                observer.next(); // Notificar que la operación se completó
+                observer.next();
                 observer.complete();
             }),
             catchError(error => {
                 console.error('❌ Error en logout:', error);
                 this.doLogoutUser();
 
-                if (usuario?.rol === 'cliente') {
+                if (usuario?.rol_nombre === 'cliente') { // Cambiado de rol a rol_nombre
                     this.router.navigate(['/login2']);
                 } else {
                     this.router.navigate(['/login']);
