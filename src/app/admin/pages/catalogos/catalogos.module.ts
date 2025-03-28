@@ -23,14 +23,11 @@ import { GestiondeventasComponent } from './gestiondeventas/gestiondeventas.comp
 import { HistorialComponent } from './historial/historial.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { CobroDialogComponent } from './puntodeventa/Mensaje/cobro-dialog/cobro-dialog.component';
-<<<<<<< HEAD
 import { ProveedoresComponent } from './proveedores/proveedores.component';
 import { CategoriasComponent } from './categorias/categorias.component';
 
-=======
 import { MatOptionModule } from '@angular/material/core';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
->>>>>>> 30cff898f87f468563b7c5473b77e8b65b636603
 
 @NgModule({
   declarations: [
