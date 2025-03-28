@@ -1,0 +1,126 @@
+<div class="proveedores-container">
+    <h3>Administrar Proveedores</h3>
+    <div class="actions">
+      <button (click)="openAddModal()" class="btn btn-success">
+        <i class="fas fa-plus"></i> Añadir Proveedor
+      </button>
+    </div>
+  
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Teléfono</th>
+          <th>Correo</th>
+          <th>Cuenta Bancaria</th>
+          <th>Activo</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let proveedor of proveedores">
+          <td>{{ proveedor.nombre }}</td>
+          <td>{{ proveedor.telefono }}</td>
+          <td>{{ proveedor.correo }}</td>
+          <td>{{ proveedor.cuenta_bancaria }}</td>
+          <td><i [ngClass]="{'fas fa-check-circle text-success': proveedor.activo, 'fas fa-times-circle text-danger': !proveedor.activo}"></i></td>
+          <td>
+            <button (click)="openEditModal(proveedor)" class="btn btn-primary btn-sm" title="Editar">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button (click)="deleteProveedor(proveedor)" class="btn btn-danger btn-sm" title="Eliminar">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div class="modal fade" id="addProveedorModal" tabindex="-1" aria-labelledby="addProveedorModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addProveedorModalLabel">Añadir Proveedor</h5>
+            <button type="button" class="btn-close" (click)="closeModal('addProveedorModal')" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <form #addProveedorForm="ngForm" (ngSubmit)="addProveedor(addProveedorForm)">
+              <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" [(ngModel)]="newProveedor.nombre" name="nombre" required #nombre="ngModel">
+                <div *ngIf="nombre.invalid && nombre.touched" class="text-danger">El nombre es obligatorio.</div>
+              </div>
+              <div class="mb-3">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input type="text" class="form-control" id="telefono" [(ngModel)]="newProveedor.telefono" name="telefono">
+              </div>
+              <div class="mb-3">
+                <label for="correo" class="form-label">Correo</label>
+                <input type="email" class="form-control" id="correo" [(ngModel)]="newProveedor.correo" name="correo">
+              </div>
+              <div class="mb-3">
+                <label for="cuenta_bancaria" class="form-label">Cuenta Bancaria</label>
+                <input type="text" class="form-control" id="cuenta_bancaria" [(ngModel)]="newProveedor.cuenta_bancaria" name="cuenta_bancaria">
+              </div>
+              <div class="mb-3">
+                <label for="notas" class="form-label">Notas</label>
+                <textarea class="form-control" id="notas" [(ngModel)]="newProveedor.notas" name="notas"></textarea>
+              </div>
+              <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="activo" [(ngModel)]="newProveedor.activo" name="activo">
+                <label class="form-check-label" for="activo">Activo</label>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeModal('addProveedorModal')">Cerrar</button>
+                <button type="submit" class="btn btn-primary" [disabled]="addProveedorForm.invalid">Añadir</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="modal fade" id="editProveedorModal" tabindex="-1" aria-labelledby="editProveedorModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editProveedorModalLabel">Editar Proveedor</h5>
+            <button type="button" class="btn-close" (click)="closeModal('editProveedorModal')" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <form #editProveedorForm="ngForm" (ngSubmit)="updateProveedor(editProveedorForm)">
+              <div class="mb-3">
+                <label for="editNombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="editNombre" [(ngModel)]="selectedProveedor.nombre" name="nombre" required #nombre="ngModel">
+                <div *ngIf="nombre.invalid && nombre.touched" class="text-danger">El nombre es obligatorio.</div>
+              </div>
+              <div class="mb-3">
+                <label for="editTelefono" class="form-label">Teléfono</label>
+                <input type="text" class="form-control" id="editTelefono" [(ngModel)]="selectedProveedor.telefono" name="telefono">
+              </div>
+              <div class="mb-3">
+                <label for="editCorreo" class="form-label">Correo</label>
+                <input type="email" class="form-control" id="editCorreo" [(ngModel)]="selectedProveedor.correo" name="correo">
+              </div>
+              <div class="mb-3">
+                <label for="editCuentaBancaria" class="form-label">Cuenta Bancaria</label>
+                <input type="text" class="form-control" id="editCuentaBancaria" [(ngModel)]="selectedProveedor.cuenta_bancaria" name="cuenta_bancaria">
+              </div>
+              <div class="mb-3">
+                <label for="editNotas" class="form-label">Notas</label>
+                <textarea class="form-control" id="editNotas" [(ngModel)]="selectedProveedor.notas" name="notas"></textarea>
+              </div>
+              <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="editActivo" [(ngModel)]="selectedProveedor.activo" name="activo">
+                <label class="form-check-label" for="editActivo">Activo</label>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeModal('editProveedorModal')">Cerrar</button>
+                <button type="submit" class="btn btn-primary" [disabled]="editProveedorForm.invalid">Guardar cambios</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

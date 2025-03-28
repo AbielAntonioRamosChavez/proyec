@@ -23,6 +23,9 @@ import { GestiondeventasComponent } from './gestiondeventas/gestiondeventas.comp
 import { HistorialComponent } from './historial/historial.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { CobroDialogComponent } from './puntodeventa/Mensaje/cobro-dialog/cobro-dialog.component';
+import { ProveedoresComponent } from './proveedores/proveedores.component';
+import { CategoriasComponent } from './categorias/categorias.component';
+
 
 @NgModule({
   declarations: [
@@ -35,7 +38,7 @@ import { CobroDialogComponent } from './puntodeventa/Mensaje/cobro-dialog/cobro-
      GestiondeventasComponent, 
      HistorialComponent, 
      EstadisticasComponent, 
-     CobroDialogComponent
+     CobroDialogComponent, ProveedoresComponent, CategoriasComponent,
   ],
   imports: [
     CommonModule,

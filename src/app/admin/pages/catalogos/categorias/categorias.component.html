@@ -1,0 +1,98 @@
+<div class="categorias-container">
+    <h3>Administrar Categorías</h3>
+    <div class="actions">
+      <button (click)="openAddModal()" class="btn btn-success">
+        <i class="fas fa-plus"></i> Añadir Categoría
+      </button>
+    </div>
+  
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Activo</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let categoria of categorias">
+          <td>{{ categoria.nombre }}</td>
+          <td>{{ categoria.descripcion }}</td>
+          <td><i [ngClass]="{'fas fa-check-circle text-success': categoria.activo, 'fas fa-times-circle text-danger': !categoria.activo}"></i></td>
+          <td>
+            <button (click)="openEditModal(categoria)" class="btn btn-primary btn-sm" title="Editar">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button (click)="deleteCategoria(categoria)" class="btn btn-danger btn-sm" title="Eliminar">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div class="modal fade" id="addCategoriaModal" tabindex="-1" aria-labelledby="addCategoriaModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addCategoriaModalLabel">Añadir Categoría</h5>
+            <button type="button" class="btn-close" (click)="closeModal('addCategoriaModal')" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <form #addCategoriaForm="ngForm" (ngSubmit)="addCategoria(addCategoriaForm)">
+              <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" [(ngModel)]="newCategoria.nombre" name="nombre" required #nombre="ngModel">
+                <div *ngIf="nombre.invalid && nombre.touched" class="text-danger">El nombre es obligatorio.</div>
+              </div>
+              <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <textarea class="form-control" id="descripcion" [(ngModel)]="newCategoria.descripcion" name="descripcion"></textarea>
+              </div>
+              <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="activo" [(ngModel)]="newCategoria.activo" name="activo">
+                <label class="form-check-label" for="activo">Activo</label>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeModal('addCategoriaModal')">Cerrar</button>
+                <button type="submit" class="btn btn-primary" [disabled]="addCategoriaForm.invalid">Añadir</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="modal fade" id="editCategoriaModal" tabindex="-1" aria-labelledby="editCategoriaModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editCategoriaModalLabel">Editar Categoría</h5>
+            <button type="button" class="btn-close" (click)="closeModal('editCategoriaModal')" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <form #editCategoriaForm="ngForm" (ngSubmit)="updateCategoria(editCategoriaForm)">
+              <div class="mb-3">
+                <label for="editNombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="editNombre" [(ngModel)]="selectedCategoria.nombre" name="nombre" required #nombre="ngModel">
+                <div *ngIf="nombre.invalid && nombre.touched" class="text-danger">El nombre es obligatorio.</div>
+              </div>
+              <div class="mb-3">
+                <label for="editDescripcion" class="form-label">Descripción</label>
+                <textarea class="form-control" id="editDescripcion" [(ngModel)]="selectedCategoria.descripcion" name="descripcion"></textarea>
+              </div>
+              <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="editActivo" [(ngModel)]="selectedCategoria.activo" name="activo">
+                <label class="form-check-label" for="editActivo">Activo</label>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeModal('editCategoriaModal')">Cerrar</button>
+                <button type="submit" class="btn btn-primary" [disabled]="editCategoriaForm.invalid">Guardar cambios</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

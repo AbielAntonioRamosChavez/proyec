@@ -1,4 +1,3 @@
-// categoria.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -15,4 +14,20 @@ export class CategoriaService {
   obtenerCategorias(): Observable<any> {
     return this.http.get(this.apiUrl);
   }
+
+  crearCategoria(categoria: any): Observable<any> {
+    return this.http.post(this.apiUrl, categoria);
+  }
+
+  actualizarCategoria(id: number, categoria: any): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.put(url, categoria);
+  }
+
+  eliminarCategoria(id: number): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete(url);
+  }
+
+  // Puedes agregar aquí otros métodos si los necesitas
 }

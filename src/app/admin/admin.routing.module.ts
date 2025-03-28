@@ -10,6 +10,8 @@ import { PuntodeventaComponent } from './pages/catalogos/puntodeventa/puntodeven
 import { EstadisticasComponent } from './pages/catalogos/estadisticas/estadisticas.component';
 import { HistorialComponent } from './pages/catalogos/historial/historial.component';
 import { RoleGuard } from '../guards/role.guard';
+import { ProveedoresComponent } from './pages/catalogos/proveedores/proveedores.component';
+import { CategoriasComponent } from './pages/catalogos/categorias/categorias.component';
 
 
 const routes: Routes = [
@@ -67,6 +69,18 @@ const routes: Routes = [
       {
         path: 'historial',
         component: HistorialComponent,
+        canActivate: [RoleGuard],
+        data: { roles: ['admin'] } // ❌ Solo el administrador
+      },
+      {
+        path: 'proveedores',
+        component: ProveedoresComponent,
+        canActivate: [RoleGuard],
+        data: { roles: ['admin'] } // ❌ Solo el administrador
+      },
+      {
+        path: 'categorias',
+        component: CategoriasComponent,
         canActivate: [RoleGuard],
         data: { roles: ['admin'] } // ❌ Solo el administrador
       }

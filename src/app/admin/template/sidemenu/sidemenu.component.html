@@ -2,12 +2,12 @@
     <div class="sb-sidenav-menu">
         <div class="nav">
             <div class="sb-sidenav-menu-heading">Catálogos</div>
-            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVentas" aria-expanded="false" aria-controls="collapseVentas">
                 <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
                 Ventas
                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
             </a>
-            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+            <div class="collapse" id="collapseVentas" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
                     <a class="nav-link" routerLink="/admin/gestiondeventas" routerLinkActive="active-link">
                         <i class="fas fa-tasks"></i> Gestión de ventas
@@ -17,14 +17,29 @@
                     </a>
                 </nav>
             </div>
-            <a class="nav-link" routerLink="productos" routerLinkActive="active-link">
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProductos" aria-expanded="false" aria-controls="collapseProductos">
                 <div class="sb-nav-link-icon"><i class="fas fa-box"></i></div>
                 Productos
+                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
             </a>
+            <div class="collapse" id="collapseProductos" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                <nav class="sb-sidenav-menu-nested nav">
+                    <a class="nav-link" routerLink="productos" routerLinkActive="active-link">
+                        <i class="fas fa-list"></i> Lista de Productos
+                    </a>
+                    <a class="nav-link" routerLink="proveedores" routerLinkActive="active-link">
+                        <i class="fas fa-truck"></i> Proveedores
+                    </a>
+                    <a class="nav-link" routerLink="categorias" routerLinkActive="active-link">
+                        <i class="fas fa-tags"></i> Categorías
+                    </a>
+                </nav>
+            </div>
             <a class="nav-link" routerLink="usuarios" routerLinkActive="active-link">
                 <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                 Usuarios
             </a>
+
             <a class="nav-link" routerLink="estadisticas" routerLinkActive="active-link">
                 <div class="sb-nav-link-icon"><i class="fas fa-chart-bar"></i></div>
                 Estadísticas
