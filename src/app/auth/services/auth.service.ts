@@ -349,4 +349,11 @@ export class AuthService {
           })
         );
       }
+
+
+      //roles
+      obtenerRoles(): Observable<any> {
+        return this.http.get(`${environment.api.authApis}/roles`);
+      }
+      
 }

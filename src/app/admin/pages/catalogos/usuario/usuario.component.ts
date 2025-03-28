@@ -57,6 +57,7 @@ export class UsuarioComponent implements OnInit {
       data: {
         id: usuario.id,
         nombre: usuario.nombre,
+        apellidos: usuario.apellidos,
         correo: usuario.correo,
         telefono: usuario.telefono,
         direccion: usuario.direccion,

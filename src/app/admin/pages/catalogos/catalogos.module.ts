@@ -23,6 +23,8 @@ import { GestiondeventasComponent } from './gestiondeventas/gestiondeventas.comp
 import { HistorialComponent } from './historial/historial.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { CobroDialogComponent } from './puntodeventa/Mensaje/cobro-dialog/cobro-dialog.component';
+import { MatOptionModule } from '@angular/material/core';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,8 @@ import { CobroDialogComponent } from './puntodeventa/Mensaje/cobro-dialog/cobro-
     MatIconModule,
     MatButtonModule,
     MatPaginatorModule,
+    MatOptionModule,
+    MatProgressBarModule
      // Importa MatDialogModule para los diálogos
   ],
   exports: [
