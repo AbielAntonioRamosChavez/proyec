@@ -19,7 +19,8 @@ export class AuthService {
     private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
     private loggedUser: string = '';
     private apiUrl = 'http://localhost:5000/api/usuarios';
-
+    private usuariosSubject = new BehaviorSubject<any[]>([]);
+    usuarios$ = this.usuariosSubject.asObservable();
     
     constructor(
     public http: HttpClient,
@@ -190,35 +191,36 @@ export class AuthService {
 
     registerAdmin(usuario: any): Observable<any> { 
         const url = `${environment.api.authApis}/usuarios/registro-admin`;
-        const token = this.getJwtToken(); // Obtener el token JWT
-        console.log('Token obtenido del localStorage:', token); // Log para verificar el token
-      
+        const token = this.getJwtToken();
+        
         if (!token) {
-          console.error('❌ No hay token disponible. El usuario no está autenticado.');
-          return throwError(() => new Error('⚠️ No tienes permisos para realizar esta acción.'));
+            console.error('❌ No hay token disponible. El usuario no está autenticado.');
+            return throwError(() => new Error('⚠️ No tienes permisos para realizar esta acción.'));
         }
-      
+    
         const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
         });
-      
-        console.log('Datos enviados al backend:', usuario); // Log para verificar los datos del usuario
-        console.log('Encabezados de la solicitud:', headers); // Log para verificar los encabezados
-      
+    
         return this.http.post(url, usuario, { headers }).pipe(
-          tap(response => console.log('✅ Usuario administrativo registrado:', response)),
-          catchError(error => {
-            console.error('❌ Error al registrar usuario administrativo:', error);
-            let mensajeError = 'Ocurrió un error al registrar el usuario administrativo.';
-            if (error.status === 400) mensajeError = '⚠️ El correo ya está registrado.';
-            if (error.status === 401) mensajeError = '⚠️ No tienes permisos para registrar usuarios.';
-            if (error.status === 500) mensajeError = '⚠️ Error interno del servidor.';
-            return throwError(() => new Error(mensajeError));
-          })
+            tap((response: any) => {
+                console.log('✅ Usuario administrativo registrado:', response);
+                if (response.token) {
+                    this.storeJwtToken(response.token);
+                }
+                return response;
+            }),
+            catchError(error => {
+                console.error('❌ Error al registrar usuario administrativo:', error);
+                let mensajeError = 'Ocurrió un error al registrar el usuario administrativo.';
+                if (error.status === 400) mensajeError = '⚠️ El correo ya está registrado.';
+                if (error.status === 401) mensajeError = '⚠️ No tienes permisos para registrar usuarios.';
+                if (error.status === 500) mensajeError = '⚠️ Error interno del servidor.';
+                return throwError(() => new Error(mensajeError));
+            })
         );
-      }
-
+    }
     private handleLoginResponse(response: any): void {
         if (response && response.token && response.refreshToken) {
             this.storeJwtToken(response.token);
@@ -279,9 +281,17 @@ export class AuthService {
         this.doLogoutUser(); // 🔄 Corregido
     }
 
-    consultarUsuarios(): Observable<any> {
+    consultarUsuarios(): Observable<any[]> {  // Especifica que retorna un array
         const url = `${environment.api.authApis}/usuarios/consultar`;
-        return this.http.get(url);
+        return this.http.get<any[]>(url).pipe(  // Especifica el tipo esperado en get<>
+            tap(usuarios => {
+                this.usuariosSubject.next(usuarios);
+            }),
+            catchError(error => {
+                console.error('❌ Error al cargar usuarios:', error);
+                return throwError(() => error);
+            })
+        );
     }
 
     private cargarUsuarios() {
@@ -354,5 +364,7 @@ export class AuthService {
       obtenerRoles(): Observable<any> {
         return this.http.get(`${environment.api.authApis}/roles`);
       }
+
+      
       
 }

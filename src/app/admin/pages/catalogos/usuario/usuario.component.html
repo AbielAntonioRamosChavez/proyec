@@ -27,7 +27,7 @@
                     <td>{{ usuario.apellidos }}</td>
                     <td>{{ usuario.correo }}</td>
                     <td>{{ usuario.telefono }}</td>
-                    <td>{{ usuario.rol }}</td>
+                    <td>{{ usuario.rol_nombre || 'NULL' }}  </td>
                     <td>
                         <div class="btn-group btn-group-sm acciones">
                             <button class="btn btn-primary" (click)="editarUsuario(usuario)">

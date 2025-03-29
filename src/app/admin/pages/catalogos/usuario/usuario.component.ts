@@ -18,6 +18,14 @@ export class UsuarioComponent implements OnInit {
 
   ngOnInit() {
     this.cargarUsuarios();
+    this.authService.usuarios$.subscribe({
+      next: (usuarios: any[]) => {  // Especifica el tipo del parámetro
+        this.usuarios = usuarios;
+      },
+      error: (error) => {
+        console.error('Error al recibir usuarios:', error);
+      }
+    });
   }
 
   // 🔄 Función para obtener los usuarios
@@ -109,7 +117,7 @@ export class UsuarioComponent implements OnInit {
           this.authService.http.put(url, result.value).subscribe({
             next: () => {
               console.log('✅ Usuario actualizado en el backend');
-              this.cargarUsuarios(); // Recargar la lista de usuarios
+              this.authService.consultarUsuarios().subscribe();
               Swal.fire('¡Actualizado!', 'El usuario ha sido actualizado correctamente.', 'success');
             },
             error: (error) => {
@@ -140,7 +148,7 @@ export class UsuarioComponent implements OnInit {
         this.authService.http.delete(url).subscribe({
           next: () => {
             console.log('✅ Usuario eliminado');
-            this.cargarUsuarios(); // Recargar lista de usuarios
+            this.authService.consultarUsuarios().subscribe();
             Swal.fire('¡Eliminado!', 'El usuario ha sido eliminado.', 'success');
           },
           error: (error) => {

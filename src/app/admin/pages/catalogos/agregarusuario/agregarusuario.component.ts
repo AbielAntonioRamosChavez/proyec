@@ -73,9 +73,9 @@ export class AgregarusuarioComponent implements OnInit {
     // Verificar token
     const token = localStorage.getItem('JWT_TOKEN');
     if (!token) {
-      console.error('❌ No hay token, el usuario no está autenticado.');
-      this.mensajeError = '⚠️ No tienes permisos para registrar usuarios. Inicia sesión.';
-      return;
+        console.error('❌ No hay token, el usuario no está autenticado.');
+        this.mensajeError = '⚠️ No tienes permisos para registrar usuarios. Inicia sesión.';
+        return;
     }
 
     // Preparar datos para el backend
@@ -85,52 +85,45 @@ export class AgregarusuarioComponent implements OnInit {
       correo: this.nuevoUsuario.correo,
       telefono: this.nuevoUsuario.telefono,
       direccion: this.nuevoUsuario.direccion,
-      rol_id: Number(this.nuevoUsuario.rol_id) // Convertir a número
-    };
+      rol_id: Number(this.nuevoUsuario.rol_id)
+   };
 
     // Registrar usuario administrativo (ya que filtramos el rol cliente)
-    this.authService.registerAdmin(datosUsuario).subscribe(
-      (response) => {
-        Swal.fire({
-          title: '¡Éxito!',
-          text: 'Usuario registrado correctamente',
-          icon: 'success',
-          showCancelButton: true,
-          confirmButtonText: '👤 Ver usuarios',
-          cancelButtonText: '➕ Agregar otro usuario',
-          timer: 5000,
-          timerProgressBar: true
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.irAUsuarios();
-          } else {
-            this.resetFormulario();
-          }
-        });
-      },
-      (error) => {
-        console.error('❌ Error al registrar usuario:', error);
-        
-        let mensaje = '⚠️ Ocurrió un error inesperado. Inténtalo nuevamente.';
-        
-        if (error.error?.message) {
-          mensaje = error.error.message;
-        } else if (error.status === 401) {
-          mensaje = '⚠️ No tienes permisos para realizar esta acción.';
-        } else if (error.status === 500) {
-          mensaje = '⚠️ Error interno en el servidor. Inténtalo más tarde.';
+    this.authService.registerAdmin(datosUsuario).subscribe({
+        next: (response) => {
+            Swal.fire({
+                title: '¡Éxito!',
+                text: response.message || 'Usuario registrado correctamente',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonText: '👤 Ver usuarios',
+                cancelButtonText: '➕ Agregar otro usuario',
+                timer: 5000,
+                timerProgressBar: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.irAUsuarios();
+                    this.authService.consultarUsuarios().subscribe();
+                } else {
+                    this.resetFormulario();
+                }
+            });
+        },
+        error: (error) => {
+            console.error('❌ Error al registrar usuario:', error);
+            
+            let mensaje = error.message || '⚠️ Ocurrió un error inesperado. Inténtalo nuevamente.';
+            
+            Swal.fire({
+                title: 'Error',
+                text: mensaje,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+
+            this.mensajeError = mensaje;
         }
-
-        Swal.fire({
-          title: 'Error',
-          text: mensaje,
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
-
-        this.mensajeError = mensaje;
-      }
-    );
+    });
   }
 
   resetFormulario() {
