@@ -1,9 +1,9 @@
-// landing.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ServicioService } from '../auth/services/servicio/servicio.service';
 import { ComentarioService } from '../auth/services/comentario/comentario.service';
 import { AuthService } from '../auth/services/auth.service';
 import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
 
 // Definir la interfaz para el tipo Comentario
 interface Comentario {
@@ -19,6 +19,7 @@ interface Comentario {
   usuarioDioLike?: boolean; // Si el usuario actual dio like
   usuarioReporto?: boolean; // Si el usuario actual reportó
   estado?: string; // Estado del comentario
+  tiempo?: string; // Agregar la propiedad tiempo
 }
 
 @Component({
@@ -27,7 +28,7 @@ interface Comentario {
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.css'],
 })
-export class LandingComponent implements OnInit {
+export class LandingComponent implements OnInit, AfterViewInit {
   servicios: any[] = [];
   comentariosModal: Comentario[] = []; // Usar la interfaz Comentario
   nuevoComentarioModal: string = '';
@@ -37,11 +38,14 @@ export class LandingComponent implements OnInit {
   comentarioSeleccionado: Comentario | null = null; // Usar la interfaz Comentario
   modalVisible: boolean = false;
   usuarioActual: any = null;
+  mostrarFormRespuesta: boolean = false; // Controla la visibilidad del formulario de respuesta
+  mostrarRespuesta: boolean = false; // Nueva propiedad para controlar la visibilidad de las respuestas
 
   constructor(
     private servicioService: ServicioService,
     private comentarioService: ComentarioService,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: ActivatedRoute // Inyectamos ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -53,16 +57,16 @@ export class LandingComponent implements OnInit {
     }
   }
 
+  // ========== FUNCIONES EXISTENTES (SE MANTIENEN IGUAL) ========== //
+
   logout(): void {
-    // Mostrar alerta de SweetAlert2
     Swal.fire({
       title: 'Sesión cerrada',
       text: 'Has cerrado la sesión correctamente.',
       icon: 'success',
-      timer: 2000, // La alerta se cerrará automáticamente después de 2 segundos
-      showConfirmButton: false, // No mostrar el botón de confirmación
+      timer: 2000,
+      showConfirmButton: false,
     }).then(() => {
-      // Cerrar sesión después de que la alerta se cierre
       this.authService.logout();
       this.usuarioActual = null;
     });
@@ -94,6 +98,8 @@ export class LandingComponent implements OnInit {
 
   cerrarModal(): void {
     this.modalVisible = false;
+    this.mostrarFormRespuesta = false; // Resetear al cerrar el modal
+    this.mostrarRespuesta = false; // Resetear al cerrar el modal
   }
 
   verRespuestas(comentarioId: string): void {
@@ -102,6 +108,7 @@ export class LandingComponent implements OnInit {
       this.comentarioService.obtenerRespuestasPorComentario(comentarioId).subscribe(
         (respuestas) => {
           this.respuestasModal = respuestas;
+          this.mostrarRespuesta = true; // Mostrar las respuestas
         },
         (error) => {
           console.error('Error al obtener respuestas:', error);
@@ -123,6 +130,7 @@ export class LandingComponent implements OnInit {
         (response) => {
           this.respuestasModal.push(response);
           this.nuevaRespuestaModal = '';
+          this.mostrarFormRespuesta = false; // Ocultar el formulario después de enviar
         },
         (error) => {
           console.error('Error al crear respuesta:', error);
@@ -210,7 +218,77 @@ export class LandingComponent implements OnInit {
     }
   }
 
+  // Función para desplazarse hacia una sección específica al hacer clic en un enlace
+  scrollToSection(id: string): void {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
   usuarioEsAutor(comentario: Comentario): boolean {
     return comentario.usuario.id_pg === this.usuarioActual?.id;
+  }
+
+  // ========== NUEVAS FUNCIONALIDADES ========== //
+  toggleFormularioRespuesta(comentario: Comentario): void {
+    if (this.comentarioSeleccionado?._id === comentario._id) {
+      this.mostrarFormRespuesta = !this.mostrarFormRespuesta;
+    } else {
+      this.comentarioSeleccionado = comentario;
+      this.mostrarFormRespuesta = true;
+      this.verRespuestas(comentario._id);
+    }
+
+    if (this.mostrarFormRespuesta) {
+      this.nuevaRespuestaModal = '';
+    }
+  }
+
+  cancelarRespuesta(): void {
+    this.mostrarFormRespuesta = false;
+    this.nuevaRespuestaModal = '';
+  }
+
+  toggleMostrarRespuestas(comentario: Comentario): void {
+    if (this.comentarioSeleccionado?._id === comentario._id) {
+      this.mostrarRespuesta = !this.mostrarRespuesta;
+    } else {
+      this.comentarioSeleccionado = comentario;
+      this.mostrarRespuesta = true;
+      this.verRespuestas(comentario._id);
+    }
+  }
+
+  ngAfterViewInit(): void {
+    this.route.fragment.subscribe(fragment => {
+      if (fragment) {
+        setTimeout(() => {  
+          const element = document.querySelector(`#${fragment}`);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
+      }
+    });
+
+    // Implementar el IntersectionObserver para resaltar los enlaces activos
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const navLink = document.querySelector(`a[href="#${entry.target.id}"]`);
+        if (entry.isIntersecting) {
+          navLink?.classList.add("active");
+        } else {
+          navLink?.classList.remove("active");
+        }
+      });
+    }, { threshold: 0.5 });
+
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
   }
 }
