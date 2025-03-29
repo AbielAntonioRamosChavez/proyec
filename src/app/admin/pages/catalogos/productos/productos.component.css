@@ -1,5 +1,5 @@
 .productos-container {
-  max-width: 800px;
+  max-width: px;
   margin: 20px auto;
   padding: 20px;
   font-family: Arial, sans-serif;
@@ -124,5 +124,5 @@
   margin: 10% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 50%;
+  width: 100%;
 }
