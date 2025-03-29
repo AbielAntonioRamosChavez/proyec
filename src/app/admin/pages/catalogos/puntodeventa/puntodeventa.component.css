@@ -54,6 +54,7 @@ body {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
+  white-space: nowrap; /* Evita el salto de línea en las celdas */
 }
 
 .product-table th {
@@ -79,26 +80,20 @@ body {
 }
 
 .table-container {
-    max-height: 300px; /* Ajusta la altura máxima según tus necesidades */
-    overflow-y: auto;  /* Habilita el scroll vertical cuando sea necesario */
-}
-
-.product-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.product-table th, .product-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-    white-space: nowrap; /* Evita el salto de línea en las celdas */
-}
-
-.product-table th {
-    background-color: #f2f2f2;
+  max-height: 300px; /* Ajusta la altura máxima según tus necesidades */
+  overflow-y: auto;  /* Habilita el scroll vertical cuando sea necesario */
 }
 
 .venta-container {
   margin: 30px; /* Aplica un margen de 30px a todos los lados */
+}
+
+.red-button {
+  background-color: #c82333!important;
+  color: white !important;
+}
+
+.green-button {
+  background-color: #28a745!important;
+  color: white !important;
 }

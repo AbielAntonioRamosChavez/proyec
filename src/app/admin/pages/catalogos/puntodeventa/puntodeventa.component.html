@@ -1,111 +1,87 @@
 <div class="venta-container">
   <h2 class="mt-4">Nueva Venta</h2>
-    <!-- Sección de Cliente -->
-    <div class="cliente">
-      <form class="example-form">
-        <table class="example-full-width" cellspacing="0">
-          <tr>
-            <td>
-              <mat-form-field class="example-full-width">
-                <mat-label>Nombre del Cliente</mat-label>
-                <input matInput 
-                       type="text"
-                       [(ngModel)]="nombreCliente"
-                       name="nombreCliente" 
-                       placeholder="F2 para buscar"
-                       (focus)="onFocusCliente()"
-                       (blur)="onBlurCliente()">
-              </mat-form-field>
-            </td>
-            <td>
-              <mat-form-field class="example-full-width">
-                <mat-label>Teléfono</mat-label>
-                <input matInput 
-                       type="text" 
-                       [(ngModel)]="telefonoCliente" 
-                       name="telefonoCliente" 
-                       placeholder="Teléfono">
-              </mat-form-field>
-            </td>
-          </tr>
-        </table>
-  
-        <p>
-          <mat-form-field class="example-full-width">
-            <mat-label>Direccion</mat-label>
-            <textarea matInput 
-                      type="text" 
-                      [(ngModel)]="direccionCliente" 
-                      name="direccionCliente" 
-                      placeholder="Dirección"></textarea>
-          </mat-form-field>
-        </p>
-      </form>
-    </div>
-    <!-- Sección de Búsqueda de Productos -->
-    <div class="producto-busqueda">
-      <mat-form-field class="example-form-field">
-        <mat-label>Codigo del producto</mat-label>
-        <input matInput  type="text" class="input-field" placeholder="Enter para buscar" [(ngModel)]="codigoBusqueda" autofocus>
-    </mat-form-field>
-    <button mat-flat-button class="action-button" (click)="borrarDatos()">Borrar datos</button>
-    </div>
-  
-    <!-- Tabla de Productos en Venta -->
-    <table mat-table [dataSource]="productosEnVenta" class="mat-elevation-z8 product-table">
-      <ng-container matColumnDef="codigo">
-        <th mat-header-cell *matHeaderCellDef>Código</th>
-        <td mat-cell *matCellDef="let element">{{ element.codigo }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="descripcion">
-        <th mat-header-cell *matHeaderCellDef>Descripción</th>
-        <td mat-cell *matCellDef="let element">{{ element.descripcion }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="precio">
-        <th mat-header-cell *matHeaderCellDef>Precio</th>
-        <td mat-cell *matCellDef="let element">{{ element.precio | currency }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="cantidad">
-        <th mat-header-cell *matHeaderCellDef>Cantidad</th>
-        <td mat-cell *matCellDef="let element">
-          <input type="number" [(ngModel)]="element.cantidad" (change)="actualizarCantidad(element)" class="cantidad-input">
-        </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="importe">
-        <th mat-header-cell *matHeaderCellDef>Importe</th>
-        <td mat-cell *matCellDef="let element">{{ element.precio * element.cantidad | currency }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="acciones">
-        <th mat-header-cell *matHeaderCellDef>Acciones</th>
-        <td mat-cell *matCellDef="let element; let i = index;">
-          <button mat-icon-button color="warn" (click)="eliminarProducto(i)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  
-    <!-- Total a Pagar -->
-    <div class="totales">
-      <div class="campo">Total a pagar: {{ total | currency }}</div>
-    </div>
-    <h6 class="mt-4">F2= Buscar Cliente
-      <br>Enter= Buscar Codigo
-      <br>Ctrl + D= Borra todo los datos
-      <br>Ctrl + Enter= Cobrar
-      <br>Supr= Vacia Tabla
-    </h6>
-    <!-- Botones de Acción -->
-    <div class="botones">
-      <button mat-flat-button class="action-button" (click)="vaciarTabla()">Vaciar tabla</button>
-      <button mat-flat-button class="action-button" (click)="cobrar()">Cobrar</button>
-    </div>
+  <div class="cliente">
+    <form class="example-form">
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+              <mat-label>Nombre del Cliente</mat-label>
+              <input matInput 
+                     type="text"
+                     [(ngModel)]="nombreCliente"
+                     name="nombreCliente" 
+                     placeholder="F2 para buscar"
+                     (focus)="onFocusCliente()"
+                     (blur)="onBlurCliente()">
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+      <p>
+      </p>
+    </form>
   </div>
+  <div class="producto-busqueda">
+    <mat-form-field class="example-form-field">
+      <mat-label>Codigo del producto</mat-label>
+      <input matInput  type="text" class="input-field" placeholder="Enter para buscar" [(ngModel)]="codigoBusqueda" autofocus>
+    </mat-form-field>
+    <button mat-flat-button class="action-button red-button" (click)="borrarDatos()">Borrar datos</button>
+  </div>
+
+  <table mat-table [dataSource]="productosEnVenta" class="mat-elevation-z8 product-table">
+    <ng-container matColumnDef="codigo">
+      <th mat-header-cell *matHeaderCellDef>Código</th>
+      <td mat-cell *matCellDef="let element">{{ element.codigo }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="descripcion">
+      <th mat-header-cell *matHeaderCellDef>Descripción</th>
+      <td mat-cell *matCellDef="let element">{{ element.descripcion }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="precio">
+      <th mat-header-cell *matHeaderCellDef>Precio</th>
+      <td mat-cell *matCellDef="let element">{{ element.precio | currency }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="cantidad">
+      <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+      <td mat-cell *matCellDef="let element">
+        <input type="number" [(ngModel)]="element.cantidad" (change)="actualizarCantidad(element)" class="cantidad-input">
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="importe">
+      <th mat-header-cell *matHeaderCellDef>Importe</th>
+      <td mat-cell *matCellDef="let element">{{ element.precio * element.cantidad | currency }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let element; let i = index;">
+        <button mat-icon-button color="warn" (click)="eliminarProducto(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <div class="totales">
+    <div class="campo">Total a pagar: {{ total | currency }}</div>
+  </div>
+  <h6 class="mt-4">F2= Buscar Cliente
+    <br>Enter= Buscar Codigo
+    <br>Ctrl + D= Borra todo los datos
+    <br>Ctrl + Enter= Cobrar
+    <br>Supr= Vacia Tabla
+  </h6>
+  <div class="botones">
+    <button mat-flat-button class="action-button red-button" (click)="vaciarTabla()">Vaciar tabla</button>
+    <button mat-flat-button class="action-button green-button" (click)="cobrar()">Cobrar</button>
+  </div>
+</div>
