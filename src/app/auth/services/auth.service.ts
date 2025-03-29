@@ -34,30 +34,29 @@ export class AuthService {
     }
 
     loginWithGoogle(idToken: string): Observable<any> {
-        return this.http.post<any>(`${environment.api.authApis}/usuarios/login-google`, { idToken }).pipe(
+        const url = `${environment.api.authApis}/usuarios/login-google`;
+        console.log('🌐 Enviando token Google a:', url);
+        
+        return this.http.post<any>(url, { idToken }).pipe(
           tap(response => {
-            console.log('✅ Respuesta del servidor (Google Login):', response);
-    
-            if (response && response.token && response.user) {
-              // 1️⃣ Guardar token JWT
-              localStorage.setItem('JWT_TOKEN', response.token);
-    
-              // 2️⃣ Guardar usuario en localStorage
+            if (response?.success && response?.token && response?.user) {
+              // Almacenar token
+              this.setJwtToken(response.token);
+              
+              // Almacenar usuario
               localStorage.setItem(this.USER_CURRENT, JSON.stringify(response.user));
+              
               console.log("👤 Usuario almacenado:", response.user);
-    
-              // 3️⃣ Redirigir a la Landing Page dentro de NgZone
-              this.ngZone.run(() => {
-                console.log("🚀 Redirigiendo a /landing...");
-                this.router.navigate(['/landing']);
-              });
             } else {
-              console.warn("⚠️ Respuesta incompleta del servidor");
+              throw new Error(response?.message || 'Respuesta incompleta del servidor');
             }
           }),
           catchError(error => {
-            console.error('❌ Error en login con Google:', error);
-            return throwError(() => error);
+            let errorMsg = error.error?.message || 
+                          error.message || 
+                          'Error en la autenticación con Google';
+            
+            return throwError(() => new Error(errorMsg));
           })
         );
       }
