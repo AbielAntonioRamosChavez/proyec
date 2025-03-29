@@ -4,6 +4,8 @@ import { ComentarioService } from '../auth/services/comentario/comentario.servic
 import { AuthService } from '../auth/services/auth.service';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
+import { RouterModule } from '@angular/router';
+
 
 // Definir la interfaz para el tipo Comentario
 interface Comentario {
